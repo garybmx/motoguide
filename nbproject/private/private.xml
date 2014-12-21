@@ -3,25 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_171411_create_levels.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_170027_create_instructors.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/config/database.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/tests/ExampleTest.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/filters.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_165715_create_clients.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/phpunit.xml</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_163217_create_events.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_165101_create_condition.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_164846_create_tours.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_165249_create_conditionFuture.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_165849_create_clients_tour.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/public/.htaccess</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/public/index.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/routes.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_165416_create_conditionPast.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2014_12_20_174405_create_prices.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/tests/TestCase.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/example.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/.git/config</file>
         </group>
     </open-files>
 </project-private>
