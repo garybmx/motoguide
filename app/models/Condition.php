@@ -12,5 +12,18 @@
  * @author Manager
  */
 class Condition {
-    //put your code here
+    
+    protected $language;
+    
+    function __construct($language) {
+        $this->language = $language;
+         $this->table = 'condition_' . $this->language;
+               
+    }
+    
+    protected function getCondition(){
+         return $results = DB::select('select * from '.$this->table);
+    }
+
+    
 }

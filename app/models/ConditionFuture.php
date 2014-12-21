@@ -11,6 +11,21 @@
  *
  * @author Manager
  */
-class ConditionFuture {
-    //put your code here
+class ConditionFuture extends Condition {
+    
+    private $condition;
+            
+            
+    function __construct($language) {
+        parent::__construct($language);
+        
+    }
+    
+    public function getFutureCondition(){
+        $this->condition = getCondition();
+        
+    }
+    
+    
+    
 }

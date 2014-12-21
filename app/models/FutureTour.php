@@ -12,5 +12,15 @@
  * @author Manager
  */
 class FutureTour extends Tour {
-    //put your code here
+    private $condition;
+   
+    function __construct($language) {
+        parent::__construct($language);
+        $this->condition = new ConditionFuture($this->language);
+    }
+    
+    function getResult(){
+        return $results = DB::select('select * from '. $this->table);
+    } 
+       
 }
