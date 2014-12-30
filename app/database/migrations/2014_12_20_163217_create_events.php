@@ -28,8 +28,8 @@ class CreateEvents extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('events_en');
-        Shema::drop('events_ru');
+        Schema::drop('events_en');
+        Schema::drop('events_ru');
     }
 
 }

@@ -15,8 +15,7 @@ abstract class Tour {
 
     protected $table;
     protected $language;
-    public $primaryKey = 'tour_id';
-    public $timestamps = false;
+    
 
     /**
      * @return int Return id of the tour
@@ -26,8 +25,16 @@ abstract class Tour {
         $this->table = 'tours_' . $this->language;
     }
 
-    function getTourInfo($id) {
+    function getFullTourInfo($id) {
+        
         return DB::select('select * from ' . $this->table .' where `tour_id`=' . $id);
+        
+    }
+    
+    function getAllTour($tourTypeId) {
+        return DB::select('select * from ' . $this->table .' where `tourType_id`=' . $tourTypeId);
+      
+        
     }
 
     function setTourInfo() {

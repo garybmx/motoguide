@@ -12,11 +12,45 @@
  * @author Manager
  */
 class FurureTourTest extends TestCase {
-    
-    
-    public function testTouransw() {
-        $tour = new FutureTour('en');
-        $this->assertTrue(is_array($tour->getResult()));
-           
+
+    function setUp() {
+        $dataup = new DatabaseSeeder();
+        $dataup->run();
     }
+    
+    public function testSetUpTourInfo(){
+        $tourInfo = new FutureTour('en', 1);
+        $tourInfo->setUpTourInfo();
+    }
+
+    
+
+    public function testGetFutureTour() {
+   
+        //    print_r($futureTour->getFutureTourInfo());
+    }
+
+    public function testGetTourList() {
+        $futureTourList = new FutureTour('en');
+        foreach ($futureTourList->getAllTour('1') as $tour) {
+            $this->assertInternalType('string', $tour->name);
+            $this->assertInternalType('int', $tour->tourType_id);
+            $this->assertInternalType('string', $tour->startTime);
+            $this->assertInternalType('string', $tour->endTime);
+            $this->assertInternalType('string', $tour->description);
+        }
+    }
+
+    public function testGetFutureTourInfo(){
+        $tourInfo = new FutureTour('en', 1);
+        foreach ($tourInfo->setUpAllToursInfo() as $info) {
+            //$this->assertInternalType('string', $info->duration);
+            }
+    }
+    
+    public function tearDown() {
+        $dataclear = new DataClear();
+        $dataclear->run();
+    }
+
 }

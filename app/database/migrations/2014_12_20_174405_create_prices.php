@@ -12,20 +12,22 @@ class CreatePrices extends Migration {
      */
     public function up() {
         Schema::create('prices_en', function(Blueprint $table) {
+            $table->increments('price_id');
             $table->integer('tour_id');
             $table->string('name', 60);
-            $table->string('description', 256);
+            $table->string('price', 256);
 
-            $table->primary('tour_id');
+        
         });
 
 
         Schema::create('prices_ru', function(Blueprint $table) {
+            $table->increments('price_id');
             $table->integer('tour_id');
             $table->string('name', 60);
-            $table->string('description', 256);
+            $table->string('price', 256);
 
-            $table->primary('tour_id');
+        
         });
     }
 
@@ -35,8 +37,8 @@ class CreatePrices extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('prices_ru');
-        Shema::drop('prices_en');
+        Schema::drop('prices_ru');
+        Schema::drop('prices_en');
     }
 
 }

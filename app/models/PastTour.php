@@ -12,5 +12,12 @@
  * @author Manager
  */
 class PastTour extends Tour {
-    //put your code here
+
+    private $condition;
+
+    function __construct($language) {
+        parent::__construct($language);
+        $this->condition = new ConditionPast($this->language);
+    }
+
 }

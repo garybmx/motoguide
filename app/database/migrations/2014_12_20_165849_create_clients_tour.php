@@ -23,7 +23,7 @@ class CreateClientsTour extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('clients_tour');
+        Schema::drop('clients_tour');
     }
 
 }

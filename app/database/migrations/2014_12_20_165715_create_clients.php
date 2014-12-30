@@ -34,8 +34,8 @@ class CreateClients extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('clients_ru');
-        Shema::drop('clients_en');
+        Schema::drop('clients_ru');
+        Schema::drop('clients_en');
     }
 
 }

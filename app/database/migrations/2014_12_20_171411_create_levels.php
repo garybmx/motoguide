@@ -32,9 +32,9 @@ class CreateLevels extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('levels_ru');
+        Schema::drop('levels_ru');
         
-        Shema::drop('levels_en');
+        Schema::drop('levels_en');
     }
 
 }

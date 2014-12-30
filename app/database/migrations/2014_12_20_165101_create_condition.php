@@ -36,8 +36,8 @@ class CreateCondition extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('condition_ru');
-        Shema::drop('condition_en');
+        Schema::drop('condition_ru');
+        Schema::drop('condition_en');
     }
 
 }

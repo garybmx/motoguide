@@ -32,8 +32,8 @@ class CreateConditionPast extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('conditionPast_en');
-        Shema::drop('conditionPast_ru');
+        Schema::drop('conditionPast_en');
+        Schema::drop('conditionPast_ru');
     }
 
 }

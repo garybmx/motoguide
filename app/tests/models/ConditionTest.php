@@ -12,10 +12,10 @@
  * @author Manager
  */
 class ConditionTest extends TestCase {
-    
-    public function testGetConditionArray(){
-        $condition = new Condition('en');
-        $this->assertTrue(is_array($condition->getCondition()));
+
+    public function testGetCondition() {
+        $condition = new Condition('en' , '1');
+        $this->assertInternalType('array', $condition->getCondition());
     }
-    
+
 }

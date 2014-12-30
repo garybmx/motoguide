@@ -36,8 +36,8 @@ class CreateTours extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('tours_ru');
-        Shema::drop('tours_en');
+        Schema::drop('tours_ru');
+        Schema::drop('tours_en');
     }
 
 }

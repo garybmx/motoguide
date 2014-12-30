@@ -38,8 +38,8 @@ class CreateInstructors extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('instructors_ru');
-        Shema::drop('instructors_en');
+        Schema::drop('instructors_ru');
+        Schema::drop('instructors_en');
     }
 
 }

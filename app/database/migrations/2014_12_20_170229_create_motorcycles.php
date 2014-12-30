@@ -38,8 +38,8 @@ class CreateMotorcycles extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('motorcycles_ru');        
-        Shema::drop('motorcycles_en');
+        Schema::drop('motorcycles_ru');        
+        Schema::drop('motorcycles_en');
     }
 
 }

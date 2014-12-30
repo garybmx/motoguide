@@ -34,8 +34,8 @@ class CreateConditionFuture extends Migration {
      * @return void
      */
     public function down() {
-        Shema::drop('conditionFuture_ru');
-        Shema::drop('conditionFuture_en');
+        Schema::drop('conditionFuture_ru');
+        Schema::drop('conditionFuture_en');
     }
 
 }
