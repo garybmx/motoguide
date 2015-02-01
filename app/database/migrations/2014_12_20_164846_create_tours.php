@@ -18,6 +18,7 @@ class CreateTours extends Migration {
             $table->date('startTime');
             $table->date('endTime');
             $table->text('description');
+            $table->boolean('active')->default(0);
         });
 
         Schema::create('tours_ru', function($table) {
@@ -27,6 +28,7 @@ class CreateTours extends Migration {
             $table->date('startTime');
             $table->date('endTime');
             $table->text('description');
+            $table->boolean('active')->default(0);
         });
     }
 

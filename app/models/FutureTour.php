@@ -8,48 +8,56 @@
 
 /**
  * Description of FutureTour
- *
+ * tourType_id for futureTour = 1; 
  * @author Manager
  */
 class FutureTour extends Tour {
 
+    protected $tourType;
     private $condition;
-    private $id;
-    private $futureTourInfo = array('name' => '',
+    protected $id;
+    private $futureTourInfo = array(
+        'tour_id' => '',
+        'tourType_id' => '',
+        'name' => '',
         'startTime' => '',
         'endTime' => '',
         'description' => '',
         'duration' => '',
-        'level_id' => '',
+        'level' => '',
         'location' => '',
         'residence' => '',
         'feed' => '',
         'price' => array()
     );
-    private $allToursInfo = array();
-            
+
 
     function __construct($language, $id = null) {
         parent::__construct($language);
         $this->id = $id;
-
-        if ($this->id != null) {
-            $this->condition = new ConditionFuture($this->language, $this->id);
-        }
-    }
-    public function setUpAllToursInfo(){
-        $tourInfo = $this->getAllTour(1);
-        foreach ($tourInfo as $value) {
-            foreach ($value as $name => $val) {
-                $this->allToursInfo[$value->tour_id][$name] = $val;
-            }
-        }
-
-        return $this->allToursInfo;
-        
+        $this->tourType = 1;
+        $this->condition = new ConditionFuture($this->language, $this->id);
     }
 
-        public function setUpTourInfo() {
+
+    /**
+     * 
+     * @return array
+     * Function return array of all tours
+     */
+    public function setUpAllToursInfo() {
+        $result = parent::setUpAllToursInfo($this->tourType);
+        return $result;
+    }
+
+
+    /**
+     * 
+     * @return array
+     * Function return array of information for one tour
+     * 
+     */
+    public function setUpTourInfo() {
 
         $tourInfo = $this->getFullTourInfo($this->id);
         foreach ($tourInfo as $value) {
@@ -65,7 +73,7 @@ class FutureTour extends Tour {
                 $this->futureTourInfo[$name1] = $val1;
             }
         }
-        
+
         $prices = $this->getTourPrices();
 
         foreach ($prices as $value2) {
@@ -74,11 +82,85 @@ class FutureTour extends Tour {
             }
         }
 
-        
-     //   var_dump($this->futureTourInfo);
+
+
         return $this->futureTourInfo;
     }
 
+
+    public function addTour($tourArray = array()) {
+        $arrayCheck = $this->arrayCheck($tourArray, $this->futureTourInfo);
+
+        if ((empty($tourArray)) || ($arrayCheck === false)) {
+            return false;
+        }
+        $check = array();
+        $id = $this->insertTourRecord($tourArray);
+        $check[] = $this->checkReturnId($id);
+        $this->condition->setId($id);
+        $check[] = $this->condition->insertConditionRecord($tourArray);
+        $check[] = $this->condition->insertConditionFutureRecord($tourArray);
+        $check[] = $this->condition->insertPrices($tourArray['price']);
+
+        return $this->checkTrue($check);
+    }
+    
+    
+    public function updateTour($tourArray = array()) {
+        $arrayCheck = $this->arrayCheck($tourArray, $this->futureTourInfo);
+        $tourType = $this->tourTypeCheck();
+
+
+        if ((empty($tourArray)) || ($arrayCheck === false) || ($tourType === false)) {
+            return false;
+        }
+
+        if ($tourType === false) {
+            return $this->changeType($tourArray);
+        }
+
+        $check = array();
+        $check[] = $this->updateTourRecord($tourArray);
+        $check[] = $this->condition->updateConditionFutureRecord($tourArray);
+        $check[] = $this->condition->updateConditionRecord($tourArray);
+        $check[] = $this->condition->updatePrices($tourArray['price']);
+
+        return $this->checkTrue($check);
+    }
+
+
+    public function deleteTour() {
+        $tourType = $this->tourTypeCheck();
+        if ($tourType === false) {
+            return false;
+        }
+        
+        $check = array();
+        $check[] = $this->deleteTourRecord();
+        $check[] = $this->condition->deleteConditionFutureRecord();
+        $check[] = $this->condition->deleteConditionRecord();
+        $check[] = $this->condition->deletePriceRecords();
+
+        return $this->checkTrue($check);
+    }
+
+
+    public function deleteOnePriceRecord($priceId) {
+        $this->condition->deleteOnePriceRecord($priceId);
+    }
+
+
+    private function addAnotherLanguageTour($addId){
+        $tour = new FutureTour('ru');
+        $tour->setAddId($addId);
+        $tour->addTour($this->futureTourInfo);
+        
+    }
+    /**
+     * 
+     * @return array
+     * Function return array of object of conditions for tour
+     */
     private function getFutureTourInfo() {
 
         if ($this->id != null) {
@@ -86,7 +168,13 @@ class FutureTour extends Tour {
         }
         return array();
     }
-    
+
+
+    /**
+     * 
+     * @return array
+     * Function return array of object of prices for tour
+     */
     private function getTourPrices() {
 
         if ($this->id != null) {
@@ -94,5 +182,5 @@ class FutureTour extends Tour {
         }
         return array();
     }
-    
+
 }

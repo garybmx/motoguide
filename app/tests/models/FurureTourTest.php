@@ -13,42 +13,125 @@
  */
 class FurureTourTest extends TestCase {
 
-    function setUp() {
+
+    public static function setUpBeforeClass() {
         $dataup = new DatabaseSeeder();
         $dataup->run();
     }
-    
-    public function testSetUpTourInfo(){
-        $tourInfo = new FutureTour('en', 1);
-        $tourInfo->setUpTourInfo();
-    }
 
-    
 
-    public function testGetFutureTour() {
-   
-        //    print_r($futureTour->getFutureTourInfo());
-    }
-
-    public function testGetTourList() {
+    public function testFutureGetTourList() {
         $futureTourList = new FutureTour('en');
-        foreach ($futureTourList->getAllTour('1') as $tour) {
-            $this->assertInternalType('string', $tour->name);
-            $this->assertInternalType('int', $tour->tourType_id);
-            $this->assertInternalType('string', $tour->startTime);
-            $this->assertInternalType('string', $tour->endTime);
-            $this->assertInternalType('string', $tour->description);
+        foreach ($futureTourList->setUpAllToursInfo() as $tour) {
+
+            $this->assertInternalType('string', $tour['name']);
+            $this->assertInternalType('int', $tour['tourType_id']);
+            $this->assertInternalType('int', $tour['tour_id']);
+            $this->assertInternalType('string', $tour['startTime']);
+            $this->assertInternalType('string', $tour['endTime']);
+            $this->assertInternalType('string', $tour['description']);
         }
     }
 
-    public function testGetFutureTourInfo(){
+
+    public function testGetFutureTourInfo() {
         $tourInfo = new FutureTour('en', 1);
-        foreach ($tourInfo->setUpAllToursInfo() as $info) {
-            //$this->assertInternalType('string', $info->duration);
-            }
+        $info = $tourInfo->setUpTourInfo();
+        $this->assertInternalType('int', $info['tour_id']);
+        $this->assertInternalType('int', $info['tourType_id']);
+        $this->assertInternalType('string', $info['startTime']);
+        $this->assertInternalType('string', $info['endTime']);
+        $this->assertInternalType('string', $info['description']);
+        $this->assertInternalType('string', $info['duration']);
+        $this->assertInternalType('string', $info['level']);
+        $this->assertInternalType('string', $info['location']);
+        $this->assertInternalType('string', $info['residence']);
+        $this->assertInternalType('string', $info['feed']);
+        $this->assertInternalType('array', $info['price']);
     }
-    
-    public function tearDown() {
+
+
+    public function testAddTour() {
+        $futureTourInfo = array(
+            'tour_id' => 'new',
+            'tourType_id' => '1',
+            'name' => 'addTour',
+            'startTime' => '2015-1-1',
+            'endTime' => '2015-1-10',
+            'description' => 'add Tour test',
+            'duration' => '10',
+            'level' => '1',
+            'location' => 'bulgaria',
+            'residence' => 'hostel',
+            'feed' => '2 times a day',
+            'price' => array(
+                array(
+                    'price_id' => 'new',
+                    'tour_id' => 'new',
+                    'name' => 'moto',
+                    'price' => '10'
+                ),
+                array(
+                    'price_id' => 'new',
+                    'tour_id' => 'new',
+                    'name' => 'feed',
+                    'price' => '12'
+                )
+            )
+        );
+
+        $futureTour = new FutureTour('en');
+        $check = $futureTour->addTour($futureTourInfo);
+
+        $this->assertTrue($check);
+    }
+
+
+    public function testUpdateTour() {
+        $futureTourInfo = array(
+            'tour_id' => '1',
+            'tourType_id' => '1',
+            'name' => 'updateTour',
+            'startTime' => '2015-1-1',
+            'endTime' => '2015-1-10',
+            'description' => 'add Tour test',
+            'duration' => '10',
+            'level' => '1',
+            'location' => 'bulgaria',
+            'residence' => 'hostel',
+            'feed' => '2 times a day',
+            'price' => array(
+                array(
+                    'price_id' => '1',
+                    'tour_id' => '1',
+                    'name' => 'moto',
+                    'price' => '10'
+                ),
+                array(
+                    'price_id' => '7',
+                    'tour_id' => '1',
+                    'name' => 'feed',
+                    'price' => '12'
+                )
+            )
+        );
+
+        $futureTour = new FutureTour('en', 1);
+        $check = $futureTour->updateTour($futureTourInfo);
+        $this->assertTrue($check);
+    }
+
+
+    public function testDeleteTour() {
+
+
+        $futureTour = new FutureTour('en', 2);
+        $check = $futureTour->deleteTour();
+        $this->assertTrue($check);
+    }
+
+
+    public static function tearDownAfterClass() {
         $dataclear = new DataClear();
         $dataclear->run();
     }

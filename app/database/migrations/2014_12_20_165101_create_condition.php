@@ -14,7 +14,7 @@ class CreateCondition extends Migration {
         Schema::create('condition_en', function($table) {
             $table->integer('tour_id');
             $table->string('duration', 128);
-            $table->integer('level_id');
+            $table->integer('level_id')->default(0);
             $table->text('location');
 
             $table->primary('tour_id');
@@ -23,7 +23,7 @@ class CreateCondition extends Migration {
         Schema::create('condition_ru', function($table) {
             $table->integer('tour_id');
             $table->string('duration', 128);
-            $table->integer('level_id');
+            $table->integer('level_id')->default(0);
             $table->text('location');
 
             $table->primary('tour_id');

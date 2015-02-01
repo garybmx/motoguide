@@ -14,6 +14,16 @@
 class TourFactory {
    
 
+    public static function addTour($tourType,  $language, $addId)
+    {
+       
+        if (class_exists($tourType)) {
+            return new $tourType($language, $addId);
+        } else {
+            throw new Exception("Тура не существует");
+        }
+    }
+    
  public static function getTour($tourType,  $language, $id)
     {
        

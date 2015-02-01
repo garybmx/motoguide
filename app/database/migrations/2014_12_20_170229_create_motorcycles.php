@@ -12,23 +12,25 @@ class CreateMotorcycles extends Migration {
      */
     public function up() {
         Schema::create('motorcycles_en', function(Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
+            $table->boolean('active')->default(0);
             $table->string('model', 60);
             $table->string('power', 60);
-            $table->integer('weight');
+            $table->integer('weight')->default(0);
             $table->text('description');
 
-            $table->primary('id');
+          
         });
         
           Schema::create('motorcycles_ru', function(Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
+            $table->boolean('active')->default(0);
             $table->string('model', 60);
             $table->string('power', 60);
-            $table->integer('weight');
+            $table->integer('weight')->default(0);
             $table->text('description');
 
-            $table->primary('id');
+           
         });
     }
 

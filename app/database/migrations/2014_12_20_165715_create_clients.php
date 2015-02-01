@@ -12,19 +12,21 @@ class CreateClients extends Migration {
      */
     public function up() {
         Schema::create('clients_en', function(Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
+            $table->boolean('active')->default(0);
             $table->string('name', 60);
             $table->text('review');
 
-            $table->primary('id');
+        
         });
 
         Schema::create('clients_ru', function(Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
+            $table->boolean('active')->default(0);
             $table->string('name', 60);
             $table->text('review');
 
-            $table->primary('id');
+         
         });
     }
 
@@ -34,8 +36,9 @@ class CreateClients extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('clients_ru');
         Schema::drop('clients_en');
+        Schema::drop('clients_ru');
+      
     }
 
 }

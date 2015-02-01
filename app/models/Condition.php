@@ -16,6 +16,8 @@ class Condition {
     protected $language;
     protected $id;
     protected $condition;
+    protected $table;
+
 
     function __construct($language, $id) {
         $this->id = $id;
@@ -23,22 +25,85 @@ class Condition {
         $this->table = 'condition_' . $this->language;
     }
 
+
     /**
      * 
      * @return array
      * Function return array of conditions
      */
     public function getCondition() {
-        $this->condition = DB::table($this->table, 'levels_'. $this->language)
-                        ->select('duration',  'location', 'levels_'.
-                                $this->language . '.description as level' )
-                        ->where('tour_id', $this->id)
-                        ->leftJoin('levels_' . $this->language, 
-                                $this->table . '.level_id', '=', 'levels_' .
-                                $this->language . '.level_id')
-                        ->get();
-                var_dump($this->condition);
+
+        $this->condition = DB::table($this->table, 'levels_' . $this->language)
+                ->select('duration', 'location', 'levels_' .
+                        $this->language . '.description as level')
+                ->where('tour_id', $this->id)
+                ->leftJoin('levels_' . $this->language, $this->table . '.level_id', '=', 'levels_' .
+                        $this->language . '.level_id')
+                ->get();
+
         return $this->condition;
+    }
+
+
+    public function insertConditionRecord($tourArray) {
+        $this->checkAndDeleteId($this->table);
+
+        return DB::table($this->table)->insert(
+                        array('tour_id' => $this->id,
+                            'duration' => $tourArray['duration'],
+                            'level_id' => $tourArray['level'],
+                            'location' => $tourArray['location'])
+        );
+    }
+
+
+    public function updateConditionRecord($tourArray) {
+        $exist = DB::table($this->table)
+                ->where('tour_id', $this->id)
+                ->count();
+
+        if ($exist == 0) {
+            return $this->insertConditionRecord($tourArray);
+        }
+        
+        $check = DB::table($this->table)->where('tour_id', $this->id)->update(
+                array(
+                    'duration' => $tourArray['duration'],
+                    'level_id' => $tourArray['level'],
+                    'location' => $tourArray['location'])
+        );
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function deleteConditionRecord() {
+        $exist = DB::table($this->table)
+                ->where('tour_id', $this->id)
+                ->count();
+
+        if ($exist == 0)
+            return true;
+
+        $check = $this->checkAndDeleteId($this->table);
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected function checkAndDeleteId($table) {
+        $cnt = DB::table($table)->where('tour_id', $this->id)->count();
+        if ($cnt != 0) {
+            return DB::table($table)->where('tour_id', $this->id)->delete();
+        }
     }
 
 }

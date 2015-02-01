@@ -24,6 +24,9 @@ class DataClear extends Seeder {
           DB::table('prices_en')->truncate();
              DB::table('levels_en')->truncate();
         DB::table('tours_ru')->truncate();
+          DB::table('conditionfuture_en')->truncate();
+            DB::table('conditionpast_en')->truncate();
+            DB::table('clients_en')->truncate();
       
     }
 

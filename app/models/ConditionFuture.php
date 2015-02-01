@@ -15,8 +15,8 @@ class ConditionFuture extends Condition {
 
     private $futureTable;
     private $price;
-    protected $id;
     protected $language;
+
 
     function __construct($language, $id) {
         $this->id = $id;
@@ -27,22 +27,104 @@ class ConditionFuture extends Condition {
         parent::__construct($language, $this->id);
     }
 
+
+    function setId($id) {
+        $this->id = $id;
+        $this->price->setId($id);
+    }
+
+
     public function getAllCondition() {
         $condition = $this->getCondition();
         $futureCondition = $this->getFutureCondition();
         return array_merge($condition, $futureCondition);
     }
 
+
     public function getCondition() {
         return parent::getCondition();
     }
+
 
     public function getPrice() {
         return $this->price->getAllPrices();
     }
 
+
+    public function deletePriceRecords() {
+        return $this->price->deletePriceRecords();
+    }
+
+
+    public function deleteOnePriceRecord($priceId) {
+        return $this->price->deleteOnePriceRecord($priceId);
+    }
+
+
+    public function insertPrices($priceArray) {
+        $this->price->insertPrices($priceArray);
+    }
+
+
+    public function updatePrices($priceArray) {
+        $this->price->updatePrices($priceArray);
+    }
+
+
+    public function insertConditionFutureRecord($tourArray) {
+        $this->checkAndDeleteId($this->futureTable);
+        return DB::table($this->futureTable)->insert(
+                        array('tour_id' => $this->id,
+                            'residence' => $tourArray['residence'],
+                            'feed' => $tourArray['feed'])
+        );
+    }
+
+
+    public function updateConditionFutureRecord($tourArray) {
+
+        $exist = DB::table($this->futureTable)
+                ->where('tour_id', $this->id)
+                ->count();
+
+        if ($exist == 0) {
+            return $this->insertConditionFutureRecord($tourArray);
+        }
+
+        $check = DB::table($this->futureTable)->where('tour_id', $this->id)->update(
+                array(
+                    'residence' => $tourArray['residence'],
+                    'feed' => $tourArray['feed'])
+        );
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function deleteConditionFutureRecord() {
+        $exist = DB::table($this->futureTable)
+                ->where('tour_id', $this->id)
+                ->count();
+
+        if ($exist == 0)
+            return true;
+
+        $check = $this->checkAndDeleteId($this->futureTable);
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     private function getFutureCondition() {
-        return DB::select('select * from ' . $this->futureTable . ' where tour_id = "' . $this->id . '"');
+        return DB::table($this->futureTable)->where('tour_id', $this->id)->get();
     }
 
 }
