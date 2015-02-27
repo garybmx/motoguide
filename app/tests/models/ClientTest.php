@@ -11,21 +11,40 @@
  *
  * @author Manager
  */
-class ClientTest extends TestCase {
+class ClientTest extends PHPUnit_Framework_TestCase {
+
 
     public static function setUpBeforeClass() {
-    $dataup = new DatabaseSeeder();
-      $dataup->run();
+
+        $dataup = new DatabaseSeeder();
+        $dataup->run();
     }
 
-    public function testSetUpClientReview() {
+
+    public function testInsertClientInfo() {
+
+        $clientInfo = array(
+            'id' => 'new',
+            'active' => '0',
+            'name' => 'review',
+            'review' => '223'
+        );
+
         $client = new Client('en');
-        $clientInfo = $client->setUpClientReview('1');
+        $check = $client->insertClientInfo($clientInfo);
+        $this->assertTrue($check);
+    }
+
+
+    public function testSetUpClientReview() {
+        $client = new Client('en', 1);
+        $clientInfo = $client->setUpClientReview();
 
         $this->assertInternalType('int', $clientInfo['id']);
         $this->assertInternalType('string', $clientInfo['name']);
         $this->assertInternalType('string', $clientInfo['review']);
     }
+
 
     public function testSetUpClientsIdList() {
         $client = new Client('en');
@@ -34,6 +53,36 @@ class ClientTest extends TestCase {
             $this->assertInternalType('int', $val);
         }
     }
+
+
+    public function testUpdateClientInfo() {
+
+        $clientInfo = array(
+            'id' => '2',
+            'active' => '1',
+            'name' => 'sdfsdf',
+            'review' => 'rew'
+        );
+
+        $client = new Client('en', 1);
+        $clientF = new Client('ru', 11);
+
+        $check1 = $client->updateClientInfo($clientInfo);
+        $check2 = $clientF->updateClientInfo($clientInfo);
+
+        $this->assertTrue($check1);
+        $this->assertFalse($check2);
+    }
+
+
+    public function testDeleteClient() {
+
+
+        $client = new Client('en', 1);
+        $check = $client->deleteClientInfo();
+        $this->assertTrue($check);
+    }
+
 
     public static function tearDownAfterClass() {
         $dataclear = new DataClear();

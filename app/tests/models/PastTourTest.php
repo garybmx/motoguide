@@ -11,7 +11,7 @@
  *
  * @author Manager
  */
-class PastTourTest extends TestCase {
+class PastTourTest extends PHPUnit_Framework_TestCase {
 
 
     public static function setUpBeforeClass() {

@@ -11,57 +11,132 @@
  *
  * @author Manager
  */
-class Client {
+class Client extends Staff {
 
-    private $clientTable;
     private $language;
+    private $clientTable;
+    private $allClientsInfo = array();
+    private $clientInfo = array(
+        'id' => '',
+        'active' => '',
+        'name' => '',
+        'review' => '',
+    );
+    protected $langId;
+    protected $id;
 
 
-    public function __construct($language) {
+    function __construct($language, $id = null) {
+        $this->id = $id;
         $this->language = $language;
-        $this->clientTable = 'clients_' . $this->language;
+        $this->clientTable = "clients_" . $this->language;
+        $this->langId = null;
     }
 
 
-    public function setUpClientReview($id) {
-        $returnArray = array();
-        $clientReview = $this->getClientReview($id);
-        foreach ($clientReview as $value1) {
-            foreach ($value1 as $name1 => $val1) {
-                $returnArray[$name1] = $val1;
-            }
-        }
+    public function setLangId($langId) {
+        $this->langId = $langId;
+    }
 
-        return $returnArray;
+
+    public function setUpClientReview() {
+        return parent::setUpInfo();
+    }
+
+
+    public function setUpAllClientsInfo() {
+        return parent::setUpAllInfo();
+    }
+
+
+    public function insertClientInfo($clientArray = array()) {
+        return parent::insertInfo($this->clientInfo, $this->langId, $clientArray);
+    }
+
+
+    public function updateClientInfo($clientArray = array()) {
+        return parent::updateInfo($this->clientInfo, $clientArray);
+    }
+
+
+    public function deleteClientInfo() {
+        return parent::deleteInfo();
     }
 
 
     public function setUpClinetsIdList() {
-        $returnArray = array();
-        $idList = $this->getClientsId();
-
-        foreach ($idList as $value1) {
-            foreach ($value1 as $name1 => $val1) {
-                $returnArray[] = $val1;
-            }
-        }
-
-        return $returnArray;
+        return DB::table($this->clientTable)->lists('id');
     }
 
 
-    private function getClientReview($id) {
+    protected function getInfo($id) {
+
         return DB::table($this->clientTable)
-                        ->select('id', 'name', 'review')
                         ->where('id', $id)
                         ->get();
     }
 
 
-    public function getClientsId() {
-        return DB::table($this->clientTable)
-                        ->select('id')
-                        ->get();
+    protected function getAllInfo() {
+        return DB::table($this->clientTable)->get();
+    }
+
+
+    protected function insertAnotherLanguage($getId) {
+        $newClient = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language);
+        $newClient->setLangId($getId);
+        $newClient->checkAndDeleteId($newClient->clientTable, $getId, 'id');
+        return $newClient->insertClientInfo($this->clientInfo);
+    }
+
+
+    protected function deleteAnotherLanguage($id) {
+        $newClient = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language,  $id);
+        $newClient->setLangId($id);
+        return $newClient->deleteClientInfo();
+    }
+
+
+    protected function insertRecord($insertArray) {
+        return DB::table($this->clientTable)->insertGetId(
+                        array('id' => $this->langId,
+                            'active' => $insertArray['active'],
+                            'name' => $insertArray['name'],
+                            'review' => $insertArray['review']
+        ));
+    }
+
+
+    protected function updateRecord($insertArray) {
+        $check = DB::table($this->clientTable)
+                ->where('id', $this->id)
+                ->update(array(
+            'active' => $insertArray['active'],
+            'name' => $insertArray['name'],
+            'review' => $insertArray['review']
+                )
+        );
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected function deleteRecord($id) {
+        $cnt = DB::table($this->clientTable)->where('id', $id)->count();
+        if ($cnt == 0) {
+            return true;
+        }
+        $check = DB::table($this->clientTable)->where('id', $id)->delete();
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

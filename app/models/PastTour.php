@@ -19,12 +19,13 @@ class PastTour extends Tour {
     private $pastTourInfo = array(
         'tour_id' => '',
         'tourType_id' => '',
+        'active' => '',
         'name' => '',
         'startTime' => '',
         'endTime' => '',
         'description' => '',
         'duration' => '',
-        'level' => '',
+        'level_id' => '',
         'location' => '',
         'review' => ''
     );
@@ -71,13 +72,18 @@ class PastTour extends Tour {
 
     public function addTour($tourArray = array()) {
         $arrayCheck = $this->arrayCheck($tourArray, $this->pastTourInfo);
-
         if ((empty($tourArray)) || ($arrayCheck === false)) {
             return false;
         }
         $check = array();
+       
         $id = $this->insertTourRecord($tourArray);
         $check[] = $this->checkReturnId($id);
+
+        if (($this->langId === NULL) && (is_numeric($id))) {
+            $check[] = $this->insertAnotherLanguage($id, $this->pastTourInfo);
+        }
+
         $this->condition->setId($id);
         $check[] = $this->condition->insertConditionRecord($tourArray);
         $check[] = $this->condition->insertConditionPastRecord($tourArray);
@@ -95,23 +101,27 @@ class PastTour extends Tour {
         }
         $check = array();
         $check[] = $this->updateTourRecord($tourArray);
+        
         $check[] = $this->condition->updateConditionPastRecord($tourArray);
         $check[] = $this->condition->updateConditionRecord($tourArray);
-
+       
         return $this->checkTrue($check);
     }
 
 
     public function deleteTour() {
-        $tourType = $this->tourTypeCheck();
-        if ($tourType === false) {
-            return false;
-        }
+       
 
         $check = array();
         $check[] = $this->deleteTourRecord();
         $check[] = $this->condition->deleteConditionPastRecord();
         $check[] = $this->condition->deleteConditionRecord();
+
+        if (($this->langId === NULL) && (is_numeric($this->id))) {
+            $check[] = $this->deleteAnotherLanguage($this->id);
+        }
+
+
         return $this->checkTrue($check);
     }
 

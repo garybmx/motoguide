@@ -11,12 +11,14 @@
  *
  * @author Manager
  */
-class MotorcycleTest extends TestCase {
+class MotorcycleTest extends PHPUnit_Framework_TestCase {
 
 
     public static function setUpBeforeClass() {
-        $dataup = new MotorcyclesSeeder();
-        $dataup->run();
+         $dataclear = new MotorcyclesClear();
+        $dataclear->run();
+     $dataup = new MotorcyclesSeeder();
+      $dataup->run();
     }
 
 
@@ -31,18 +33,18 @@ class MotorcycleTest extends TestCase {
             'description' => 'good motorcycle',
         );
 
-        $motorcycle = new Motocycle('en');
+        $motorcycle = new Motorcycle('en');
         $check = $motorcycle->insertMotorcycleInfo($motorcycleInfo);
         $this->assertTrue($check);
     }
 
 
     public function testSetupMotorcycleInfo() {
-        $mototorcycleF = new Motocycle('en', 12);
-        $false = $mototorcycleF->setUpMotorcycleInfo();
+        $motorcycleF = new Motorcycle('en', 12);
+        $false = $motorcycleF->setUpMotorcycleInfo();
         $this->assertFalse($false);
-        $mototorcycle = new Motocycle('en', 1);
-        $motorArray = $mototorcycle->setUpMotorcycleInfo();
+        $motorcycle = new Motorcycle('en', 1);
+        $motorArray = $motorcycle->setUpMotorcycleInfo();
         $this->assertInternalType('int', $motorArray['id']);
         $this->assertInternalType('int', $motorArray['active']);
         $this->assertInternalType('string', $motorArray['model']);
@@ -53,7 +55,7 @@ class MotorcycleTest extends TestCase {
 
 
     public function testSetupAllMotorcyclesInfo() {
-        $motorcycles = new Motocycle('en');
+        $motorcycles = new Motorcycle('en');
 
         foreach ($motorcycles->setUpAllMotorcylesInfo() as $motorArray) {
 
@@ -78,8 +80,8 @@ class MotorcycleTest extends TestCase {
             'description' => 'good motorcycle',
         );
 
-        $motorcycles = new Motocycle('ru', 1);
-        $motorcyclesF = new Motocycle('ru', 11);
+        $motorcycles = new Motorcycle('ru', 1);
+        $motorcyclesF = new Motorcycle('ru', 11);
 
         $check1 = $motorcycles->updateMotorcycleInfo($motorcycleInfo);
         $check2 = $motorcyclesF->updateMotorcycleInfo($motorcycleInfo);
@@ -88,6 +90,14 @@ class MotorcycleTest extends TestCase {
         $this->assertFalse($check2);
     }
 
+    
+    public function testDeleteMotorcycle() {
+
+
+        $motorcycle = new Motorcycle('en', 1);
+        $check = $motorcycle->deleteMotorcycleInfo();
+        $this->assertTrue($check);
+    }
 
     public static function tearDownAfterClass() {
         $dataclear = new MotorcyclesClear();

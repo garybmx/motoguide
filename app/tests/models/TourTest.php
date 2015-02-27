@@ -11,7 +11,7 @@
  *
  * @author Manager
  */
-class TourTest extends TestCase {
+class TourTest extends PHPUnit_Framework_TestCase {
 
     private $stub;
 

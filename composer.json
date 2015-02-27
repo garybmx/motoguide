@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"phpunit/phpunit-skeleton-generator": "*"
+		"phpunit/phpunit-skeleton-generator": "*",
+		"intervention/image": "~2.1"
 	},
 	"autoload": {
 		"classmap": [
@@ -36,6 +37,7 @@
 	},
 	"minimum-stability": "stable",
 	"require-dev": {
-		"apigen/apigen": "~2.8"
+		"apigen/apigen": "~2.8",
+                "mockery/mockery": "dev-master@dev"
 	}
 }

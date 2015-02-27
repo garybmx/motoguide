@@ -17,6 +17,7 @@ abstract class Tour {
     protected $language;
     protected $allToursInfo = array();
     protected $tourType;
+    protected $langId;
 
 
     /**
@@ -25,6 +26,11 @@ abstract class Tour {
     function __construct($language) {
         $this->language = $language;
         $this->table = 'tours_' . $this->language;
+    }
+
+
+    public function setLangId($langId) {
+        $this->langId = $langId;
     }
 
 
@@ -52,6 +58,31 @@ abstract class Tour {
     }
 
 
+    protected function insertAnotherLanguage($getId, $addArray) {
+
+        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language);
+        $newTour->setLangId($getId);
+        $newTour->checkAndDeleteId($getId);
+        return $newTour->addTour($addArray);
+    }
+
+
+    protected function deleteAnotherLanguage($id) {
+
+        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language);
+        $newTour->setLangId($id);
+        return $newTour->deleteTour();
+    }
+
+
+    protected function checkAndDeleteId($id) {
+        $cnt = DB::table($this->table)->where('tour_id', $id)->count();
+        if ($cnt != 0) {
+            return DB::table($this->table)->where('tour_id', $id)->delete();
+        }
+    }
+
+
     protected function arrayCheck($checkArray, $defaultArray) {
 
         $returnArray = array_diff_key($checkArray, $defaultArray);
@@ -65,12 +96,16 @@ abstract class Tour {
 
 
     protected function insertTourRecord($tourArray) {
+       
         return $id = DB::table($this->table)->insertGetId(
-                array('tourType_id' => $this->tourType,
+                array(
+                    'tour_id' => $this->langId,
+                    'tourType_id' => $this->tourType,
                     'name' => $tourArray['name'],
                     'startTime' => $tourArray['startTime'],
                     'endTime' => $tourArray['endTime'],
-                    'description' => $tourArray['description'])
+                    'description' => $tourArray['description'],
+                     'active' => $tourArray['active'])
         );
     }
 
@@ -106,7 +141,8 @@ abstract class Tour {
             'name' => $tourArray['name'],
             'startTime' => $tourArray['startTime'],
             'endTime' => $tourArray['endTime'],
-            'description' => $tourArray['description'])
+            'description' => $tourArray['description'],
+            'active' => $tourArray['active'])
         );
 
         if ($check > 0) {
@@ -118,6 +154,12 @@ abstract class Tour {
 
 
     protected function deleteTourRecord() {
+        
+        $cnt = DB::table($this->table)->where('tour_id', $this->id)->count();
+        if ($cnt == 0) {
+            return true;
+        }
+        
         $check = DB::table($this->table)->where('tour_id', $this->id)->delete();
 
         if ($check > 0) {
@@ -130,7 +172,7 @@ abstract class Tour {
 
     protected function tourTypeCheck() {
         $checkType = $this->getType();
-     
+
         if ($this->tourType != $checkType) {
             return false;
         } else {
@@ -138,12 +180,14 @@ abstract class Tour {
         }
     }
 
-    private function getType(){
-        $array =DB::table($this->table)
+
+    private function getType() {
+        $array = DB::table($this->table)
                 ->select('tourType_id')
                 ->where('tour_id', $this->id)
-            ->get();
-        
+                ->get();
+
         return $array[0]->tourType_id;
     }
+
 }

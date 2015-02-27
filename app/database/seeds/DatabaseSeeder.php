@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder {
          
          
          
+         
+         
         DB::table('condition_en')->insert(array(
             array('tour_id' => '1', 'duration' => '2', 'level_id' => '2', 'location' => 'bulgaria')
         ));

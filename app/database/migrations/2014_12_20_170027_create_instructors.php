@@ -12,25 +12,25 @@ class CreateInstructors extends Migration {
      */
     public function up() {
         Schema::create('instructors_en', function(Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->boolean('active')->default(0);
             $table->string('name', 60);
             $table->string('lastname', 60);
             $table->integer('age')->default(0);
             $table->text('expirience');
 
-            $table->primary('id');
+      
         });
 
         Schema::create('instructors_ru', function(Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->boolean('active')->default(0);
             $table->string('name', 60);
             $table->string('lastname', 60);
             $table->integer('age')->default(0);
             $table->text('expirience');
 
-            $table->primary('id');
+       
         });
     }
 

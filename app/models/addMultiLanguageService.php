@@ -14,8 +14,8 @@
 class addMultiLanguageService {
 
 
-    public static function getAnotherLanguageObj($className, $language) {
-        return new $className(addMultiLanguageService::detectLanguage($language));
+    public static function getAnotherLanguageObj($className, $language, $id= null) {
+        return new $className(addMultiLanguageService::detectLanguage($language), $id);
     }
 
 

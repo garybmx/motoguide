@@ -16,6 +16,7 @@ class FutureTour extends Tour {
     protected $tourType;
     private $condition;
     protected $id;
+    
     private $futureTourInfo = array(
         'tour_id' => '',
         'tourType_id' => '',
@@ -37,6 +38,7 @@ class FutureTour extends Tour {
         $this->id = $id;
         $this->tourType = 1;
         $this->condition = new ConditionFuture($this->language, $this->id);
+        $this->langId = null;
     }
 
 
@@ -97,6 +99,11 @@ class FutureTour extends Tour {
         $check = array();
         $id = $this->insertTourRecord($tourArray);
         $check[] = $this->checkReturnId($id);
+        
+        if (($this->langId === NULL) && (is_numeric($id))) {
+            $check[] = $this->insertAnotherLanguage($id, $this->futureTourInfo);
+        }
+        
         $this->condition->setId($id);
         $check[] = $this->condition->insertConditionRecord($tourArray);
         $check[] = $this->condition->insertConditionFutureRecord($tourArray);
@@ -130,10 +137,6 @@ class FutureTour extends Tour {
 
 
     public function deleteTour() {
-        $tourType = $this->tourTypeCheck();
-        if ($tourType === false) {
-            return false;
-        }
         
         $check = array();
         $check[] = $this->deleteTourRecord();
@@ -141,6 +144,10 @@ class FutureTour extends Tour {
         $check[] = $this->condition->deleteConditionRecord();
         $check[] = $this->condition->deletePriceRecords();
 
+        if (($this->langId === NULL) && (is_numeric($this->id))) {
+            $check[] = $this->deleteAnotherLanguage($this->id);
+        }
+        
         return $this->checkTrue($check);
     }
 
@@ -150,12 +157,7 @@ class FutureTour extends Tour {
     }
 
 
-    private function addAnotherLanguageTour($addId){
-        $tour = new FutureTour('ru');
-        $tour->setAddId($addId);
-        $tour->addTour($this->futureTourInfo);
-        
-    }
+    
     /**
      * 
      * @return array

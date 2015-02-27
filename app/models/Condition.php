@@ -34,7 +34,7 @@ class Condition {
     public function getCondition() {
 
         $this->condition = DB::table($this->table, 'levels_' . $this->language)
-                ->select('duration', 'location', 'levels_' .
+                ->select('duration', $this->table. '.level_id', 'location', 'levels_' .
                         $this->language . '.description as level')
                 ->where('tour_id', $this->id)
                 ->leftJoin('levels_' . $this->language, $this->table . '.level_id', '=', 'levels_' .
@@ -51,7 +51,7 @@ class Condition {
         return DB::table($this->table)->insert(
                         array('tour_id' => $this->id,
                             'duration' => $tourArray['duration'],
-                            'level_id' => $tourArray['level'],
+                            'level_id' => $tourArray['level_id'],
                             'location' => $tourArray['location'])
         );
     }
@@ -69,7 +69,7 @@ class Condition {
         $check = DB::table($this->table)->where('tour_id', $this->id)->update(
                 array(
                     'duration' => $tourArray['duration'],
-                    'level_id' => $tourArray['level'],
+                    'level_id' => $tourArray['level_id'],
                     'location' => $tourArray['location'])
         );
 

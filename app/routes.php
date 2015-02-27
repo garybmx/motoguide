@@ -11,6 +11,21 @@
 |
 */
 
+
+
+Route::group(array('prefix' => 'admin'), function()
+{
+    Route::get('/', 'AdminController@index');
+   
+    Route::resource('motorcycles', 'AdminMotorcyclesController');
+    Route::resource('instructors', 'AdminInstructorsController');
+    Route::resource('PastTour', 'AdminToursController');
+    Route::resource('FutureTour', 'AdminToursController');
+    
+    
+});
+
+
 Route::get('/', function()
 {
 	return View::make('hello');

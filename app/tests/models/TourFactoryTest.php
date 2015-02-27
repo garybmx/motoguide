@@ -11,7 +11,7 @@
  *
  * @author Manager
  */
-class TourFactoryTest extends TestCase {
+class TourFactoryTest extends PHPUnit_Framework_TestCase {
 
     public function testTourFactoryReturnRightObject() {
         $factoryObject = new TourFactory;

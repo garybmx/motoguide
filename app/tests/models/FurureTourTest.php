@@ -11,7 +11,7 @@
  *
  * @author Manager
  */
-class FurureTourTest extends TestCase {
+class FurureTourTest extends PHPUnit_Framework_TestCase {
 
 
     public static function setUpBeforeClass() {
@@ -108,10 +108,10 @@ class FurureTourTest extends TestCase {
                     'price' => '10'
                 ),
                 array(
-                    'price_id' => '7',
+                    'price_id' => '2',
                     'tour_id' => '1',
                     'name' => 'feed',
-                    'price' => '12'
+                    'price' => '123'
                 )
             )
         );
@@ -133,7 +133,7 @@ class FurureTourTest extends TestCase {
 
     public static function tearDownAfterClass() {
         $dataclear = new DataClear();
-        $dataclear->run();
+       $dataclear->run();
     }
 
 }

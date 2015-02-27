@@ -11,7 +11,7 @@
  *
  * @author Manager
  */
-class ConditionTest extends TestCase {
+class ConditionTest extends PHPUnit_Framework_TestCase {
 
     public function testGetCondition() {
         $condition = new Condition('en' , '1');

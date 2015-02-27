@@ -11,7 +11,7 @@
  *
  * @author Manager
  */
-class ConditionFutureTest extends TestCase {
+class ConditionFutureTest extends PHPUnit_Framework_TestCase {
     
     public function testgetAllCondition(){
         $allcondition = new ConditionFuture('en', 'id');

@@ -50,9 +50,8 @@ class Price {
                         'name' => $priceName['name'],
                         'price' => $priceName['price']
             ));
-
-            return $this->checkTrue($check);
         }
+        return $this->checkTrue($check);
     }
 
 
