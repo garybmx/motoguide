@@ -109,6 +109,7 @@ abstract class Staff {
         $check = array();
 
         $getId = $this->insertRecord($insertArray);
+       
         $check[] = $this->checkById($getId);
 
         if (($langId === NULL) && (is_numeric($getId))) {

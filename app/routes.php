@@ -16,12 +16,12 @@
 Route::group(array('prefix' => 'admin'), function()
 {
     Route::get('/', 'AdminController@index');
-   
+    
     Route::resource('motorcycles', 'AdminMotorcyclesController');
     Route::resource('instructors', 'AdminInstructorsController');
     Route::resource('PastTour', 'AdminToursController');
     Route::resource('FutureTour', 'AdminToursController');
-    
+    Route::resource('levels', 'AdminLevelsController');
     
 });
 

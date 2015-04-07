@@ -31,8 +31,8 @@ class AdminInstructorsController extends \BaseController {
     public function index() {
         $instructors = new Instructor('ru');
         $instructorsEng = new Instructor('en');
-        $allInstructors = $instructors->setUpAllMotorcylesInfo();
-        $allInstructorsEng = $instructorsEng->setUpAllMotorcylesInfo();
+        $allInstructors = $instructors->setUpAllInstructorsInfo();
+        $allInstructorsEng = $instructorsEng->setUpAllInstructorsInfo();
         $check = $this->checkAndInsertRecords($allInstructors, $allInstructorsEng);
 
         if ($check == true) {

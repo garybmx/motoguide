@@ -4,11 +4,14 @@
 <!-- content starts -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#pastTour_link').parent().addClass('active');
+        $('#futureTour_link').parent().addClass('active');
         $('input[name="ru_startTime"]').minical();
         $('input[name="ru_endTime"]').minical();
         $("#markItUp").markItUp(mySettings);
-         $("#markItUp2").markItUp(mySettings);
+        $("#markItUp2").markItUp(mySettings);
+   $("#markItUp3").markItUp(mySettings);
+   
+
     });
 
 </script>
@@ -19,10 +22,10 @@
 
         </li>
         <li>
-            {{HTML::link('admin/PastTour', 'Прошедшие туры')}}
+            {{HTML::link('admin/FutureTour', 'Предстоящие туры')}}
         </li>
         <li>
-            {{HTML::link('admin/PastTour/create', 'Добавить тур')}}
+            {{HTML::link('admin/FutureTour/create', 'Добавить тур')}}
         </li>
     </ul>
 </div>
@@ -30,7 +33,7 @@
 <div class="row">
     <div class="box col-md-12">
         <div class="box-inner">
-             
+
             <div class="box-header well" data-original-title="">
                 <h2><i class="glyphicon glyphicon-user"></i> Добавить тур </h2>
                 <div class="box-icon">
@@ -48,9 +51,9 @@
                 <div id="myTabContent" class="tab-content">
 
 
-                    <p>{{Form::open(array('action' => array('AdminToursController@store'), 'method'=>'post'))}}</p>
+                    <p>{{Form::open(array('url' => 'admin/FutureTour', 'method' => 'post'))}}</p>
                     {{ Form::hidden('lang', 'ru') }}
-                    {{ Form::hidden('tourType_id', '2') }}
+                    {{ Form::hidden('tourType_id', '1') }}
                     <table class="mytable  "><tbody>
                             <tr>
 
@@ -78,7 +81,7 @@
 
                                     {{ $errors->first('ru_endTime', '<div class="alert alert-danger">:message</div>') }}
                                 </td></tr>
-                         
+
 
                             <tr>
                                 <td>
@@ -100,13 +103,13 @@
                             <tr>
                                 <td>
                                     {{ Form::label('ru_level_id', 'Уровень:') }}</td><td>
-                                 
+
                                     {{ Form::select('ru_level_id', $allLevels, null, array('class' => 'mydrop')) }}
-                                 
+
                                     {{ $errors->first('ru_level_id', '<div class="alert alert-danger">:message</div>') }}
                                 </td></tr>
 
-                      
+
                             <tr>
                                 <td>
                                     {{ Form::label('ru_location', 'Место проведения:') }}</td><td>
@@ -116,11 +119,21 @@
                                 </td></tr>
                             <tr>
                                 <td>
-                                    {{ Form::label('ru_review', 'Отчет:') }}</td><td>
-                                    {{ Form::textarea('ru_review', null, array('class' => 'form-custom', 'id'=> 'markItUp2')) }}
+                                    {{ Form::label('ru_residence', 'Проживание:') }}</td><td>
+                                    {{ Form::textarea('ru_residence', null, array('class' => 'form-custom', 'id'=> 'markItUp2')) }}
 
-                                    {{ $errors->first('ru_review', '<div class="alert alert-danger">:message</div>') }}
+                                    {{ $errors->first('ru_residence', '<div class="alert alert-danger">:message</div>') }}
                                 </td></tr>
+
+                            <tr>
+                                <td>
+                                    {{ Form::label('ru_feed', 'Питание:') }}</td><td>
+                                    {{ Form::textarea('ru_feed', null, array('class' => 'form-custom', 'id'=> 'markItUp3')) }}
+
+                                    {{ $errors->first('ru_feed', '<div class="alert alert-danger">:message</div>') }}
+                                </td></tr>
+
+                           
 
                             <tr>
                                 <td>

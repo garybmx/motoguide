@@ -35,7 +35,7 @@ class Condition {
 
         $this->condition = DB::table($this->table, 'levels_' . $this->language)
                 ->select('duration', $this->table. '.level_id', 'location', 'levels_' .
-                        $this->language . '.description as level')
+                        $this->language . '.name as level')
                 ->where('tour_id', $this->id)
                 ->leftJoin('levels_' . $this->language, $this->table . '.level_id', '=', 'levels_' .
                         $this->language . '.level_id')

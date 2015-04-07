@@ -19,13 +19,14 @@ class FutureTour extends Tour {
     
     private $futureTourInfo = array(
         'tour_id' => '',
+        'active' => '',
         'tourType_id' => '',
         'name' => '',
         'startTime' => '',
         'endTime' => '',
         'description' => '',
         'duration' => '',
-        'level' => '',
+        'level_id' => '',
         'location' => '',
         'residence' => '',
         'feed' => '',
@@ -108,7 +109,7 @@ class FutureTour extends Tour {
         $check[] = $this->condition->insertConditionRecord($tourArray);
         $check[] = $this->condition->insertConditionFutureRecord($tourArray);
         $check[] = $this->condition->insertPrices($tourArray['price']);
-
+      
         return $this->checkTrue($check);
     }
     
@@ -150,7 +151,13 @@ class FutureTour extends Tour {
         
         return $this->checkTrue($check);
     }
+     protected function deleteAnotherLanguage($id) {
 
+        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
+        $newTour->setLangId($id);
+       
+        return $newTour->deleteTour();
+    }
 
     public function deleteOnePriceRecord($priceId) {
         $this->condition->deleteOnePriceRecord($priceId);

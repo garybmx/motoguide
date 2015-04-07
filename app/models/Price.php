@@ -32,7 +32,7 @@ class Price {
 
     public function getAllPrices() {
         return DB::table($this->table)
-                        ->select('name as price_name', 'price', 'price_id')
+                        ->select('name as price_name', 'price', 'price_id', 'description')
                         ->where('tour_id', $this->id)
                         ->get();
     }

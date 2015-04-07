@@ -25,9 +25,8 @@ class AdminToursController extends \BaseController {
         'boolean' => 'Запись не добавлена: Недопустимые сиволы.',
         'integer' => 'Запись не добавлена: Поле должно содержать только цифры'
     );
-    private $imageHeight = 300;
-    private $imageWidth = 200;
-
+    private $imageHeight = 480;
+    private $imageWidth = 640;
 
     /**
      * Display a listing of the resource.
@@ -41,15 +40,15 @@ class AdminToursController extends \BaseController {
         $toursEng = $factoryTour->getAllTours(Request::segment(2), 'en');
         $allTours = $tours->setUpAllToursInfo();
         $allToursEng = $toursEng->setUpAllToursInfo();
-//        $check = $this->checkAndInsertRecords($allTours, $allToursEng);
-        //   if ($check == true) {
-        //return Redirect::to('/admin/tours');
-        //     }
+
+        $check = $this->checkAndInsertRecords($allTours, $allToursEng);
+        if ($check == true) {
+            return Redirect::to('/admin/' . Request::segment(2));
+        }
 
         return View::make('admin.tours.' . Request::segment(2), array('allTours' => $allTours,
                     'allToursEng' => $allToursEng));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -57,9 +56,14 @@ class AdminToursController extends \BaseController {
      * @return Response
      */
     public function create() {
-        return View::make('admin.tours.' . Request::segment(2) . 'Create');
-    }
 
+        $level = new Level('ru');
+        $allLevels = $level->setUpListLevelsInfo();
+        if (empty($allLevels)) {
+            return Redirect::to('/admin/levels/create');
+        }
+        return View::make('admin.tours.' . Request::segment(2) . 'Create', array('allLevels' => $allLevels));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -76,6 +80,7 @@ class AdminToursController extends \BaseController {
             return Redirect::back()->withErrors($validator)->withInput(Input::except(array('ru_startTime', 'ru_endTime')));
         }
 
+
         $tourInfo = array(
             'tour_id' => null,
             'tourType_id' => Input::get('tourType_id'),
@@ -87,8 +92,18 @@ class AdminToursController extends \BaseController {
             'duration' => Input::get(Input::get('lang') . '_duration'),
             'level_id' => Input::get(Input::get('lang') . '_level_id'),
             'location' => Input::get(Input::get('lang') . '_location'),
-            'review' => Input::get(Input::get('lang') . '_review'),
         );
+
+        if (Input::get('tourType_id') == '1') {
+
+            $tourInfo['residence'] = Input::get(Input::get('lang') . '_residence');
+            $tourInfo['feed'] = Input::get(Input::get('lang') . '_feed');
+            $tourInfo['price'] = array();
+        } elseif (Input::get('tourType_id') == '2') {
+            $tourInfo['review'] = Input::get(Input::get('lang') . '_review');
+        }
+
+
 
         $factoryTour = new TourFactory();
         $tours = $factoryTour->addTour(Request::segment(2), 'ru', null);
@@ -110,7 +125,6 @@ class AdminToursController extends \BaseController {
         //
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -129,7 +143,6 @@ class AdminToursController extends \BaseController {
                     'tourArrayEng' => $tourArrayEng));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -138,6 +151,13 @@ class AdminToursController extends \BaseController {
      */
     public function edit($id) {
         $factoryTour = new TourFactory();
+        $level = new Level('ru');
+        $levelEng = new Level('en');
+        $allLevels = $level->setUpListLevelsInfo();
+        $allLevelsEng = $levelEng->setUpListLevelsInfo();
+        $allLevels[0] = 'не выбран';
+        $allLevelsEng[0] = 'not selected';
+
 
         $tours = $factoryTour->getTour(Request::segment(2), 'ru', $id);
         $toursEng = $factoryTour->getTour(Request::segment(2), 'en', $id);
@@ -145,12 +165,13 @@ class AdminToursController extends \BaseController {
         $tourArrayEng = $toursEng->setUpTourInfo();
         $tourArray = $this->checkDate($tourArray);
         $tourArrayEng = $this->checkDate($tourArrayEng);
-       
+        $fileArray = $this->getFileArray($id);
+
+        $prices = $this->getPrices($tourArray);
 
         return View::make('admin.tours.' . Request::segment(2) . 'Edit', array('tourArray' => $tourArray,
-                    'tourArrayEng' => $tourArrayEng));
+                    'tourArrayEng' => $tourArrayEng, 'fileArray' => $fileArray, 'allLevels' => $allLevels, 'allLevelsEng' => $allLevelsEng, 'prices' => $prices));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -162,13 +183,13 @@ class AdminToursController extends \BaseController {
         $messages = new Illuminate\Support\MessageBag;
 
         if (Input::has('photo')) {
-            $this->insertImage(Input::file('motoPhoto'), $id);
+            $this->insertImage(Input::file('motoPhoto'), $id, Input::get('editImage'));
 
             return Redirect::back();
         }
 
         if (Input::has('deleteImage')) {
-            $this->deleteImage($id);
+            $this->deleteImage($id, Input::get('deleteImageName'));
             return Redirect::back();
         }
 
@@ -184,7 +205,7 @@ class AdminToursController extends \BaseController {
 
         $tourInfo = array(
             'tour_id' => Input::get(Input::get('tour_id')),
-            'tourType_id' => '2',
+            'tourType_id' => Input::get('tourType_id'),
             'name' => Input::get(Input::get('lang') . '_name'),
             'active' => (Input::get(Input::get('lang') . '_active') == '') ? 0 : 1,
             'startTime' => Input::get(Input::get('lang') . '_startTime'),
@@ -196,19 +217,27 @@ class AdminToursController extends \BaseController {
             'review' => Input::get(Input::get('lang') . '_review'),
         );
 
+        if (Input::get('tourType_id') == '1') {
+
+            $tourInfo['residence'] = Input::get(Input::get('lang') . '_residence');
+            $tourInfo['feed'] = Input::get(Input::get('lang') . '_feed');
+            $tourInfo['price'] = array();
+        } elseif (Input::get('tourType_id') == '2') {
+            $tourInfo['review'] = Input::get(Input::get('lang') . '_review');
+        }
+
+
         $factoryTour = new TourFactory();
         $tours = $factoryTour->addTour(Request::segment(2), Input::get('lang'), Input::get('tour_id'));
-       
+
         $check = $tours->updateTour($tourInfo);
 
 
 
-       
-            $messages->add('done', 'Запись обновлена');
-            return Redirect::back()->withErrors($messages);
-      
-    }
 
+        $messages->add('done', 'Запись обновлена');
+        return Redirect::back()->withErrors($messages);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -219,15 +248,17 @@ class AdminToursController extends \BaseController {
     public function destroy($id) {
 
 
-        $path = base_path() . '\public\images\tours\tour_' . $id . '.jpeg';
-        if (file_exists($path)) {
-            File::delete($path);
+        $path = base_path() . '\public\images\tours\tour_' . $id;
+        if (is_dir($path)) {
+            File::deleteDirectory($path);
         }
 
-        $tour = new TourFactory('ru', $id);
+        $factoryTour = new TourFactory('ru', $id);
+        $tour = $factoryTour->addTour(Request::segment(2), 'ru', $id);
+
         $messages = new Illuminate\Support\MessageBag;
 
-        $check = $tour->deleteTourInfo();
+        $check = $tour->deleteTour();
 
         if ($check == true) {
             $messages->add('done', 'Запись удалена');
@@ -237,7 +268,6 @@ class AdminToursController extends \BaseController {
             return Redirect::back()->withErrors($messages);
         }
     }
-
 
     private function checkAndInsertRecords($allTours, $allToursEng) {
         $diffArraycheck1 = array_diff_key($allTours, $allToursEng);
@@ -254,7 +284,6 @@ class AdminToursController extends \BaseController {
         return FALSE;
     }
 
-
     private function getLangErrors($lang, $validator) {
         $mes = new Illuminate\Support\MessageBag;
         $mes->merge($validator);
@@ -266,20 +295,28 @@ class AdminToursController extends \BaseController {
         return $returnArray;
     }
 
-
     private function insertAbsentRecords($array) {
         foreach ($array as $name) {
 
-            $tour = new TourFactory('ru', $name['id']);
+            $factoryTour = new TourFactory();
+            $tour = $factoryTour->addTour(Request::segment(2), 'ru', $name['tour_id']);
+
             $tour->checkAndInsert();
         }
     }
 
+    private function insertImage($image, $id, $editImage) {
 
-    private function insertImage($image, $id) {
         $doneMessages = new Illuminate\Support\MessageBag;
         $file = array('image' => $image);
-        $path = base_path() . '\public\images\tours\tour_' . $id . '.jpeg';
+        $fileNumber = $this->getFileNumber($id);
+        if ($editImage != '') {
+            $fileName = $editImage;
+        } else {
+            $fileName = 'enduroTour' . $fileNumber . '.jpeg';
+        }
+        $path = base_path() . '\public\images\tours\tour_' . $id . '\\' . $fileName;
+        $paththumbs = base_path() . '\public\images\tours\tour_' . $id . '\thumbs\\' . $fileName;
         $rules = array('image' => 'required|mimes:jpeg,jpg',
         );
         $messages = array('required' => 'Ошибка: файл не выбран',
@@ -293,16 +330,25 @@ class AdminToursController extends \BaseController {
             return Redirect::back()->withErrors($validator);
         }
 
-        $image->move(base_path() . '\public\images\tours', 'tour_' . $id . '.jpeg');
+
+        $image->move(base_path() . '\public\images\tours\tour_' . $id, $fileName);
+
+        if (!is_dir(base_path() . '\public\images\tours\tour_' . $id . '\thumbs')) {
+            mkdir(base_path() . '\public\images\tours\tour_' . $id . '\thumbs');
+        }
+        copy($path, $paththumbs);
 
         $height = Image::make($path)->height();
         $width = Image::make($path)->width();
 
         if ($height != $this->imageHeight || $width != $this->imageWidth) {
-            $img = Image::make($path)->resize($this->imageHeight, $this->imageWidth);
+            $img = Image::make($path)->resize($this->imageWidth, $this->imageHeight);
         } else {
             $img = Image::make($path);
         }
+        $imgthumbs = Image::make($paththumbs)->resize(100, 100);
+        $imgthumbs->save();
+
         $check = $img->save();
 
         if (is_object($check)) {
@@ -314,15 +360,51 @@ class AdminToursController extends \BaseController {
         }
     }
 
+    private function deleteImage($id, $name) {
 
-    private function deleteImage($id) {
+        $path = base_path() . '\public\images\tours\tour_' . $id . '\\' . $name;
+        $paththumbs = base_path() . '\public\images\tours\tour_' . $id . '\thumbs\\' . $name;
 
-        $path = base_path() . '\public\images\tours\tour_' . $id . '.jpeg';
         File::delete($path);
+        File::delete($paththumbs);
 
         return Redirect::back();
     }
 
+    private function getFileNumber($id) {
+        $fileArray = array();
+        $path = base_path() . '\public\images\tours\tour_' . $id;
+        if (!is_dir($path)) {
+            return 1;
+        }
+        $list = scandir($path);
+        foreach ($list as $item) {
+            if ($item != "." && $item != ".." && !(strpos($item, '.jpeg') === false)) {
+                $item = substr_replace($item, '', 0, strlen('enduroTour'));
+                $fileArray[] = substr_replace($item, '', -5, strlen('.jpeg'));
+            }
+        }
+        sort($fileArray, SORT_NUMERIC);
+        $newNumber = array_pop($fileArray);
+        $newNumber++;
+        return $newNumber;
+    }
+
+    private function getFileArray($id) {
+        $fileArray = array();
+        $path = base_path() . '\public\images\tours\tour_' . $id;
+        if (!is_dir($path)) {
+            return $fileArray;
+        }
+        $list = scandir($path);
+        foreach ($list as $item) {
+            if ($item != "." && $item != ".." && !(strpos($item, '.jpeg') === false)) {
+                $fileArray[] = $item;
+            }
+        }
+        sort($fileArray, SORT_STRING);
+        return $fileArray;
+    }
 
     private function checkDate($array) {
         if ($array['startTime'] == '0000-00-00') {
@@ -332,6 +414,23 @@ class AdminToursController extends \BaseController {
             $array['endTime'] = '';
         }
         return $array;
+    }
+
+    private function getPrices($tourArray) {
+
+        if (array_key_exists('price', $tourArray)) {
+            if (!empty($tourArray['price'])) {
+                
+            } else {
+                $tourArray['price'][1]['num'] = 1;
+                $tourArray['price'][1]['name'] = '';
+                $tourArray['price'][1]['price'] = '';
+                $tourArray['price'][1]['description'] = '';
+            }
+            return $tourArray['price'];
+        } else {
+            return array();
+        }
     }
 
 }

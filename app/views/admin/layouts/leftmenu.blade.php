@@ -30,10 +30,10 @@
                             <a href="#"><i class="glyphicon glyphicon-plus"></i><span> Туры</span></a>
                             <ul class="nav nav-pills nav-stacked">
                                 <li><a href="{{HTML::entities('/admin/PastTour');}}" id="pastTour_link">Прошедшие</a></li>
-                                <li><a href="{{HTML::entities('/admin/FutureTour');}}">Предстоящие</a></li>
+                                <li><a href="{{HTML::entities('/admin/FutureTour');}}" id="futureTour_link">Предстоящие</a></li>
                             </ul>
                         </li>
-                        <li><a class="ajax-link" href="grid.html"><i
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/levels');}}" id="levels_link"><i
                                     class="glyphicon glyphicon-signal"></i><span> Уровни сложности</span></a></li>
                         <li><a class="ajax-link" href="calendar.html"><i class="glyphicon glyphicon-lock"></i><span> Цены</span></a>
                         </li>

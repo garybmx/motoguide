@@ -12,17 +12,19 @@ class CreateLevels extends Migration {
      */
     public function up() {
         Schema::create('levels_en', function(Blueprint $table) {
-            $table->integer('level_id');
-            $table->string('description', 256);
+            $table->increments('level_id');
+             $table->string('name', 256);
+            $table->text('description');
 
-            $table->primary('level_id');
+           
         });
         
           Schema::create('levels_ru', function(Blueprint $table) {
-            $table->integer('level_id');
-            $table->string('description', 256);
+            $table->increments('level_id');
+             $table->string('name', 256);
+            $table->text('description');
 
-            $table->primary('level_id');
+           
         });
     }
 

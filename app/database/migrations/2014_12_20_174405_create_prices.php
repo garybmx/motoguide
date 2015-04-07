@@ -16,8 +16,7 @@ class CreatePrices extends Migration {
             $table->integer('tour_id');
             $table->string('name', 60);
             $table->string('price', 256);
-
-        
+            $table->text('description');
         });
 
 
@@ -26,8 +25,7 @@ class CreatePrices extends Migration {
             $table->integer('tour_id');
             $table->string('name', 60);
             $table->string('price', 256);
-
-        
+            $table->text('description');
         });
     }
 

@@ -15,7 +15,7 @@ class Instructor extends Staff {
 
     private $language;
     private $instructorTable;
-    private $instuctorInfo = array(
+    private $instructorInfo = array(
         'id' => '',
         'active' => '',
         'name' => '',
@@ -45,18 +45,18 @@ class Instructor extends Staff {
     }
 
 
-    public function setUpAllMotorcylesInfo() {
+    public function setUpAllInstructorsInfo() {
         return parent::setUpAllInfo();
     }
 
 
     public function insertInstructorInfo($instructorArray = array()) {
-        return parent::insertInfo($this->instuctorInfo, $this->langId, $instructorArray);
+        return parent::insertInfo($this->instructorInfo, $this->langId, $instructorArray);
     }
 
 
     public function updateInstructorInfo($instructorArray = array()) {
-        return parent::updateInfo($this->instuctorInfo, $instructorArray);
+        return parent::updateInfo($this->instructorInfo, $instructorArray);
     }
 
 
@@ -69,7 +69,7 @@ class Instructor extends Staff {
         $cnt = DB::table($this->instructorTable)->where('id', $this->id)->count();
         if ($cnt == 0) {
             $this->setLangId($this->id);
-            $this->insertInstructorInfo($this->instuctorInfo);
+            $this->insertInstructorInfo($this->instructorInfo);
         } else {
             $newInstructor = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $this->id);
             $newInstructor->setLangId($this->id);
@@ -93,7 +93,7 @@ class Instructor extends Staff {
         $newInstructor = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language);
         $newInstructor->setLangId($getId);
         $newInstructor->checkAndDeleteId($newInstructor->instructorTable, $getId, 'id');
-        return $newInstructor->insertInstructorInfo($this->instuctorInfo);
+        return $newInstructor->insertInstructorInfo($this->instructorInfo);
     }
 
 

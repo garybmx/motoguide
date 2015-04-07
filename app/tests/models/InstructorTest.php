@@ -55,7 +55,7 @@ class InstructorTest extends PHPUnit_Framework_TestCase {
     public function testSetupAllInstructorsInfo() {
         $instructors = new Instructor('en');
 
-        foreach ($instructors->setUpAllMotorcylesInfo() as $instructorArray) {
+        foreach ($instructors->setUpAllInstructorsInfo() as $instructorArray) {
 
             $this->assertInternalType('int', $instructorArray['id']);
             $this->assertInternalType('int', $instructorArray['active']);

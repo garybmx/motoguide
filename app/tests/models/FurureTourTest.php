@@ -54,13 +54,14 @@ class FurureTourTest extends PHPUnit_Framework_TestCase {
     public function testAddTour() {
         $futureTourInfo = array(
             'tour_id' => 'new',
+            'active' => '0',
             'tourType_id' => '1',
             'name' => 'addTour',
             'startTime' => '2015-1-1',
             'endTime' => '2015-1-10',
             'description' => 'add Tour test',
             'duration' => '10',
-            'level' => '1',
+            'level_id' => '1',
             'location' => 'bulgaria',
             'residence' => 'hostel',
             'feed' => '2 times a day',
@@ -69,13 +70,15 @@ class FurureTourTest extends PHPUnit_Framework_TestCase {
                     'price_id' => 'new',
                     'tour_id' => 'new',
                     'name' => 'moto',
-                    'price' => '10'
+                     'price' => '19',
+                    'description' => '10'
                 ),
                 array(
                     'price_id' => 'new',
                     'tour_id' => 'new',
                     'name' => 'feed',
-                    'price' => '12'
+                    'price' => '12',
+                    'description' => '12'
                 )
             )
         );
@@ -90,13 +93,14 @@ class FurureTourTest extends PHPUnit_Framework_TestCase {
     public function testUpdateTour() {
         $futureTourInfo = array(
             'tour_id' => '1',
+            'active' => '0',
             'tourType_id' => '1',
             'name' => 'updateTour',
             'startTime' => '2015-1-1',
             'endTime' => '2015-1-10',
             'description' => 'add Tour test',
             'duration' => '10',
-            'level' => '1',
+            'level_id' => '1',
             'location' => 'bulgaria',
             'residence' => 'hostel',
             'feed' => '2 times a day',
@@ -105,13 +109,15 @@ class FurureTourTest extends PHPUnit_Framework_TestCase {
                     'price_id' => '1',
                     'tour_id' => '1',
                     'name' => 'moto',
-                    'price' => '10'
+                    'price' => '10',
+                      'description' => '12'
                 ),
                 array(
                     'price_id' => '2',
                     'tour_id' => '1',
                     'name' => 'feed',
-                    'price' => '123'
+                    'price' => '123',
+                      'description' => '12'
                 )
             )
         );

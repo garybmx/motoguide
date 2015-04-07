@@ -5,14 +5,14 @@
 <!-- content starts -->
 <div>
     <ul class="breadcrumb">
-         <li>
+        <li>
             {{HTML::link('/admin', 'Главная')}}
 
         </li>
         <li>
-            {{HTML::link('admin/tours', 'Предстоящие туры')}}
+            {{HTML::link('admin/levels', 'Уровни сложности')}}
         </li>
-      
+
     </ul>
 </div>
 
@@ -20,12 +20,12 @@
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2><i class="glyphicon glyphicon-user"></i> Предстоящие туры</h2>
+                <h2><i class="glyphicon glyphicon-user"></i> Уровни подготовки</h2>
 
 
             </div>
             <div class="box-content">
-                <div class="alert alert-info">Добавить новый тур:&nbsp;&nbsp;<a class="btn  btn-success" href="FutureTour/create">
+                <div class="alert alert-info">Добавить новый уровень:&nbsp;&nbsp;<a class="btn  btn-success" href="levels/create">
                         <i class="glyphicon glyphicon-share icon-white"></i>
                         Добавить
                     </a>
@@ -33,13 +33,13 @@
                 </div>
                 <script type="text/javascript">
                     $(document).ready(function () {
-                        if($("div").is("#messageBox")){
-                        setTimeout(function () {
-                            $('#messageBox').fadeOut('slow')
-                        }, 5000);
-                        }        
+                        if ($("div").is("#messageBox")) {
+                            setTimeout(function () {
+                                $('#messageBox').fadeOut('slow')
+                            }, 5000);
+                        }
                     });</script>
-                @if($errors->has('notdone') || $errors->has('model'))
+                @if($errors->has('notdone'))
 
                 <div class="alert alert-danger" id="messageBox">
                     {{$errors->first()}}
@@ -50,50 +50,35 @@
                     {{$errors->first('done')}}
                 </div>
                 @endif
-                <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                <table class="table table-striped table-bordered responsive">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Тур</th>
+                            <th>Название</th>
                             <th>Описание</th>
-                            <th>Статус RUS</th>
-                            <th>Статус ENG</th>
                             <th>Действия</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($allTours as $id => $tour)
+                   <tbody>
+                        @foreach($allLevels as $id => $level)
                         <tr>
-                            <td class="center">{{$tour['tour_id']}}</td>
-                            <td>{{$tour['name']}}</td>
+                            <td class="center">{{$level['level_id']}}</td>
+                            <td>{{$level['name']}}</td>
                             <td class="center">
-                                @if($allToursEng[$id]['description'] == '' || $tour['description'] == '')
+                                @if($allLevelsEng[$id]['description'] == '' || $level['description'] == '')
                                 Неполное
                                 @else 
                                 Полное
                                 @endif
                             </td>
+                          
                             <td class="center">
-                                @if($tour['active'] == 1)
-                                <span class="label-success label label-default">Активен</span>
-                                @else
-                                <span class="label-default label label-danger">Не активен</span>
-                                @endif
-                            </td>
-                            <td class="center">
-                                @if($allToursEng[$id]['active'] == 1)
-                                <span class="label-success label label-default">Активен</span>
-                                @else
-                                <span class="label-default label label-danger">Не активен</span>
-                                @endif
-                            </td>
-                            <td class="center">
-                                {{Form::open(array('action' => array('AdminToursController@destroy', $tour['tour_id'] ), 'method' => 'delete' ))}}
-                                <a class="btn btn-success" href="/admin/FutureTour/{{$tour['tour_id']}}">
+                                {{Form::open(array('action' => array('AdminLevelsController@destroy', $level['level_id'] ), 'method' => 'delete' ))}}
+                                <a class="btn btn-success" href="/admin/levels/{{$level['level_id']}}">
                                     <i class="glyphicon glyphicon-zoom-in icon-white"></i>
                                     Просмотреть
                                 </a>
-                                <a class="btn btn-info" href="/admin/FutureTour/{{$tour['tour_id']}}/edit">
+                                <a class="btn btn-info" href="/admin/levels/{{$level['level_id']}}/edit">
                                     <i class="glyphicon glyphicon-edit icon-white"></i>
                                     Редактировать
                                 </a>
@@ -121,6 +106,5 @@
 
 <!-- content ends -->
 @stop
-
 
 

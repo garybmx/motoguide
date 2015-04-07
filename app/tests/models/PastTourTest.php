@@ -43,7 +43,7 @@ class PastTourTest extends PHPUnit_Framework_TestCase {
         $this->assertInternalType('string', $info['endTime']);
         $this->assertInternalType('string', $info['description']);
         $this->assertInternalType('string', $info['duration']);
-        $this->assertInternalType('string', $info['level']);
+        $this->assertInternalType('string', $info['level_id']);
         $this->assertInternalType('string', $info['location']);
         $this->assertInternalType('string', $info['review']);
     }
@@ -53,12 +53,13 @@ class PastTourTest extends PHPUnit_Framework_TestCase {
         $pastTourInfo = array(
             'tour_id' => 'new',
             'tourType_id' => '2',
+            'active' => '0',
             'name' => 'add past Tour',
             'startTime' => '2014-06-06',
             'endTime' => '2014-06-08',
             'description' => 'past tour in july',
             'duration' => '2 days',
-            'level' => '2',
+            'level_id' => '2',
             'location' => 'bulgaria',
             'review' => 'it was cool tour'
         );
@@ -71,13 +72,14 @@ class PastTourTest extends PHPUnit_Framework_TestCase {
     public function testUpdateTour() {
          $pastTourInfo = array(
             'tour_id' => '3',
+             'active' => '0',
             'tourType_id' => '2',
             'name' => 'add past Tour 6',
             'startTime' => '2014-06-06',
             'endTime' => '2014-06-08',
             'description' => 'past tour in july',
             'duration' => '2 days',
-            'level' => '2',
+            'level_id' => '2',
             'location' => 'bulgaria',
             'review' => 'it was cool tour'
         );

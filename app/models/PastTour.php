@@ -72,6 +72,7 @@ class PastTour extends Tour {
 
     public function addTour($tourArray = array()) {
         $arrayCheck = $this->arrayCheck($tourArray, $this->pastTourInfo);
+      
         if ((empty($tourArray)) || ($arrayCheck === false)) {
             return false;
         }
@@ -125,6 +126,13 @@ class PastTour extends Tour {
         return $this->checkTrue($check);
     }
 
+     protected function deleteAnotherLanguage($id) {
+
+        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
+        $newTour->setLangId($id);
+       
+        return $newTour->deleteTour();
+    }
 
     private function getPastTourInfo() {
 
@@ -134,4 +142,17 @@ class PastTour extends Tour {
         return array();
     }
 
+       public function checkAndInsert() {
+        $cnt = DB::table($this->table)->where('tour_id', $this->id)->count();
+        if ($cnt == 0) {
+           
+            $this->setLangId($this->id);
+            $this->addTour($this->pastTourInfo);
+        } else {
+            $newLevel = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $this->id);
+            $newLevel->setLangId($this->id);
+
+            $newLevel->checkAndInsert();
+        }
+    }
 }
