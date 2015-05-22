@@ -13,6 +13,7 @@
   {{HTML::style('css/myCustom.css')}}        
    
     {{HTML::style('css/charisma-app.css')}} 
+    {{HTML::style('css/style.css')}} 
     {{HTML::style('bower_components/fullcalendar/dist/fullcalendar.css')}}
     {{HTML::style('bower_components/fullcalendar/dist/fullcalendar.print.css')}} 
     {{HTML::style('bower_components/chosen/chosen.min.css')}}

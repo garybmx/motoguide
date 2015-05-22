@@ -201,6 +201,46 @@
 </div><!--/row-->
 
 
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-picture"></i> Gallery</h2>
+
+                <div class="box-icon">
+
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+
+                </div>
+            </div>
+            <div class="box-content">
+                <br>
+                <ul class="thumbnails ">
+                    @forelse($fileArray as $file)
+
+                    <li id="{{$file}}" class="thumbnail">
+                         
+                        <a style="background:url({{url(). '/images/tours/tour_' . $tourArray['tour_id'] . '/thumbs/'. $file . '?' . time()}})"
+                           title="{{$file}}" href="{{url(). '/images/tours/tour_' . $tourArray['tour_id'] . '/'. $file . '?' . time() }}"><img
+                                class="grayscale" src="{{url(). '/images/tours/tour_' . $tourArray['tour_id'] . '/thumbs/'. $file. '?' . time() }}"
+                                alt="{{$file}}"></a>
+
+
+                    </li>
+
+                    @empty
+                    <p>Нет изображений</p>
+                    @endforelse
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+
+</div><!--/row-->
 
 
 

@@ -18,12 +18,12 @@
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/instructors');}}" id="instructors_link"><i class="glyphicon glyphicon-user"></i><span> Инструктора</span></a>
                         </li>
                         
-                        <li><a class="ajax-link" href="{{HTML::entities('/admin/clients');}}"><i class="glyphicon glyphicon-user"></i><span> Клиенты</span></a>
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/clients');}}" id="clients_link"><i class="glyphicon glyphicon-user"></i><span> Клиенты</span></a>
                         </li>
-                        <li><a class="ajax-link" href="icon.html"><i
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/contacts');}}"><i
                                     class="glyphicon glyphicon-envelope"></i><span> Контакты</span></a></li>
                         <li class="nav-header hidden-md">События</li>
-                        <li><a class="ajax-link" href="form.html"><i
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/timer');}}"><i
                                     class="glyphicon glyphicon-time"></i><span>Таймер</span></a></li>
                        
                         <li class="accordion">
@@ -35,10 +35,7 @@
                         </li>
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/levels');}}" id="levels_link"><i
                                     class="glyphicon glyphicon-signal"></i><span> Уровни сложности</span></a></li>
-                        <li><a class="ajax-link" href="calendar.html"><i class="glyphicon glyphicon-lock"></i><span> Цены</span></a>
-                        </li>
-                        <li><a href="error.html"><i class="glyphicon glyphicon-ban-circle"></i><span> Error Page</span></a>
-                        </li>
+                       
                       
                     </ul>
                    

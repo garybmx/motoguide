@@ -44,13 +44,25 @@ class Price {
 
         $check = array();
 
+
         foreach ($priceArray as $priceName) {
-            $check[] = DB::table($this->table)->insert(
-                    array('tour_id' => $this->id,
-                        'name' => $priceName['name'],
-                        'price' => $priceName['price']
-            ));
+
+            if (array_key_exists('delete', $priceName)) {
+                $this->deleteOnePriceRecord($priceName['price_id']);
+            } else {
+
+                $check[] = DB::insert(
+                                'insert into `' . $this->table . '` (`price_id`, `tour_id`, `name`, `price`, `description`) values (?, ?, ?, ?, ?)
+             on duplicate key update `name`=values(`name`), `price`=values(`price`), `tour_id`=values(`tour_id`), `description`=values(`description`)', array($priceName['price_id'], $this->id, $priceName['name'], $priceName['price'], $priceName['description'])
+                );
+                $this->checkAndInsert($priceName['price_id']);
+            }
+
+            $checkId = DB::select('select last_insert_id() as id ');
+            $this->checkAndInsert($checkId[0]->id);
         }
+
+
         return $this->checkTrue($check);
     }
 
@@ -100,6 +112,8 @@ class Price {
         if ($exist == 0)
             return true;
 
+
+
         $check = DB::table($this->table)
                 ->where('tour_id', $this->id)
                 ->delete();
@@ -113,15 +127,59 @@ class Price {
 
 
     public function deleteOnePriceRecord($priceId) {
-        $check = DB::table($this->table)
-                ->where('id', $priceId)
-                ->delete();
+
+        $exist = DB::table($this->table)
+                ->where('price_id', $priceId)
+                ->count();
+        if ($exist != 0) {
+            $check = DB::table($this->table)
+                    ->where('price_id', $priceId)
+                    ->delete();
+        }
+
+
+        $anotherLangPrice = addMultiLanguageService::getAnotherLanguageObj('Price', $this->language, $this->id);
+        $check = $anotherLangPrice->deleteAnotherPriceRecord($priceId);
 
         if ($check > 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+
+    public function deleteAnotherPriceRecord($priceId) {
+
+
+        $exist = DB::table($this->table)
+                ->where('price_id', $priceId)
+                ->count();
+
+        if ($exist != 0) {
+            $check = DB::table($this->table)
+                    ->where('price_id', $priceId)
+                    ->delete();
+        }
+
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function addEmptyRecord($price_id) {
+        $check = true;
+        $cnt = DB::table($this->table)->where('price_id', $price_id)->where('tour_id', $this->id)->count();
+        if ($cnt == 0) {
+            $check = DB::insert('insert into `' . $this->table . '` (`price_id`, `tour_id`, `name`, `price`, `description`) values (?, ?, ?, ?, ?)
+             on duplicate key update `name`=values(`name`), `price`=values(`price`), `tour_id`=values(`tour_id`), `description`=values(`description`)', array($price_id, $this->id, '', '', '')
+            );
+        }
+        return $check;
     }
 
 
@@ -137,6 +195,18 @@ class Price {
         }
 
         return true;
+    }
+
+
+    private function checkAndInsert($checkId) {
+        if ($checkId == 0) {
+            return true;
+        }
+
+        $anotherLangPrice = addMultiLanguageService::getAnotherLanguageObj('Price', $this->language, $this->id);
+        $check = $anotherLangPrice->addEmptyRecord($checkId);
+
+        return $check;
     }
 
 }

@@ -19,6 +19,7 @@ abstract class Tour {
     protected $tourType;
     protected $langId;
 
+
     /**
      * @return int Return id of the tour
      */
@@ -27,12 +28,14 @@ abstract class Tour {
         $this->table = 'tours_' . $this->language;
     }
 
+
     public function setLangId($langId) {
         $this->langId = $langId;
     }
 
-    public function setUpAllToursInfo() {
-        $tourInfo = $this->getAllTour($this->tourType);
+
+    public function setUpAllToursInfo($select = array()) {
+        $tourInfo = $this->getAllTour($select);
         foreach ($tourInfo as $value) {
             foreach ($value as $name => $val) {
 
@@ -43,16 +46,26 @@ abstract class Tour {
         return $this->allToursInfo;
     }
 
+
     function getFullTourInfo($id) {
 
         return DB::select('select * from ' . $this->table . ' where `tour_id`=' . $id);
     }
 
-    function getAllTour() {
-        return DB::select('select * from ' . $this->table . ' where `tourType_id`=' . $this->tourType);
+
+    function getAllTour($select = array()) {
+        if (empty($select)) {
+            return DB::table($this->table)
+                            ->where('tourType_id', $this->tourType)
+                            ->get();
+        } else {
+
+            $selectString = "`" . implode("`,`", $select) . "`";
+            return DB::select('select ' . $selectString . ' from ' . $this->table . ' where `tourType_id`=' . $this->tourType);
+           
+        }
     }
 
- 
 
     protected function insertAnotherLanguage($getId, $addArray) {
 
@@ -62,7 +75,6 @@ abstract class Tour {
         return $newTour->addTour($addArray);
     }
 
-   
 
     protected function checkAndDeleteId($id) {
         $cnt = DB::table($this->table)->where('tour_id', $id)->count();
@@ -70,6 +82,7 @@ abstract class Tour {
             return DB::table($this->table)->where('tour_id', $id)->delete();
         }
     }
+
 
     protected function arrayCheck($checkArray, $defaultArray) {
 
@@ -81,6 +94,7 @@ abstract class Tour {
             return false;
         }
     }
+
 
     protected function insertTourRecord($tourArray) {
 
@@ -96,6 +110,7 @@ abstract class Tour {
         );
     }
 
+
     protected function checkReturnId($id) {
         if (is_numeric($id)) {
             return true;
@@ -103,6 +118,7 @@ abstract class Tour {
             return false;
         }
     }
+
 
     protected function checkTrue($check = array()) {
         if (empty($check)) {
@@ -117,6 +133,22 @@ abstract class Tour {
 
         return true;
     }
+
+
+    protected function checkUpdateTrue($check = array()) {
+        if (empty($check)) {
+            return false;
+        }
+
+        foreach ($check as $name => $value) {
+            if ($value === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     protected function updateTourRecord($tourArray) {
         $check = DB::table($this->table)
@@ -136,6 +168,7 @@ abstract class Tour {
         }
     }
 
+
     protected function deleteTourRecord() {
 
         $cnt = DB::table($this->table)->where('tour_id', $this->id)->count();
@@ -152,6 +185,7 @@ abstract class Tour {
         }
     }
 
+
     protected function tourTypeCheck() {
         $checkType = $this->getType();
 
@@ -161,6 +195,7 @@ abstract class Tour {
             return true;
         }
     }
+
 
     private function getType() {
         $array = DB::table($this->table)

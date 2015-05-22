@@ -57,6 +57,7 @@ return array(
       |
      */
     'fallback_locale' => 'en',
+    'available_language' => array('en', 'ru'),
     /*
       |--------------------------------------------------------------------------
       | Encryption Key

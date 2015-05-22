@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/gary/Documents/GitHub/motoguide/app/views/admin/tours/futureTourEdit.blade.php</file>
-            <file>file:/C:/Users/gary/Documents/GitHub/motoguide/app/controllers/admin/AdminToursController.php</file>
-            <file>file:/C:/Users/gary/Documents/GitHub/motoguide/app/models/Tour.php</file>
-            <file>file:/C:/Users/gary/Documents/GitHub/motoguide/public/js/charisma.js</file>
-            <file>file:/C:/Users/gary/Documents/GitHub/motoguide/app/models/FutureTour.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/models/Instructor.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/controllers/admin/AdminContactsController.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/models/Contact.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/controllers/admin/AdminClientsController.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/contacts.blade.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/models/Staff.php</file>
         </group>
     </open-files>
 </project-private>

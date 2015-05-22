@@ -46,6 +46,7 @@
 
         <!-- library for cookie management -->
         {{HTML::script('js/jquery.cookie.js')}}
+    
         <!-- calender plugin -->
         {{HTML::script('bower_components/moment/min/moment.min.js')}}
         {{HTML::script('bower_components/fullcalendar/dist/fullcalendar.min.js')}}

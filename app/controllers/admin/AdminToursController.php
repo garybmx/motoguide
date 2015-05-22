@@ -6,19 +6,23 @@ class AdminToursController extends \BaseController {
         'ru_name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'ru_startTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
         'ru_endTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
-        'ru_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.:\(\)\/]+$)um'),
+        'ru_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\-!\,\\\ \;\.:\(\)\/\n\r]+$)u'),
         'ru_duration' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\ \.:\(\)]+$/u'),
         'ru_level_id' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'ru_location' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
-        'ru_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.:\(\)\/]+$)um'),
+        'ru_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'ru_feed' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'ru_residence' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
         'en_name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'en_startTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
         'en_endTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
-        'en_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.:\(\)\/]+$)um'),
+        'en_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
         'en_duration' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'en_level_id' => array('Regex:/^[A-Za-zа-яА-Я0-9\<\>\-! ,\\ \.:\(\)]+$/u'),
         'en_location' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
-        'en_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.:\(\)\/]+$)um'),
+        'en_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'en_feed' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'en_residence' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
     );
     private $messages = array(
         'regex' => 'Запись не добавлена: Недопустимые сиволы.',
@@ -27,6 +31,7 @@ class AdminToursController extends \BaseController {
     );
     private $imageHeight = 480;
     private $imageWidth = 640;
+
 
     /**
      * Display a listing of the resource.
@@ -50,6 +55,7 @@ class AdminToursController extends \BaseController {
                     'allToursEng' => $allToursEng));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -64,6 +70,7 @@ class AdminToursController extends \BaseController {
         }
         return View::make('admin.tours.' . Request::segment(2) . 'Create', array('allLevels' => $allLevels));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -98,7 +105,6 @@ class AdminToursController extends \BaseController {
 
             $tourInfo['residence'] = Input::get(Input::get('lang') . '_residence');
             $tourInfo['feed'] = Input::get(Input::get('lang') . '_feed');
-            $tourInfo['price'] = array();
         } elseif (Input::get('tourType_id') == '2') {
             $tourInfo['review'] = Input::get(Input::get('lang') . '_review');
         }
@@ -125,6 +131,7 @@ class AdminToursController extends \BaseController {
         //
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -138,10 +145,12 @@ class AdminToursController extends \BaseController {
         $toursEng = $factoryTour->getTour(Request::segment(2), 'en', $id);
         $tourArray = $tours->setUpTourInfo();
         $tourArrayEng = $toursEng->setUpTourInfo();
-
+        $fileArray = $this->getFileArray($id);
+         
         return View::make('admin.tours.' . Request::segment(2) . 'Show', array('tourArray' => $tourArray,
-                    'tourArrayEng' => $tourArrayEng));
+                    'tourArrayEng' => $tourArrayEng, 'fileArray' => $fileArray));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -167,11 +176,15 @@ class AdminToursController extends \BaseController {
         $tourArrayEng = $this->checkDate($tourArrayEng);
         $fileArray = $this->getFileArray($id);
 
-        $prices = $this->getPrices($tourArray);
+        $prices = $this->getPrices($id, 'ru');
+        $pricesEng = $this->getPrices($id, 'en');
+
+
 
         return View::make('admin.tours.' . Request::segment(2) . 'Edit', array('tourArray' => $tourArray,
-                    'tourArrayEng' => $tourArrayEng, 'fileArray' => $fileArray, 'allLevels' => $allLevels, 'allLevelsEng' => $allLevelsEng, 'prices' => $prices));
+                    'tourArrayEng' => $tourArrayEng, 'fileArray' => $fileArray, 'allLevels' => $allLevels, 'allLevelsEng' => $allLevelsEng, 'prices' => $prices, 'pricesEng' => $pricesEng));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -181,6 +194,17 @@ class AdminToursController extends \BaseController {
      */
     public function update($id) {
         $messages = new Illuminate\Support\MessageBag;
+
+
+        if (Input::has('price_ok')) {
+            $message = $this->savePrice(Input::all(), $id);
+
+            if (!empty($message->get('error'))) {
+
+                return Redirect::back()->withErrors($message)->withInput(Input::except('lang'));
+            }
+            return Redirect::to('/admin/' . Request::segment(2) . '/' . $id . '/edit')->withErrors($message);
+        }
 
         if (Input::has('photo')) {
             $this->insertImage(Input::file('motoPhoto'), $id, Input::get('editImage'));
@@ -193,6 +217,13 @@ class AdminToursController extends \BaseController {
             return Redirect::back();
         }
 
+        if (Input::has('change')) {
+            $this->changeType($id);
+            $messages->add('done', 'Тур перенесен в прошедшие');
+            return Redirect::to('/admin/' . Request::segment(2))->withErrors($messages);
+            ;
+        }
+
         $validator = Validator::make(Input::all(), $this->rules, $this->messages);
 
         $messages->add('active', Input::get('lang'));
@@ -200,11 +231,12 @@ class AdminToursController extends \BaseController {
         if ($validator->fails()) {
 
             $messages->merge($validator);
-            return Redirect::back()->withErrors($messages)->withInput();
+            return Redirect::back()->withErrors($messages)->withInput(Input::except('lang'));
         }
 
+
         $tourInfo = array(
-            'tour_id' => Input::get(Input::get('tour_id')),
+            'tour_id' => Input::get('tour_id'),
             'tourType_id' => Input::get('tourType_id'),
             'name' => Input::get(Input::get('lang') . '_name'),
             'active' => (Input::get(Input::get('lang') . '_active') == '') ? 0 : 1,
@@ -214,17 +246,16 @@ class AdminToursController extends \BaseController {
             'duration' => Input::get(Input::get('lang') . '_duration'),
             'level_id' => Input::get(Input::get('lang') . '_level_id'),
             'location' => Input::get(Input::get('lang') . '_location'),
-            'review' => Input::get(Input::get('lang') . '_review'),
         );
 
         if (Input::get('tourType_id') == '1') {
 
             $tourInfo['residence'] = Input::get(Input::get('lang') . '_residence');
             $tourInfo['feed'] = Input::get(Input::get('lang') . '_feed');
-            $tourInfo['price'] = array();
         } elseif (Input::get('tourType_id') == '2') {
             $tourInfo['review'] = Input::get(Input::get('lang') . '_review');
         }
+
 
 
         $factoryTour = new TourFactory();
@@ -232,12 +263,14 @@ class AdminToursController extends \BaseController {
 
         $check = $tours->updateTour($tourInfo);
 
-
-
-
-        $messages->add('done', 'Запись обновлена');
-        return Redirect::back()->withErrors($messages);
+        if ($check == true) {
+            $messages->add('done', 'Запись обновлена');
+        } else {
+            $messages->add('notdone', 'Запись не обновлена');
+        }
+        return Redirect::to('/admin/' . Request::segment(2) . '/' . $id . '/edit')->withErrors($messages);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -269,6 +302,7 @@ class AdminToursController extends \BaseController {
         }
     }
 
+
     private function checkAndInsertRecords($allTours, $allToursEng) {
         $diffArraycheck1 = array_diff_key($allTours, $allToursEng);
         $diffArraycheck2 = array_diff_key($allToursEng, $allTours);
@@ -284,6 +318,7 @@ class AdminToursController extends \BaseController {
         return FALSE;
     }
 
+
     private function getLangErrors($lang, $validator) {
         $mes = new Illuminate\Support\MessageBag;
         $mes->merge($validator);
@@ -295,6 +330,7 @@ class AdminToursController extends \BaseController {
         return $returnArray;
     }
 
+
     private function insertAbsentRecords($array) {
         foreach ($array as $name) {
 
@@ -304,6 +340,7 @@ class AdminToursController extends \BaseController {
             $tour->checkAndInsert();
         }
     }
+
 
     private function insertImage($image, $id, $editImage) {
 
@@ -360,6 +397,7 @@ class AdminToursController extends \BaseController {
         }
     }
 
+
     private function deleteImage($id, $name) {
 
         $path = base_path() . '\public\images\tours\tour_' . $id . '\\' . $name;
@@ -370,6 +408,7 @@ class AdminToursController extends \BaseController {
 
         return Redirect::back();
     }
+
 
     private function getFileNumber($id) {
         $fileArray = array();
@@ -390,6 +429,7 @@ class AdminToursController extends \BaseController {
         return $newNumber;
     }
 
+
     private function getFileArray($id) {
         $fileArray = array();
         $path = base_path() . '\public\images\tours\tour_' . $id;
@@ -406,6 +446,7 @@ class AdminToursController extends \BaseController {
         return $fileArray;
     }
 
+
     private function checkDate($array) {
         if ($array['startTime'] == '0000-00-00') {
             $array['startTime'] = '';
@@ -416,21 +457,79 @@ class AdminToursController extends \BaseController {
         return $array;
     }
 
-    private function getPrices($tourArray) {
 
-        if (array_key_exists('price', $tourArray)) {
-            if (!empty($tourArray['price'])) {
-                
-            } else {
-                $tourArray['price'][1]['num'] = 1;
-                $tourArray['price'][1]['name'] = '';
-                $tourArray['price'][1]['price'] = '';
-                $tourArray['price'][1]['description'] = '';
+    private function getPrices($id, $lang) {
+
+
+        $price = new Price($lang, $id);
+        $getPrice = $price->getAllPrices();
+
+        if (!empty($getPrice)) {
+            $i = 1;
+            foreach ($getPrice as $prices) {
+                $priceArray[$i]['num'] = $i;
+                $priceArray[$i]['name'] = $prices->price_name;
+                $priceArray[$i]['price_id'] = $prices->price_id;
+                $priceArray[$i]['price'] = $prices->price;
+                $priceArray[$i]['description'] = $prices->description;
+                $i++;
             }
-            return $tourArray['price'];
         } else {
-            return array();
+            $priceArray[1]['num'] = 1;
+            $priceArray[1]['name'] = '';
+            $priceArray[1]['price'] = '';
+            $priceArray[1]['price_id'] = '';
+            $priceArray[1]['description'] = '';
         }
+        return $priceArray;
+    }
+
+
+    private function savePrice($input, $id) {
+
+        $messages = new Illuminate\Support\MessageBag;
+        $rules = array();
+        $priceArray = array();
+        for ($i = 1; $i <= $input['num']; $i++) {
+            $priceArray[$i]['price_id'] = $input[$input['lang'] . '_price_id_' . $i];
+            $priceArray[$i]['name'] = $input[$input['lang'] . '_price_name_' . $i];
+            $priceArray[$i]['price'] = $input[$input['lang'] . '_price_price_' . $i];
+            $priceArray[$i]['description'] = $input[$input['lang'] . '_price_description_' . $i];
+
+            $rules[$input['lang'] . '_price_name_' . $i] = array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u');
+            $rules[$input['lang'] . '_price_price_' . $i] = array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u');
+            $rules[$input['lang'] . '_price_description_' . $i] = array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.:\(\)\/]+$)u');
+
+            if (array_key_exists($input['lang'] . '_delete_' . $i, $input)) {
+                $priceArray[$i]['delete'] = $input[$input['lang'] . '_delete_' . $i];
+            }
+        }
+
+
+        $validator = Validator::make(Input::all(), $rules, $this->messages);
+
+        $messages->add('active1', Input::get('lang'));
+
+        if ($validator->fails()) {
+
+
+            $messages->add('error', 'Цены не сохранены: Недопустимые символы в полях!');
+            return $messages;
+            //Redirect::back()->withErrors($messages)->withInput();
+        }
+
+        $price = new Price($input['lang'], $input['tour_id']);
+        $price->insertPrices($priceArray);
+
+        return $messages;
+    }
+
+
+    private function changeType($id) {
+        
+        $factoryTour = new TourFactory('ru', $id);
+        $tour = $factoryTour->addTour(Request::segment(2), 'ru', $id);
+        $check = $tour->changeType();
     }
 
 }

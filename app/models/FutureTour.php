@@ -16,7 +16,6 @@ class FutureTour extends Tour {
     protected $tourType;
     private $condition;
     protected $id;
-    
     private $futureTourInfo = array(
         'tour_id' => '',
         'active' => '',
@@ -30,7 +29,6 @@ class FutureTour extends Tour {
         'location' => '',
         'residence' => '',
         'feed' => '',
-        'price' => array()
     );
 
 
@@ -48,8 +46,8 @@ class FutureTour extends Tour {
      * @return array
      * Function return array of all tours
      */
-    public function setUpAllToursInfo() {
-        $result = parent::setUpAllToursInfo($this->tourType);
+    public function setUpAllToursInfo($select= array()) {
+        $result = parent::setUpAllToursInfo($select);
         return $result;
     }
 
@@ -100,23 +98,25 @@ class FutureTour extends Tour {
         $check = array();
         $id = $this->insertTourRecord($tourArray);
         $check[] = $this->checkReturnId($id);
-        
+
         if (($this->langId === NULL) && (is_numeric($id))) {
             $check[] = $this->insertAnotherLanguage($id, $this->futureTourInfo);
         }
-        
+
         $this->condition->setId($id);
         $check[] = $this->condition->insertConditionRecord($tourArray);
         $check[] = $this->condition->insertConditionFutureRecord($tourArray);
-        $check[] = $this->condition->insertPrices($tourArray['price']);
-      
+
+
         return $this->checkTrue($check);
     }
-    
-    
+
+
     public function updateTour($tourArray = array()) {
+
         $arrayCheck = $this->arrayCheck($tourArray, $this->futureTourInfo);
         $tourType = $this->tourTypeCheck();
+
 
 
         if ((empty($tourArray)) || ($arrayCheck === false) || ($tourType === false)) {
@@ -128,17 +128,18 @@ class FutureTour extends Tour {
         }
 
         $check = array();
+
         $check[] = $this->updateTourRecord($tourArray);
         $check[] = $this->condition->updateConditionFutureRecord($tourArray);
         $check[] = $this->condition->updateConditionRecord($tourArray);
-        $check[] = $this->condition->updatePrices($tourArray['price']);
 
-        return $this->checkTrue($check);
+
+        return $this->checkUpdateTrue($check);
     }
 
 
     public function deleteTour() {
-        
+
         $check = array();
         $check[] = $this->deleteTourRecord();
         $check[] = $this->condition->deleteConditionFutureRecord();
@@ -148,23 +149,67 @@ class FutureTour extends Tour {
         if (($this->langId === NULL) && (is_numeric($this->id))) {
             $check[] = $this->deleteAnotherLanguage($this->id);
         }
-        
+
         return $this->checkTrue($check);
     }
-     protected function deleteAnotherLanguage($id) {
 
-        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
-        $newTour->setLangId($id);
-       
-        return $newTour->deleteTour();
-    }
-
-    public function deleteOnePriceRecord($priceId) {
+     public function deleteOnePriceRecord($priceId) {
         $this->condition->deleteOnePriceRecord($priceId);
     }
 
 
-    
+    public function changeType() {
+        $check = array();
+        $check[] = $this->changeTypeId();
+        $check[] = $this->condition->deleteConditionFutureRecord();
+        $check[] = $this->condition->deletePriceRecords();        
+        
+        $past = new ConditionPast($this->language, $this->id);
+        $insertArray = array();
+        $insertArray['review'] = '';
+        $check[] = $past->insertConditionPastRecord($insertArray);
+        
+        if (($this->langId === NULL) && (is_numeric($this->id))) {
+            $check[] = $this->changeAnotherLanguage($this->id);
+        }
+        
+        return $this->checkTrue($check);
+    }
+
+
+    protected function deleteAnotherLanguage($id) {
+
+        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
+        $newTour->setLangId($id);
+
+        return $newTour->deleteTour();
+    }
+
+    protected function changeAnotherLanguage($id) {
+
+        $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
+        $newTour->setLangId($id);
+
+        return $newTour->changeType();
+    }
+
+   
+
+    protected function changeTypeId() {
+        $check = DB::table($this->table)
+                ->where('tour_id', $this->id)
+                ->update(array(
+            'tourType_id' => 2)
+        );
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /**
      * 
      * @return array

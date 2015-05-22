@@ -44,8 +44,22 @@ class PastTour extends Tour {
      * @return array
      * Function return array of all tours
      */
-    public function setUpAllToursInfo() {
-        $result = parent::setUpAllToursInfo($this->tourType);
+    
+    public function setUpListToursInfo($select = array()) {
+        $returnArray = array(0=> 'не определен');
+        $result = parent::setUpAllToursInfo($select);
+       
+        foreach ($result as $value) {
+            foreach ($value as $name => $val) {
+                $returnArray[$value['tour_id']] = $val;
+            }
+        }
+ 
+        return $returnArray;
+    }
+    
+    public function setUpAllToursInfo($select = array()) {
+        $result = parent::setUpAllToursInfo($select);
         return $result;
     }
 
@@ -71,6 +85,7 @@ class PastTour extends Tour {
 
 
     public function addTour($tourArray = array()) {
+        
         $arrayCheck = $this->arrayCheck($tourArray, $this->pastTourInfo);
       
         if ((empty($tourArray)) || ($arrayCheck === false)) {
@@ -94,6 +109,7 @@ class PastTour extends Tour {
 
 
     public function updateTour($tourArray = array()) {
+         
         $arrayCheck = $this->arrayCheck($tourArray, $this->pastTourInfo);
         $tourType = $this->tourTypeCheck();
 
@@ -105,8 +121,9 @@ class PastTour extends Tour {
         
         $check[] = $this->condition->updateConditionPastRecord($tourArray);
         $check[] = $this->condition->updateConditionRecord($tourArray);
-       
-        return $this->checkTrue($check);
+      
+        
+        return $this->checkUpdateTrue($check);
     }
 
 

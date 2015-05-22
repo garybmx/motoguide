@@ -85,3 +85,26 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('localization', function() {
+    App::setLocale(Route::input('lang'));
+});
+
+Route::filter('detectLang', function($route, $request, $lang =null)
+{
+    
+    if($lang != null && in_array($lang , Config::get('app.available_language')))
+    {
+        if($lang != Config::get('app.locale')){
+            //return Redirect::back();
+        }
+        Config::set('app.locale', $lang);
+     
+    }elseif($lang == null){
+        $browser_lang = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? strtok(strip_tags($_SERVER['HTTP_ACCEPT_LANGUAGE']), ',') : '';
+        $browser_lang = substr($browser_lang, 0,2);
+        $userLang = (in_array($browser_lang, Config::get('app.available_language'))) ? $browser_lang : Config::get('app.locale');
+        Config::set('app.locale', $userLang);
+    }
+    
+});

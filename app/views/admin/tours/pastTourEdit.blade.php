@@ -46,7 +46,7 @@
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2><a href="{{URL::to('/admin/PastTour')}}"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Назад</a>&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-user"></i> Редактировать просшедший тур  {{ $tourArray['tour_id'] }}</h2>
+                <h2><a href="{{URL::to('/admin/PastTour')}}"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Назад</a>&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-user"></i> Редактировать прошедший тур  {{ $tourArray['tour_id'] }}</h2>
                 <div class="box-icon">
 
                     <a href="#" class="btn btn-minimize btn-round btn-default"><i
@@ -111,6 +111,7 @@
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArray['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'ru') }}
                             {{ Form::hidden('tour_id', $tourArray['tour_id']) }}
+                            {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
                             <table class="mytable  "><tbody>
                                     <tr>
 
@@ -204,6 +205,7 @@
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArrayEng['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'en') }}
                             {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
+                              {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
                             <table class="mytable "><tbody>
                                     <tr>
 

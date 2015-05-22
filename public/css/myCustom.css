@@ -7,7 +7,20 @@ and open the template in the editor.
     Created on : 07.02.2015, 14:03:28
     Author     : Gary
 */
+@font-face {
+  font-family: 'CTCSplashRounded';
+  src: url('CTCSplashRounded.eot');
+  src: url('CTCSplashRounded.eot?#iefix') format('embedded-opentype'),
+       url('CTCSplashRounded.ttf') format('truetype'),
+       url('CTCSplashRounded.svg#CTCSplashRounded') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
+
+.mkt{
+    color:black;
+}
 .form-custom{
 
     padding:5px;

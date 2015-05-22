@@ -14,7 +14,9 @@ class CreateClientsTour extends Migration {
         Schema::create('clients_tour', function(Blueprint $table) {
             $table->integer('client_id');
             $table->integer('tour_id');
+            $table->primary('client_id');
         });
+        
     }
 
     /**

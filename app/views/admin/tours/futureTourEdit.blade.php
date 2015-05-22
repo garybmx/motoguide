@@ -15,6 +15,8 @@
             $("#markItUp2").markItUp(mySettings);
             $("#markItUp3").markItUp(mySettings);
             $("#markItUp4").markItUp(mySettings);
+            $("#markItUp5").markItUp(mySettings);
+            $("#markItUp6").markItUp(mySettings);
             if ($("div").is("#messageBox")) {
     setTimeout(function () {
     $('#messageBox').fadeOut('slow').remove();
@@ -22,19 +24,20 @@
     }
 
 
-$(document).on("click", "#addprices2", function () {
-    num = $('.prices_ru').last().attr('num');
-    num++;       
-    $('<table class="prices_ru" num="'+num+'"><tbody><tr><td>Цена '+num+':</td><td><table><tr><td>Наименование:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Стоимость:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Описание:&nbsp;</td><td>{{ Form::textarea('ru_feed', null, array('class' => 'form - custom'))}}</td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_ru").last());
-    $('<table class="prices_en" num="'+num+'"><tbody><tr><td>Цена '+num+'(ENG):</td><td><table><tr><td>Наименование:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Стоимость:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Описание:&nbsp;</td><td>{{ Form::textarea('ru_feed', null, array('class' => 'form - custom'))}}</td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_en").last());
+    $(document).on("click", "#addprices2", function () {
+    num = $('.prices_en').last().attr('num');
+            num++;
+            $('<table class="prices_ru" num="' + num + '"><tbody><tr><td>Цена ' + num + ':</td><td><table><tr><td>Наименование:&nbsp;</td><td><input name="ru_price_id_' + num + '" type="hidden" value=""><input class="form-custom" size="30%" name="ru_price_name_' + num + '" type="text" value=""></td></tr><tr><td>Стоимость:&nbsp;</td><td><input class="form-custom" size="30%" name="ru_price_price_' + num + '" type="text" value=""></td></tr><tr><td>Описание:&nbsp;</td><td><textarea class="form-custom" name="ru_price_description_' + num + '" cols="50" rows="10"></textarea></td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_ru").last());
+            $('<table class="prices_en" num="' + num + '"><tbody><tr><td>Цена ' + num + ' (ENG):</td><td><table><tr><td>Наименование:&nbsp;</td><td><input name="en_price_id_' + num + '" type="hidden" value=""><input class="form-custom" size="30%" name="en_price_name_' + num + '" type="text" value=""></td></tr><tr><td>Стоимость:&nbsp;</td><td><input class="form-custom" size="30%" name="en_price_price_' + num + '" type="text" value=""></td></tr><tr><td>Описание:&nbsp;</td><td><textarea class="form-custom" name="en_price_description_' + num + '" cols="50" rows="10"></textarea></td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_en").last());
+            $('input[name="num"]').val(num);
             return false;
     });
-
-    $(document).on("click", "#addprices", function () {
+            $(document).on("click", "#addprices", function () {
     num = $('.prices_ru').last().attr('num');
-    num++;       
-    $('<table class="prices_ru" num="'+num+'"><tbody><tr><td>Цена '+num+':</td><td><table><tr><td>Наименование:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Стоимость:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Описание:&nbsp;</td><td>{{ Form::textarea('ru_feed', null, array('class' => 'form - custom'))}}</td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_ru").last());
-    $('<table class="prices_en" num="'+num+'"><tbody><tr><td>Цена '+num+'(ENG):</td><td><table><tr><td>Наименование:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Стоимость:&nbsp;</td><td>{{ Form::text('ru_price_name', null, array('class' => 'form - custom', 'size' => '30 % ')) }}</td></tr><tr><td>Описание:&nbsp;</td><td>{{ Form::textarea('ru_feed', null, array('class' => 'form - custom'))}}</td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_en").last());
+            num++;
+            $('<table class="prices_ru" num="' + num + '"><tbody><tr><td>Цена ' + num + ':</td><td><table><tr><td>Наименование:&nbsp;</td><td><input name="ru_price_id_' + num + '" type="hidden" value=""><input class="form-custom" size="30%" name="ru_price_name_' + num + '" type="text" value=""></td></tr><tr><td>Стоимость:&nbsp;</td><td><input class="form-custom" size="30%" name="ru_price_price_' + num + '" type="text" value=""></td></tr><tr><td>Описание:&nbsp;</td><td><textarea class="form-custom" name="ru_price_description_' + num + '" cols="50" rows="10"></textarea></td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_ru").last());
+            $('<table class="prices_en" num="' + num + '"><tbody><tr><td>Цена ' + num + ' (ENG):</td><td><table><tr><td>Наименование:&nbsp;</td><td><input name="en_price_id_' + num + '" type="hidden" value=""><input class="form-custom" size="30%" name="en_price_name_' + num + '" type="text" value=""></td></tr><tr><td>Стоимость:&nbsp;</td><td><input class="form-custom" size="30%" name="en_price_price_' + num + '" type="text" value=""></td></tr><tr><td>Описание:&nbsp;</td><td><textarea class="form-custom" name="en_price_description_' + num + '" cols="50" rows="10"></textarea></td></tr></table></td></tr></tbody></table>').insertAfter($(".prices_en").last());
+            $('input[name="num"]').val(num);
             return false;
     });
     });</script>
@@ -45,10 +48,10 @@ $(document).on("click", "#addprices2", function () {
 
         </li>
         <li>
-            {{HTML::link('admin/PastTour', 'Прошедшие туры')}}
+            {{HTML::link('admin/FutureTour', 'Предстоящие туры')}}
         </li>
         <li>
-            {{HTML::link('admin/PastTour/'. $tourArray['tour_id']. '/edit', 'Редактировать тур')}}
+            {{HTML::link('admin/FutureTour/'. $tourArray['tour_id']. '/edit', 'Редактировать тур')}}
         </li>
     </ul>
 </div>
@@ -58,7 +61,7 @@ $(document).on("click", "#addprices2", function () {
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2><a href="{{URL::to('/admin/PastTour')}}"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Назад</a>&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-user"></i> Редактировать просшедший тур  {{ $tourArray['tour_id'] }}</h2>
+                <h2><a href="{{URL::to('/admin/FutureTour')}}"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Назад</a>&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-user"></i> Редактировать предстоящий тур  {{ $tourArray['tour_id'] }}</h2>
                 <div class="box-icon">
 
                     <a href="#" class="btn btn-minimize btn-round btn-default"><i
@@ -122,6 +125,7 @@ $(document).on("click", "#addprices2", function () {
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArray['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'ru') }}
                             {{ Form::hidden('tour_id', $tourArray['tour_id']) }}
+                              {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
                             <table class="mytable  "><tbody>
                                     <tr>
 
@@ -187,6 +191,29 @@ $(document).on("click", "#addprices2", function () {
                                             {{ $errors->first('ru_location', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
 
+                                     <tr>
+                                        <td>
+                                            {{ Form::label('ru_location', 'Место проведения:') }}</td><td>
+                                            {{ Form::text('ru_location', $tourArray['location'], array('class' => 'form-custom', 'size' => '30%')) }}
+
+                                            {{ $errors->first('ru_location', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
+                                     
+                                      <tr>
+                                        <td>
+                                            {{ Form::label('ru_residence', 'Условия проживания:') }}</td><td>
+                                            {{ Form::textarea('ru_residence', $tourArray['residence'], array('class' => 'form-custom', 'id'=> 'markItUp2')) }}
+
+                                            {{ $errors->first('ru_residence', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
+                                      
+                                       <tr>
+                                        <td>
+                                            {{ Form::label('ru_feed', 'Питание:') }}</td><td>
+                                            {{ Form::textarea('ru_feed', $tourArray['feed'], array('class' => 'form-custom', 'id'=> 'markItUp3')) }}
+
+                                            {{ $errors->first('ru_feed', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
 
                                     <tr>
                                         <td>
@@ -209,6 +236,7 @@ $(document).on("click", "#addprices2", function () {
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArrayEng['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'en') }}
                             {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
+                              {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
                             <table class="mytable "><tbody>
                                     <tr>
 
@@ -250,7 +278,7 @@ $(document).on("click", "#addprices2", function () {
                                     <tr>
                                         <td>
                                             {{ Form::label('en_description', 'Описание:') }}</td><td>
-                                            {{ Form::textarea('en_description', $tourArrayEng['description'], array('class' => 'form-custom', 'id'=> 'markItUp3')) }}
+                                            {{ Form::textarea('en_description', $tourArrayEng['description'], array('class' => 'form-custom', 'id'=> 'markItUp4')) }}
 
                                             {{ $errors->first('en_description', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
@@ -272,7 +300,21 @@ $(document).on("click", "#addprices2", function () {
 
                                             {{ $errors->first('en_location', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
+  <tr>
+                                        <td>
+                                            {{ Form::label('en_residence', 'Условия проживания:') }}</td><td>
+                                            {{ Form::textarea('en_residence', $tourArrayEng['residence'], array('class' => 'form-custom', 'id'=> 'markItUp5')) }}
 
+                                            {{ $errors->first('en_residence', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
+                                      
+                                       <tr>
+                                        <td>
+                                            {{ Form::label('en_feed', 'Питание:') }}</td><td>
+                                            {{ Form::textarea('en_feed', $tourArrayEng['feed'], array('class' => 'form-custom', 'id'=> 'markItUp6')) }}
+
+                                            {{ $errors->first('en_feed', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
 
                                     <tr>
                                         <td>
@@ -317,10 +359,15 @@ $(document).on("click", "#addprices2", function () {
             </div>
             <div class="box-content">
                 <div class="box-content">
-                    @if($errors->has('active'))
+                    @if($errors->has('active1'))
                     <script type="text/javascript">
                                 $(document).ready(function () {
-                        $('#myTab2 #{{$errors->first('active')}}').addClass("active");
+                        $('#myTab2 #{{$errors->first('active1')}}').addClass("active");
+                                element = $("#myTab2").offset().top;
+                            
+                        $('body').scrollTop(element);
+                       
+
                         });</script>
                     @else
                     <script type="text/javascript">
@@ -339,20 +386,26 @@ $(document).on("click", "#addprices2", function () {
                     </ul>
 
                     <div id="myTabContent" class="tab-content">
-
+                        {{ $errors->first('error', '<div class="alert alert-danger">:message</div>') }}
 
                         <div class="tab-pane active" id="rus2">
-                        
+
 
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArray['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'ru') }}
+                            {{ Form::hidden('num', count($prices)) }}
                             {{ Form::hidden('tour_id', $tourArray['tour_id']) }}
                             @foreach($prices as $price)
                             <table class="prices_ru" num="{{$price['num']}}"><tbody>
                                     <tr>
 
                                         <td>
-                                            Цена 1:
+                                            Цена {{$price['num']}}:<br>
+                                            <div class="checkbox">
+                                                <label style="color: red">
+                                                    {{Form::checkbox('ru_delete_' . $price['num'], $price['num'])}}  Удалить
+                                                </label>
+                                            </div>
                                         </td><td>
                                             <table>
                                                 <tr>
@@ -360,10 +413,10 @@ $(document).on("click", "#addprices2", function () {
                                                         Наименование:&nbsp;
                                                     </td>
                                                     <td>
-                                                         {{ Form::hidden('ru_price_id') }}
+                                                        {{ Form::hidden('ru_price_id_'.$price['num'] , $price['price_id']) }}
                                                         {{ Form::text('ru_price_name_' . $price['num'], $price['name'], array('class' => 'form-custom', 'size' => '30%')) }}
 
-                                                        {{ $errors->first('ru_price_name', '<div class="alert alert-danger">:message</div>') }}
+
                                                     </td>
                                                 </tr>    
                                                 <tr>
@@ -373,7 +426,7 @@ $(document).on("click", "#addprices2", function () {
                                                     <td>
                                                         {{ Form::text('ru_price_price_' . $price['num'], $price['price'], array('class' => 'form-custom', 'size' => '30%')) }}
 
-                                                        {{ $errors->first('ru_price_price', '<div class="alert alert-danger">:message</div>') }}
+                                                        {{ $errors->first('ru_price_price_'. $price['num'], '<div class="alert alert-danger">:message</div>') }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -392,7 +445,7 @@ $(document).on("click", "#addprices2", function () {
                                     </tr>
 
                                 </tbody></table>
-@endforeach
+                            @endforeach
                             <div>
                                 <p><br/>
                                     <a class="btn btn-success" id="addprices" href="">
@@ -409,12 +462,21 @@ $(document).on("click", "#addprices2", function () {
                         <div class="tab-pane" id="eng2">
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArrayEng['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'en') }}
+                            {{ Form::hidden('num', count($pricesEng)) }}
                             {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
-                            <table class="prices_en" num="1"><tbody>
+                            @foreach($pricesEng as $priceEng)
+                            <table class="prices_en" num="{{$priceEng['num']}}"><tbody>
                                     <tr>
 
                                         <td>
-                                            Цена 1(Eng):
+                                            Цена {{$priceEng['num']}} (ENG):<br>
+                                            <div class="checkbox">
+                                                <label style="color: red">
+
+                                                    {{Form::checkbox('en_delete_' .$priceEng['num'], $priceEng['num'])}} Удалить 
+                                                </label>
+                                            </div>
+
                                         </td><td>
                                             <table>
                                                 <tr>
@@ -422,9 +484,10 @@ $(document).on("click", "#addprices2", function () {
                                                         Наименование:&nbsp;
                                                     </td>
                                                     <td>
-                                                        {{ Form::text('en_price_name', null, array('class' => 'form-custom', 'size' => '30%')) }}
+                                                        {{ Form::hidden('en_price_id_'.$priceEng['num'] , $priceEng['price_id']) }}
+                                                        {{ Form::text('en_price_name_' . $priceEng['num'], $priceEng['name'], array('class' => 'form-custom', 'size' => '30%')) }}
 
-                                                        {{ $errors->first('en_price_name', '<div class="alert alert-danger">:message</div>') }}
+
                                                     </td>
                                                 </tr>    
                                                 <tr>
@@ -432,7 +495,7 @@ $(document).on("click", "#addprices2", function () {
                                                         Стоимость:&nbsp;
                                                     </td>
                                                     <td>
-                                                        {{ Form::text('en_price_price', null, array('class' => 'form-custom', 'size' => '30%')) }}
+                                                        {{ Form::text('en_price_price_' . $priceEng['num'], $priceEng['price'], array('class' => 'form-custom', 'size' => '30%')) }}
 
                                                         {{ $errors->first('en_price_price', '<div class="alert alert-danger">:message</div>') }}
                                                     </td>
@@ -442,9 +505,9 @@ $(document).on("click", "#addprices2", function () {
                                                         Описание:&nbsp;
                                                     </td>
                                                     <td>
-                                                        {{ Form::textarea('en_price_description', null, array('class' => 'form-custom')) }}
+                                                        {{ Form::textarea('en_price_description_' . $priceEng['num'], $priceEng['description'], array('class' => 'form-custom')) }}
 
-                                                        {{ $errors->first('ru_price_description', '<div class="alert alert-danger">:message</div>') }}
+                                                        {{ $errors->first('en_price_description', '<div class="alert alert-danger">:message</div>') }}
                                                     </td>
                                                 </tr>   
 
@@ -453,7 +516,7 @@ $(document).on("click", "#addprices2", function () {
                                     </tr>
 
                                 </tbody></table>
-
+                            @endforeach
                             <div>
                                 <p><br/>
                                     <a class="btn btn-success" id="addprices2" href="">
@@ -608,6 +671,35 @@ $(document).on("click", "#addprices2", function () {
 
 
                 </ul>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+
+</div><!--/row-->
+
+
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-cog"></i> Статус тура</h2>
+
+                <div class="box-icon">
+
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+
+                </div>
+            </div>
+            <div class="box-content">
+                {{Form::open(array('action' => array('AdminToursController@update', $tourArrayEng['tour_id']), 'method'=>'put', 'onsubmit' => 'return confirm("Изменить статус тура?")'))}}
+                  {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
+                   {{Form::submit('Перенести в прошедшие', array('name'=> 'change', 'class'=>'btn btn-primary btn-lg'))}}</p>
+                            {{Form::close()}}
+               
+                
             </div>
         </div>
     </div>

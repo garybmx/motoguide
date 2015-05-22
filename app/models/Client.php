@@ -18,9 +18,10 @@ class Client extends Staff {
     private $allClientsInfo = array();
     private $clientInfo = array(
         'id' => '',
+        'tour_id' => '',
         'active' => '',
         'name' => '',
-        'review' => '',
+        'review' => ''
     );
     protected $langId;
     protected $id;
@@ -39,7 +40,7 @@ class Client extends Staff {
     }
 
 
-    public function setUpClientReview() {
+    public function setUpClientInfo() {
         return parent::setUpInfo();
     }
 
@@ -69,6 +70,32 @@ class Client extends Staff {
     }
 
 
+    public function checkAndInsert() {
+        $cnt = DB::table($this->clientTable)->where('id', $this->id)->count();
+        if ($cnt == 0) {
+            $this->setLangId($this->id);
+            $this->insertClientInfo($this->clientInfo);
+        } else {
+            $newInstructor = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $this->id);
+            $newInstructor->setLangId($this->id);
+            $newInstructor->checkAndInsert();
+        }
+    }
+
+    public function getClientTourId() {
+        $cnt = DB::table('clients_tour')->where('client_id', $this->id)->count();
+        if ($cnt == 0) {
+            return 0;
+        } else {
+            $return = DB::table('clients_tour')->select('tour_id')
+                        ->where('client_id', $this->id)
+                        ->get();
+            
+            return $return[0]->tour_id;
+        }
+        
+    }
+    
     protected function getInfo($id) {
 
         return DB::table($this->clientTable)
@@ -91,19 +118,27 @@ class Client extends Staff {
 
 
     protected function deleteAnotherLanguage($id) {
-        $newClient = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language,  $id);
+        $newClient = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
         $newClient->setLangId($id);
         return $newClient->deleteClientInfo();
     }
 
 
     protected function insertRecord($insertArray) {
-        return DB::table($this->clientTable)->insertGetId(
-                        array('id' => $this->langId,
-                            'active' => $insertArray['active'],
-                            'name' => $insertArray['name'],
-                            'review' => $insertArray['review']
+
+        $getId = DB::table($this->clientTable)->insertGetId(
+                array('id' => $this->langId,
+                    'active' => $insertArray['active'],
+                    'name' => $insertArray['name'],
+                    'review' => $insertArray['review']
         ));
+        if ($this->langId == null) {
+            DB::insert('insert into `clients_tour` (`client_id`, `tour_id`) values (?, ?)
+             on duplicate key update `tour_id`=values(`tour_id`)', array($getId, (int) $insertArray['tour_id'])
+            );
+        }
+
+        return $getId;
     }
 
 
@@ -117,6 +152,13 @@ class Client extends Staff {
                 )
         );
 
+        if ($this->langId == null) {
+            DB::insert('insert into `clients_tour` (`client_id`, `tour_id`) values (?, ?)
+             on duplicate key update `tour_id`=values(`tour_id`)', array($this->id, (int) $insertArray['tour_id'])
+            );
+            $check = 1;
+        }
+        
         if ($check > 0) {
             return true;
         } else {
@@ -130,7 +172,24 @@ class Client extends Staff {
         if ($cnt == 0) {
             return true;
         }
+        $this->deleteClientTourRecord();
         $check = DB::table($this->clientTable)->where('id', $id)->delete();
+
+        if ($check > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected function deleteClientTourRecord() {
+        $cnt = DB::table('clients_tour')->where('client_id', $this->id)->count();
+        if ($cnt == 0) {
+            return true;
+        }
+       
+        $check = DB::table('clients_tour')->where('client_id', $this->id)->delete();
 
         if ($check > 0) {
             return true;

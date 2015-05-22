@@ -1,0 +1,54 @@
+/*Тело счётчика*/
+#timer {
+    width:100%;
+   
+    display: block;
+    overflow:auto;
+}
+
+/*Элементы счётчика, день/час/минута/секунда*/
+.countdown{
+    color:#fff;
+    display:block;
+    margin:0 auto;
+}
+.timernum{display: inline-block;
+             float:left;
+             width:50px;
+             clear:none;
+             font-family:roboto_condensedlight,Arial,san-serif;
+             font-size:14px;
+             padding-top:14px;
+             padding-bottom:23px;
+             margin-right:8px;
+             margin-bottom:0;
+}
+.s{display: inline-block;
+             float:left;
+             width:12px;
+             clear:none;
+             font-family:roboto_condensedlight,Arial,san-serif;
+             font-size:14px;
+             padding-top:14px;
+             padding-bottom:23px;
+             margin-right:8px;
+             margin-bottom:0;
+}
+.countdown li span{
+    display:block;
+    font-family:roboto_condensedlight,Arial,san-serif;
+    font-size:36px;
+    margin-bottom:0;}
+/*Отступы для дня*/
+.sep{padding-left: 6px; width: 12px;}
+.days_ref {margin:0;padding-left: 18px;}
+.days,p {margin:0;padding-left: 12px;}
+/*Отступы для часа*/
+.hours,p {margin:0;padding-left: 12px;}
+.hours_ref {margin:0;padding-left: 22px;}
+/*Отступы для минуты*/
+.minutes,p {margin:0;padding-left: 12px;}
+.minutes_ref {margin:0;padding-left: 22px;}
+/*Отступы для секунды*/
+.seconds,p {margin:0;padding-left: 12px;}
+.seconds_ref {margin:0;padding-left: 22px;}

@@ -73,6 +73,8 @@ class ConditionPast extends Condition {
                     'review' => $tourArray['review'])
         );
 
+       
+        
         if ($check > 0) {
             return true;
         } else {
