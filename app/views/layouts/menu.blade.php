@@ -31,6 +31,11 @@
                                     </ul>
                                     <b class="caret-out"></b>                        
                                 </li>
+                                 <li>
+                                    <a href="{{ URL::to(Config::get('app.locale')  . '/application' ) }}" class="dropdown-toggle" data-toggle="dropdown">{{ trans('menu.application') }}
+                                    </a>
+
+                                </li>
                                 <li>
                                     <a href="{{ URL::to(Config::get('app.locale')  . '/contacts' ) }}" class="dropdown-toggle" data-toggle="dropdown">{{ trans('menu.contacts') }}
                                     </a>

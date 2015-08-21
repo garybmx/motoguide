@@ -44,7 +44,7 @@
     <div class="row-fluid servive-block">
         <div class="span4">
             <h4>Различные категории сложности</h4>
-            <p><i class="icon-bell"></i></p>
+            <p> <i><img src="{{'/images/1.jpeg'"/></i></p>
             <p>В наших турах может участвовать человек любого уровня подготовки</p>
         </div>
         <div class="span4">

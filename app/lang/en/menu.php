@@ -10,6 +10,7 @@ return array(
     'about'     => 'About',
     'motorcycles' => 'Motorcycles',
     'instructors' => 'Instructors',
+    'application' => 'Application',
         'contacts'     => 'Contacts',
 
 );

@@ -7,10 +7,10 @@
 
 namespace Nette\Templating;
 
-use Nette,
-	Nette\Utils\Strings,
-	Nette\Forms\Form,
-	Nette\Utils\Html;
+use Nette;
+use Nette\Utils\Strings;
+use Nette\Forms\Form;
+use Nette\Utils\Html;
 
 
 /**
@@ -77,7 +77,7 @@ class Helpers
 		if ($quotes !== ENT_NOQUOTES && strpos($s, '`') !== FALSE && strpbrk($s, ' <>"\'') === FALSE) {
 			$s .= ' ';
 		}
-		return htmlSpecialChars($s, $quotes);
+		return htmlSpecialChars($s, $quotes, 'UTF-8');
 	}
 
 
@@ -106,7 +106,7 @@ class Helpers
 		// XML 1.0: \x09 \x0A \x0D and C1 allowed directly, C0 forbidden
 		// XML 1.1: \x00 forbidden directly and as a character reference,
 		//   \x09 \x0A \x0D \x85 allowed directly, C0, C1 and \x7F allowed as character references
-		return htmlSpecialChars(preg_replace('#[\x00-\x08\x0B\x0C\x0E-\x1F]+#', '', $s), ENT_QUOTES);
+		return htmlSpecialChars(preg_replace('#[\x00-\x08\x0B\x0C\x0E-\x1F]+#', '', $s), ENT_QUOTES, 'UTF-8');
 	}
 
 
@@ -169,7 +169,7 @@ class Helpers
 		return Strings::replace(
 			$s,
 			'#(</textarea|</pre|</script|^).*?(?=<textarea|<pre|<script|\z)#si',
-			function($m) {
+			function ($m) {
 				return trim(preg_replace('#[ \t\r\n]+#', " ", $m[0]));
 			});
 	}
@@ -185,7 +185,7 @@ class Helpers
 	public static function indent($s, $level = 1, $chars = "\t")
 	{
 		if ($level >= 1) {
-			$s = Strings::replace($s, '#<(textarea|pre).*?</\\1#si', function($m) {
+			$s = Strings::replace($s, '#<(textarea|pre).*?</\\1#si', function ($m) {
 				return strtr($m[0], " \t\r\n", "\x1F\x1E\x1D\x1A");
 			});
 			$s = Strings::indent($s, $level, $chars);

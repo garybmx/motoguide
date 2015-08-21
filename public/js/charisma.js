@@ -155,12 +155,59 @@ function docReady() {
         $(this).tab('show');
     });
 
+    $('#myTab1 a.active').tab('show');
+    $('#myTab1 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+
+
     $('#myTab2 a.active').tab('show');
     $('#myTab2 a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
 
+    $('#myTab3 a.active').tab('show');
+    $('#myTab3 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    
+    $('#myTab4 a.active').tab('show');
+    $('#myTab4 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    
+    $('#myTab5 a.active').tab('show');
+    $('#myTab5 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    $('#myTab6 a.active').tab('show');
+    $('#myTab6 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    $('#myTab7 a.active').tab('show');
+    $('#myTab7 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    $('#myTab8 a.active').tab('show');
+    $('#myTab8 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    $('#myTab9 a.active').tab('show');
+    $('#myTab9 a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+  
+    
     //tooltip
     $('[data-toggle="tooltip"]').tooltip();
 

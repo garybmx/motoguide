@@ -22,16 +22,16 @@
                     <li><i class="icon-globe"></i><a>Languages <i class="icon-sort-up"></i></a>
                         <ul class="nav-list">
 
-                            @if(Request::segment(1) == 'en' || Request::segment(1) == '')
+                            @if(Request::segment(1) == 'en' || Config::get('app.locale') == 'en')
                             <li class="active">
                                 @else <li>    
                                 @endif
-                                <a href="{{ URL::to('en/' . Request::segment(2).'/'. Request::segment(3). '/'. Request::segment(4)) }}">English</a> @if(Request::segment(1) == 'en' || Request::segment(1) == '')<i class="icon-ok"></i>@endif</li>
-                            @if(Request::segment(1) == 'ru')
+                                <a href="{{ URL::to('en/' . Request::segment(2).'/'. Request::segment(3). '/'. Request::segment(4)) }}">English</a> @if(Request::segment(1) == 'en' || Config::get('app.locale') == 'en')<i class="icon-ok"></i>@endif</li>
+                            @if(Request::segment(1) == 'ru' || Config::get('app.locale') == 'ru')
                             <li class="active">
                                 @else <li>    
                                 @endif
-                                <a href="{{ URL::to('ru/' . Request::segment(2).'/'. Request::segment(3). '/'. Request::segment(4)) }}">Russian</a> @if(Request::segment(1) == 'ru')<i class="icon-ok"></i>@endif</li>
+                                <a href="{{ URL::to('ru/' . Request::segment(2).'/'. Request::segment(3). '/'. Request::segment(4)) }}">Russian</a> @if(Request::segment(1) == 'ru' || Config::get('app.locale') == 'ru')<i class="icon-ok"></i>@endif</li>
 
                         </ul>
                     </li>   

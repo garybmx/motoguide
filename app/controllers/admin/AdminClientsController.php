@@ -6,11 +6,11 @@ class AdminClientsController extends \BaseController {
         'ru_name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'ru_active' => 'boolean',
         'ru_tour_id' => 'integer',
-        'ru_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'ru_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\\?-!\,\\\ \;\.:\(\)\/]+$)u'),
         'en_name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'en_active' => 'boolean',
         'en_tour_id' => 'integer',
-        'en_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u')
+        'en_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u')
     );
     private $messages = array(
         'regex' => 'Запись не добавлена: Недопустимые сиволы.',

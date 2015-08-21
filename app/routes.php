@@ -14,12 +14,17 @@
 
 
 Route::group(array('prefix' => 'admin'), function() {
-    Route::get('/', 'AdminController@index');
+    Route::get('/', 'AdminSettingsController@index');
     Route::get('timer', 'AdminTimerController@index');
     Route::put('timer', 'AdminTimerController@update');
     Route::get('contacts', 'AdminContactsController@index');
     Route::put('contacts', 'AdminContactsController@update');
+    Route::get('information', 'AdminInformationController@index');
+    Route::put('information', 'AdminInformationController@update');
+    Route::get('settings', 'AdminSettingsController@index');
+    Route::put('settings', 'AdminInformationController@update');
     
+    Route::resource('request', 'AdminRequestController');
     Route::resource('motorcycles', 'AdminMotorcyclesController');
     Route::resource('instructors', 'AdminInstructorsController');
     Route::resource('clients', 'AdminClientsController');
@@ -32,13 +37,16 @@ Route::group(array('prefix' => 'admin'), function() {
     }
 });
 
-Route::group(['prefix' => '{lang?}', 'before' => 'detectLang:' . Request::segment(1)], function() {
+Route::group(array('prefix' => '{lang?}', 'before' => 'detectLang:' . Request::segment(1). '|cache', 'after'=>'cache') , function() {
     
     Route::get('/', function() {
+         
+  
         return View::make('index');
     });
     
      Route::get('/pastTours/', function() {
+
         return View::make('pastTours');
     });
     

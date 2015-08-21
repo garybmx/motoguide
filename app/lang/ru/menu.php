@@ -7,6 +7,7 @@ return array(
     'pastTours' => 'Прошедшие туры',
     'motorcycles' => 'Мотоциклы',
     'instructors' => 'Инструкторы',
+    'application' => 'Заявка на участие',
     'about' => 'О нас',
     'contacts' => 'Контакты',
 );

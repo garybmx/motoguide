@@ -7,15 +7,19 @@
 
                     </div>
                     <ul class="nav nav-pills nav-stacked main-menu">
+                        
                         <li class="nav-header">Настройки сайта</li>
-                        <li><a class="ajax-link" href="index.html" id="information_link"><i class="glyphicon glyphicon-info-sign"></i><span> Информация</span></a>
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/settings');}}" id="settings_link"><i class="glyphicon  glyphicon-cog"></i><span> Главная</span></a>
                         </li>
-                        <li><a class="ajax-link" href="ui.html" id="preference_link"><i class="glyphicon  glyphicon-cog"></i><span> Настройки</span></a>
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/levels');}}" id="levels_link"><i
+                                    class="glyphicon glyphicon-signal"></i><span> Статистика</span></a></li>
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/information');}}" id="information_link"><i class="glyphicon glyphicon-info-sign"></i><span> Информация</span></a>
                         </li>
+                        
                       
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/motorcycles');}}" id="motorcycles_link"><i class="glyphicon glyphicon-list-alt"></i><span> Мотоциклы</span></a>
                         </li>
-                        <li><a class="ajax-link" href="{{HTML::entities('/admin/instructors');}}" id="instructors_link"><i class="glyphicon glyphicon-user"></i><span> Инструктора</span></a>
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/instructors');}}" id="instructors_link"><i class="glyphicon glyphicon-user"></i><span> Инструкторы</span></a>
                         </li>
                         
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/clients');}}" id="clients_link"><i class="glyphicon glyphicon-user"></i><span> Клиенты</span></a>
@@ -35,7 +39,12 @@
                         </li>
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/levels');}}" id="levels_link"><i
                                     class="glyphicon glyphicon-signal"></i><span> Уровни сложности</span></a></li>
-                       
+                                     <li><a class="ajax-link" href="{{HTML::entities('/admin/request');}}" id="request_link"><i
+                                    class="glyphicon glyphicon-bullhorn"></i><span> Заявки</span></a></li>
+                        <li><a class="ajax-link" href="{{HTML::entities('/admin/mailinglist');}}" id="mailinglist_link"><i
+                                    class=" glyphicon glyphicon-envelope"></i><span> Подписки</span></a></li>
+                                   
+                                    
                       
                     </ul>
                    
