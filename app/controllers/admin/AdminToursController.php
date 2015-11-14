@@ -6,31 +6,33 @@ class AdminToursController extends \BaseController {
         'ru_name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'ru_startTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
         'ru_endTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
-        'ru_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \;\.:\(\)\/\n\r]+$)u'),
+        'ru_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
+        'ru_nodate' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
         'ru_duration' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\ \.:\(\)]+$/u'),
         'ru_level_id' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'ru_location' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
-        'ru_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u'),
-        'ru_feed' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u'),
-        'ru_residence' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'ru_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
+        'ru_feed' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
+        'ru_residence' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
         'en_name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'en_startTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
         'en_endTime' => array('Regex:/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/'),
-        'en_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'en_nodate' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
+        'en_description' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
         'en_duration' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
         'en_level_id' => array('Regex:/^[A-Za-zа-яА-Я0-9\<\>\-! ,\\ \.:\(\)]+$/u'),
         'en_location' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
-        'en_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u'),
-        'en_feed' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u'),
-        'en_residence' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \;\.:\(\)\/]+$)u'),
+        'en_review' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
+        'en_feed' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
+        'en_residence' => array('Regex:(^[A-Za-zа-яА-Я0-9\<\>\&\?\-!\,\\\ \\"\=;\.:\(\)\/\n\r]+$)u'),
     );
     private $messages = array(
         'regex' => 'Запись не добавлена: Недопустимые сиволы.',
         'boolean' => 'Запись не добавлена: Недопустимые сиволы.',
         'integer' => 'Запись не добавлена: Поле должно содержать только цифры'
     );
-    private $imageHeight = 480;
-    private $imageWidth = 640;
+    private $imageHeight = 500;
+    private $imageWidth = 800;
 
 
     /**
@@ -95,6 +97,8 @@ class AdminToursController extends \BaseController {
             'active' => (Input::get(Input::get('lang') . '_active') == '') ? 0 : 1,
             'startTime' => Input::get(Input::get('lang') . '_startTime'),
             'endTime' => Input::get(Input::get('lang') . '_endTime'),
+            'nodate' => Input::get(Input::get('lang') . '_nodate'),
+            'nodateactive' => (Input::get(Input::get('lang') . '_nodateactive') == '') ? 0 : 1,
             'description' => Input::get(Input::get('lang') . '_description'),
             'duration' => Input::get(Input::get('lang') . '_duration'),
             'level_id' => Input::get(Input::get('lang') . '_level_id'),
@@ -102,7 +106,7 @@ class AdminToursController extends \BaseController {
         );
 
         if (Input::get('tourType_id') == '1') {
-
+          
             $tourInfo['residence'] = Input::get(Input::get('lang') . '_residence');
             $tourInfo['feed'] = Input::get(Input::get('lang') . '_feed');
         } elseif (Input::get('tourType_id') == '2') {
@@ -146,7 +150,7 @@ class AdminToursController extends \BaseController {
         $tourArray = $tours->setUpTourInfo();
         $tourArrayEng = $toursEng->setUpTourInfo();
         $fileArray = $this->getFileArray($id);
-         
+
         return View::make('admin.tours.' . Request::segment(2) . 'Show', array('tourArray' => $tourArray,
                     'tourArrayEng' => $tourArrayEng, 'fileArray' => $fileArray));
     }
@@ -176,9 +180,12 @@ class AdminToursController extends \BaseController {
         $tourArrayEng = $this->checkDate($tourArrayEng);
         $fileArray = $this->getFileArray($id);
 
-        $prices = $this->getPrices($id, 'ru');
-        $pricesEng = $this->getPrices($id, 'en');
-
+        $prices = array();
+        $pricesEng = array();
+        if (Request::segment(2) == 'FutureTour') {
+            $prices = $tours->getPrices($id);
+            $pricesEng = $toursEng->getPrices($id);
+        }
 
 
         return View::make('admin.tours.' . Request::segment(2) . 'Edit', array('tourArray' => $tourArray,
@@ -242,14 +249,17 @@ class AdminToursController extends \BaseController {
             'active' => (Input::get(Input::get('lang') . '_active') == '') ? 0 : 1,
             'startTime' => Input::get(Input::get('lang') . '_startTime'),
             'endTime' => Input::get(Input::get('lang') . '_endTime'),
+            'nodateactive' => (Input::get(Input::get('lang') . '_nodateactive') == '') ? 0 : 1,
+            'nodate' => Input::get(Input::get('lang') . '_nodate'),            
             'description' => Input::get(Input::get('lang') . '_description'),
             'duration' => Input::get(Input::get('lang') . '_duration'),
             'level_id' => Input::get(Input::get('lang') . '_level_id'),
             'location' => Input::get(Input::get('lang') . '_location'),
+              
         );
 
         if (Input::get('tourType_id') == '1') {
-
+          
             $tourInfo['residence'] = Input::get(Input::get('lang') . '_residence');
             $tourInfo['feed'] = Input::get(Input::get('lang') . '_feed');
         } elseif (Input::get('tourType_id') == '2') {
@@ -458,33 +468,6 @@ class AdminToursController extends \BaseController {
     }
 
 
-    private function getPrices($id, $lang) {
-
-
-        $price = new Price($lang, $id);
-        $getPrice = $price->getAllPrices();
-
-        if (!empty($getPrice)) {
-            $i = 1;
-            foreach ($getPrice as $prices) {
-                $priceArray[$i]['num'] = $i;
-                $priceArray[$i]['name'] = $prices->price_name;
-                $priceArray[$i]['price_id'] = $prices->price_id;
-                $priceArray[$i]['price'] = $prices->price;
-                $priceArray[$i]['description'] = $prices->description;
-                $i++;
-            }
-        } else {
-            $priceArray[1]['num'] = 1;
-            $priceArray[1]['name'] = '';
-            $priceArray[1]['price'] = '';
-            $priceArray[1]['price_id'] = '';
-            $priceArray[1]['description'] = '';
-        }
-        return $priceArray;
-    }
-
-
     private function savePrice($input, $id) {
 
         $messages = new Illuminate\Support\MessageBag;
@@ -498,7 +481,7 @@ class AdminToursController extends \BaseController {
 
             $rules[$input['lang'] . '_price_name_' . $i] = array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u');
             $rules[$input['lang'] . '_price_price_' . $i] = array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u');
-            $rules[$input['lang'] . '_price_description_' . $i] = array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.:\(\)\/]+$)u');
+            $rules[$input['lang'] . '_price_description_' . $i] = array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\\\ \.\"\'\=\:\(\)\/]+$)u');
 
             if (array_key_exists($input['lang'] . '_delete_' . $i, $input)) {
                 $priceArray[$i]['delete'] = $input[$input['lang'] . '_delete_' . $i];
@@ -526,7 +509,7 @@ class AdminToursController extends \BaseController {
 
 
     private function changeType($id) {
-        
+
         $factoryTour = new TourFactory('ru', $id);
         $tour = $factoryTour->addTour(Request::segment(2), 'ru', $id);
         $check = $tour->changeType();

@@ -7,9 +7,9 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"phpunit/phpunit-skeleton-generator": "*",
-		"intervention/image": "~2.1",
-		"pragmarx/tracker": "^1.0",
-		"geoip/geoip": "~1.14"
+		"intervention/image": "~2.1",		
+		"geoip/geoip": "~1.14",
+		"symfony/var-dumper": "^2.7"
 	},
 	"autoload": {
 		"classmap": [

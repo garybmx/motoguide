@@ -27,8 +27,8 @@ class Level extends Staff {
         return parent::setUpInfo();
     }
 
-    public function setUpAllLevelsInfo() {
-        return $this->setUpAllInfo();
+    public function setUpAllLevelsInfo($isactive = null, $paginate = null) {
+        return $this->setUpAllInfo($isactive, $paginate);
     }
 
     public function setUpListLevelsInfo() {
@@ -49,9 +49,9 @@ class Level extends Staff {
         return $returnArray;
     }
     
-    protected function setUpAllInfo() {
+    protected function setUpAllInfo($isactive = null, $paginate = null) {
         $returnArray = array();
-        $Info = $this->getAllInfo();
+        $Info = $this->getAllInfo($isactive, $paginate);
         foreach ($Info as $value) {
             foreach ($value as $name => $val) {
 
@@ -94,7 +94,7 @@ class Level extends Staff {
     }
 
     
-    protected function getAllInfo() {
+    protected function getAllInfo($isactive = null) {
         return DB::table($this->levelTable)->get();
     }
 

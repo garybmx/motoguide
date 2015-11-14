@@ -20,7 +20,7 @@ class AdminInformationController extends \BaseController {
     private $messages = array(
         'regex' => 'Запись не добавлена: Недопустимые сиволы.'
     );
-    private $imageHeight = 640;
+    private $imageHeight = 328;
     private $imageWidth = 480;
 
 
@@ -101,11 +101,11 @@ class AdminInformationController extends \BaseController {
         $doneMessages = new Illuminate\Support\MessageBag;
         $file = array('image' => $image);
 
-        $path = base_path() . '\public\images\informations\\' . Input::get('type') . '_' . Input::get('number') . '.jpeg';
-        $rules = array('image' => 'required|mimes:jpeg,jpg',
+        $path = base_path() . '\public\images\informations\\' . Input::get('type') . '_' . Input::get('number') . '.png';
+        $rules = array('image' => 'required|mimes:png',
         );
         $messages = array('required' => 'Ошибка: файл не выбран',
-            'mimes' => 'Файл не загружен! Разрешенные типы файлов: .jpeg или .jpg'
+            'mimes' => 'Файл не загружен! Разрешенные типы файлов: .png'
         );
 
         $validator = Validator::make($file, $rules, $messages);
@@ -115,13 +115,14 @@ class AdminInformationController extends \BaseController {
             return Redirect::back()->withErrors($validator);
         }
 
-        $image->move(base_path() . '\public\images\informations', Input::get('type') . '_' . Input::get('number') . '.jpeg');
+        $image->move(base_path() . '\public\images\informations', Input::get('type') . '_' . Input::get('number') . '.png');
 
         $height = Image::make($path)->height();
         $width = Image::make($path)->width();
 
         if ($height != $this->imageHeight || $width != $this->imageWidth) {
-            $img = Image::make($path)->resize($this->imageHeight, $this->imageWidth);
+         
+            $img = Image::make($path)->resize($this->imageWidth, $this->imageHeight);
         } else {
             $img = Image::make($path);
         }
@@ -139,7 +140,7 @@ class AdminInformationController extends \BaseController {
 
     private function deleteImage() {
 
-        $path = base_path() . '\public\images\informations\\' . Input::get('type') . '_' . Input::get('number') . '.jpeg';
+        $path = base_path() . '\public\images\informations\\' . Input::get('type') . '_' . Input::get('number') . '.png';
         File::delete($path);
 
         return Redirect::back();

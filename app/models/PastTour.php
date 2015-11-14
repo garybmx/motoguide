@@ -23,6 +23,8 @@ class PastTour extends Tour {
         'name' => '',
         'startTime' => '',
         'endTime' => '',
+        'nodate' => '',
+        'nodateactive' => '',
         'description' => '',
         'duration' => '',
         'level_id' => '',
@@ -58,13 +60,13 @@ class PastTour extends Tour {
         return $returnArray;
     }
     
-    public function setUpAllToursInfo($select = array()) {
-        $result = parent::setUpAllToursInfo($select);
+    public function setUpAllToursInfo($select = array(), $isactive = null, $num = null) {
+        $result = parent::setUpAllToursInfo($select, $isactive, $num);
         return $result;
     }
 
 
-    public function setUpTourInfo() {
+    public function setUpTourInfo($isactive = null) {
 
         $tourInfo = $this->getFullTourInfo($this->id);
         foreach ($tourInfo as $value) {
@@ -72,9 +74,15 @@ class PastTour extends Tour {
                 $this->pastTourInfo[$name] = $val;
             }
         }
-
-        $futureTour = $this->getPastTourInfo();
-        foreach ($futureTour as $value1) {
+        
+        if($isactive != null){
+            if($this->pastTourInfo['active'] != 1){
+                return array();
+            }
+        }
+        
+        $pastTour = $this->getPastTourInfo();
+        foreach ($pastTour as $value1) {
             foreach ($value1 as $name1 => $val1) {
                 $this->pastTourInfo[$name1] = $val1;
             }

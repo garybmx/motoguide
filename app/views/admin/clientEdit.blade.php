@@ -222,7 +222,7 @@
                 @if(file_exists(base_path() . '\public\images\clients\client_' . $clientArray['id'] . '.jpeg'))
                 <p><img src="{{'/images/clients/client_' . $clientArray['id'] . '.jpeg?img='. time()}}" class="animated zoomIn"></p>
                 {{Form::open(array('action' => array('AdminClientsController@update', $clientArray['id']), 'method'=>'put', 'id' => 'deleteImage'))}}
-                <a class="btn btn-setting btn-success" href="#">
+                <br> <a class="btn btn-setting btn-success" href="#">
                     <i class="glyphicon glyphicon-share icon-white"></i>
                     Изменить
                 </a>

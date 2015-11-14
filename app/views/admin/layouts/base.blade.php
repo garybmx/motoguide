@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
     @include('admin.layouts.head')
 
 
@@ -33,7 +33,8 @@
 
 
             <footer class="row">
-                <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; <a href="http://usman.it" target="_blank">Gary</p>
+                <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; Gary</p>
+                <p> ver. 1.0 (beta)</p>
 
 
             </footer>

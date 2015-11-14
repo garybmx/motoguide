@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/vendor/pragmarx/tracker/src/config/config.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/request.blade.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/layouts/leftmenu.blade.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/levelEdit.blade.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/controllers/admin/AdminRequestController.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/instructors.blade.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/requestShow.blade.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/blog.blade.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/login.blade.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/seeds/userSeeder.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/models/User.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/layouts/topmenu.blade.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/views/admin/layouts/base.blade.php</file>
             <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/routes.php</file>
-            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/models/RequestTour.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2015_08_30_190338_create_blog_table.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/controllers/admin/AuthController.php</file>
+            <file>file:/C:/Users/Manager/Documents/NetBeansProjects/motoguide/app/database/migrations/2015_11_11_212001_create_users_table.php</file>
         </group>
     </open-files>
 </project-private>

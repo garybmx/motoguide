@@ -20,7 +20,7 @@ class TourFactory {
         if (class_exists($tourType)) {
             return new $tourType($language, $addId);
         } else {
-            throw new Exception("Тура не существует");
+            App::abort(404);
         }
     }
     
@@ -30,7 +30,7 @@ class TourFactory {
         if (class_exists($tourType)) {
             return new $tourType($language, $id);
         } else {
-            throw new Exception("Тура не существует");
+           App::abort(404);
         }
     }
     
@@ -41,7 +41,7 @@ class TourFactory {
         if (class_exists($tourType)) {
             return new $tourType($language);
         } else {
-            throw new Exception("Тура не существует");
+            App::abort(404);
         }
     }
     

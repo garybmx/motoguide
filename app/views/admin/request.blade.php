@@ -49,8 +49,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Имя</th>
-                            <th>Город</th>
+                            <th>Имя</th>                           
                             <th>Дата</th>
                             <th>Статус</th>
                             <th>Действия</th>
@@ -60,11 +59,10 @@
                         @foreach($allRequests as $id => $request)
                         <tr>
                             <td class="center">{{$request['id']}}</td>
-                            <td>{{$request['name']}}</td>
-                            <td>{{$request['location']}}</td>
-                            <td>{{$request['date']}}</td>
+                            <td>{{$request['name']}}</td>                   
+                            <td>{{date('d-m-Y',time($request['date']))}}</td>
                             <td class="center">
-                                @if($allRequests[$id]['new'] == 1)
+                                @if($request['new'] == 1)
                                 <span class="label-success label label-default">Новый</span>
 
                                 @endif

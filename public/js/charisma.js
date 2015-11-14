@@ -237,7 +237,7 @@ function docReady() {
         $('img', this).fadeToggle(1000);
         $(this).find('.gallery-controls').remove();
         $(this).append('<div class="well gallery-controls">' +
-                '<p><a href="#" class="gallery-edit btn"><i class="glyphicon glyphicon-edit"></i></a> <a href="#" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a></p>' +
+                '<a href="#" class="gallery-edit btn"><i class="glyphicon glyphicon-edit"></i></a> <a href="#" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>' +
                 '</div>');
         $(this).find('.gallery-controls').stop().animate({'margin-top': '-1'}, 400);
     }, function () {
@@ -332,8 +332,10 @@ function docReady() {
 
     //datatable
     $('.datatable').dataTable({
+        
         "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-12'i><'col-md-12 center-block'p>>",
         "sPaginationType": "bootstrap",
+        
         "oLanguage": {
             "sLengthMenu": "_MENU_ records per page"
         }

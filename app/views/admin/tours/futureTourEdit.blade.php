@@ -125,7 +125,7 @@
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArray['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'ru') }}
                             {{ Form::hidden('tour_id', $tourArray['tour_id']) }}
-                              {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
+                            {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
                             <table class="mytable  "><tbody>
                                     <tr>
 
@@ -155,7 +155,27 @@
                                             {{ $errors->first('ru_endTime', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
 
+                                    <tr>
+                                        <td>
+                                            {{ Form::label('ru_nodateactive', 'Дата не определена:') }}</td><td>
+                                            @if($tourArray['nodateactive'] == 1)
+                                            {{ Form::checkbox('ru_nodateactive','1', true)}}
+                                            @else {{ Form::checkbox('ru_nodateactive','1')}}
+                                            @endif
+                                            Дата не определена
 
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            {{ Form::label('ru_nodate', 'Примерная дата:') }}</td><td>
+                                            {{ Form::text('ru_nodate', $tourArray['nodate'], array('class' => 'form-custom', 'size' => '30%')) }}
+
+                                            {{ $errors->first('ru_nodate', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
                                     <tr>
                                         <td>
                                             {{ Form::label('ru_duration', 'Продолжительность тура:') }}</td><td>
@@ -183,6 +203,8 @@
                                         </td></tr>
 
 
+
+
                                     <tr>
                                         <td>
                                             {{ Form::label('ru_location', 'Место проведения:') }}</td><td>
@@ -191,23 +213,15 @@
                                             {{ $errors->first('ru_location', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
 
-                                     <tr>
-                                        <td>
-                                            {{ Form::label('ru_location', 'Место проведения:') }}</td><td>
-                                            {{ Form::text('ru_location', $tourArray['location'], array('class' => 'form-custom', 'size' => '30%')) }}
-
-                                            {{ $errors->first('ru_location', '<div class="alert alert-danger">:message</div>') }}
-                                        </td></tr>
-                                     
-                                      <tr>
+                                    <tr>
                                         <td>
                                             {{ Form::label('ru_residence', 'Условия проживания:') }}</td><td>
                                             {{ Form::textarea('ru_residence', $tourArray['residence'], array('class' => 'form-custom', 'id'=> 'markItUp2')) }}
 
                                             {{ $errors->first('ru_residence', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
-                                      
-                                       <tr>
+
+                                    <tr>
                                         <td>
                                             {{ Form::label('ru_feed', 'Питание:') }}</td><td>
                                             {{ Form::textarea('ru_feed', $tourArray['feed'], array('class' => 'form-custom', 'id'=> 'markItUp3')) }}
@@ -236,7 +250,7 @@
                             <p>{{Form::open(array('action' => array('AdminToursController@update', $tourArrayEng['tour_id']), 'method'=>'put'))}}</p>
                             {{ Form::hidden('lang', 'en') }}
                             {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
-                              {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
+                            {{ Form::hidden('tourType_id', $tourArray['tourType_id']) }}
                             <table class="mytable "><tbody>
                                     <tr>
 
@@ -264,7 +278,27 @@
 
                                             {{ $errors->first('en_endTime', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
+                                    <tr>
+                                        <td>
+                                            {{ Form::label('en_nodateactive', 'Дата не определена:') }}</td><td>
+                                            @if($tourArrayEng['nodateactive'] == 1)
+                                            {{ Form::checkbox('en_nodateactive','1', true)}}
+                                            @else {{ Form::checkbox('en_nodateactive','1')}}
+                                            @endif
+                                            Дата не определена (ENG)
 
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            {{ Form::label('en_nodate', 'Примерная дата(ENG):') }}</td><td>
+                                            {{ Form::text('en_nodate', $tourArrayEng['nodate'], array('class' => 'form-custom', 'size' => '30%')) }}
+
+                                            {{ $errors->first('en_nodate', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
 
                                     <tr>
                                         <td>
@@ -300,15 +334,15 @@
 
                                             {{ $errors->first('en_location', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
-  <tr>
+                                    <tr>
                                         <td>
                                             {{ Form::label('en_residence', 'Условия проживания:') }}</td><td>
                                             {{ Form::textarea('en_residence', $tourArrayEng['residence'], array('class' => 'form-custom', 'id'=> 'markItUp5')) }}
 
                                             {{ $errors->first('en_residence', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
-                                      
-                                       <tr>
+
+                                    <tr>
                                         <td>
                                             {{ Form::label('en_feed', 'Питание:') }}</td><td>
                                             {{ Form::textarea('en_feed', $tourArrayEng['feed'], array('class' => 'form-custom', 'id'=> 'markItUp6')) }}
@@ -364,10 +398,7 @@
                                 $(document).ready(function () {
                         $('#myTab2 #{{$errors->first('active1')}}').addClass("active");
                                 element = $("#myTab2").offset().top;
-                            
-                        $('body').scrollTop(element);
-                       
-
+                                $('body').scrollTop(element);
                         });</script>
                     @else
                     <script type="text/javascript">
@@ -587,7 +618,7 @@
                             Только файлы формата .jpg или .jpeg
                         </li>
                         <li>
-                            Размер изображения должен быть 300x200 пикселей, в противном случае файл будет уменьшен автоматически
+                            Размер изображения должен быть 800x500 пикселей, в противном случае файл будет уменьшен автоматически
                         </li>
 
                     </ul>
@@ -681,6 +712,7 @@
 
 
 <div class="row">
+
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
@@ -695,11 +727,11 @@
             </div>
             <div class="box-content">
                 {{Form::open(array('action' => array('AdminToursController@update', $tourArrayEng['tour_id']), 'method'=>'put', 'onsubmit' => 'return confirm("Изменить статус тура?")'))}}
-                  {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
-                   {{Form::submit('Перенести в прошедшие', array('name'=> 'change', 'class'=>'btn btn-primary btn-lg'))}}</p>
-                            {{Form::close()}}
-               
-                
+                {{ Form::hidden('tour_id', $tourArrayEng['tour_id']) }}
+                {{Form::submit('Перенести в прошедшие', array('name'=> 'change', 'class'=>'btn btn-primary btn-lg'))}}</p>
+                {{Form::close()}}
+
+
             </div>
         </div>
     </div>

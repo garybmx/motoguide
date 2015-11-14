@@ -13,13 +13,7 @@
             </div>
 
 
-            @if($errors->has('image'))
-
-            <div class="alert alert-danger" id="messageBox">
-                {{$errors->first('image')}}
-            </div>
-            @endif
-
+         
 
 
             @if($errors->has('notdone_banner_1'))
@@ -139,8 +133,8 @@
 
                 <br>
 
-                @if(file_exists(base_path() . '\public\images\informations\banner_1.jpeg'))
-                <p><img src="{{'/images/informations/banner_1.jpeg?img='. time()}}" class="animated zoomIn"></p>
+                @if(file_exists(base_path() . '\public\images\informations\banner_1.png'))
+                <p><img src="{{'/images/informations/banner_1.png?img='. time()}}" class="animated zoomIn"></p>
                 {{Form::open(array('action' => array('AdminInformationController@update'), 'method'=>'put', 'id' => 'deleteImage1'))}}
                 <br>
                 {{ Form::hidden('deleteImage', '1') }}
@@ -175,14 +169,12 @@
 
                 <div class="helpbox"><ul>
                         <li>
-                            Только файлы формата .jpeg или .jpeg
+                            Только файлы формата .png
                         </li>
                         <li>
-                            Размер изображения должен быть 640x480 пикселей, в противном случае файл будет уменьшен автоматически
+                            Размер изображения должен быть 480x328 пикселей, в противном случае файл будет уменьшен автоматически
                         </li>
-                        <li>
-                            Если изображение уже существует, то новое изображение заменит старое
-                        </li>
+                      
                     </ul>
                 </div>
 

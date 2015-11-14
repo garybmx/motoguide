@@ -1,0 +1,19 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 06.11.2015, 1:11:29
+    Author     : Manager
+*/
+
+@font-face {
+  font-family: 'CTCSplashRounded';
+  src: url('CTCSplashRounded.eot');
+  src: url('CTCSplashRounded.eot?#iefix') format('embedded-opentype'),
+       url('CTCSplashRounded.ttf') format('truetype'),
+       url('CTCSplashRounded.svg#CTCSplashRounded') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

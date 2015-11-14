@@ -9,8 +9,9 @@ return array(
     'pastTours' => 'Past tours',
     'about'     => 'About',
     'motorcycles' => 'Motorcycles',
-    'instructors' => 'Instructors',
-    'application' => 'Application',
+    'instructors' => 'Team',
+    'blog' => 'Blog',
+    'request' => 'Request',
         'contacts'     => 'Contacts',
 
 );

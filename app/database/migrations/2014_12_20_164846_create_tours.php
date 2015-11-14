@@ -17,6 +17,8 @@ class CreateTours extends Migration {
             $table->string('name', 128);
             $table->date('startTime');
             $table->date('endTime');
+            $table->boolean('nodateactive')->default(0);
+            $table->string('nodate', 256);
             $table->text('description');
             $table->boolean('active')->default(0);
         });
@@ -27,6 +29,8 @@ class CreateTours extends Migration {
             $table->string('name', 128);
             $table->date('startTime');
             $table->date('endTime');
+            $table->boolean('nodateactive')->default(0);
+            $table->string('nodate', 256);
             $table->text('description');
             $table->boolean('active')->default(0);
         });

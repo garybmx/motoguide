@@ -16,6 +16,7 @@ abstract class Staff {
     protected $id;
     protected $langId;
 
+
     protected function arrayCheck($checkArray, $defaultArray) {
 
         $returnArray = array_diff_key($checkArray, $defaultArray);
@@ -42,6 +43,7 @@ abstract class Staff {
         return true;
     }
 
+
     protected function checkById($checkId) {
         if (is_numeric($checkId)) {
             return true;
@@ -49,23 +51,21 @@ abstract class Staff {
             return false;
         }
     }
-    
-    
+
+
     protected function checkAndDeleteId($table, $id, $fieldName) {
         $cnt = DB::table($table)->where($fieldName, $id)->count();
-        
+
         if ($cnt != 0) {
             return DB::table($table)->where($fieldName, $id)->delete();
-           
-            
         }
     }
-    
-    
-    protected function setUpInfo() {
+
+
+    protected function setUpInfo($isactive = NULL) {
 
         $returnArray = array();
-        $Info = $this->getInfo($this->id);
+        $Info = $this->getInfo($this->id, $isactive);
         if (empty($Info)) {
             return FALSE;
         }
@@ -75,17 +75,18 @@ abstract class Staff {
                 $returnArray[$name] = $val;
             }
         }
-       
-        
+
+
         return $returnArray;
     }
-    
+
+
     abstract protected function getInfo($id);
 
 
-    protected function setUpAllInfo() {
+    protected function setUpAllInfo($isactive = null, $paginate = null) {
         $returnArray = array();
-        $Info = $this->getAllInfo();
+        $Info = $this->getAllInfo($isactive, $paginate);
         foreach ($Info as $value) {
             foreach ($value as $name => $val) {
 
@@ -95,8 +96,9 @@ abstract class Staff {
 
         return $returnArray;
     }
-    
-    abstract protected function getAllInfo();
+
+
+    abstract protected function getAllInfo($isactive = null);
 
 
     protected function insertInfo($defaultArray, $langId, $insertArray = array()) {
@@ -109,7 +111,7 @@ abstract class Staff {
         $check = array();
 
         $getId = $this->insertRecord($insertArray);
-       
+
         $check[] = $this->checkById($getId);
 
         if (($langId === NULL) && (is_numeric($getId))) {
@@ -119,10 +121,10 @@ abstract class Staff {
         return $this->checkTrue($check);
     }
 
-       
+
     abstract protected function insertRecord($insertArray);
-    
-    
+
+
     protected function deleteInfo() {
 
         $check = array();
@@ -130,16 +132,17 @@ abstract class Staff {
 
         if (($this->langId === NULL) && (is_numeric($this->id))) {
             $check[] = $this->deleteAnotherLanguage($this->id);
-         
         }
 
         return $this->checkTrue($check);
     }
 
+
     abstract protected function deleteRecord($id);
 
+
     protected function updateInfo($defaultArray, $insertArray = array()) {
-        
+
         $arrayCheck = $this->arrayCheck($insertArray, $defaultArray);
         if (empty($insertArray) || $arrayCheck === false) {
             return false;
@@ -149,10 +152,7 @@ abstract class Staff {
 
         return $check;
     }
-    
-    abstract protected function updateRecord($insertArray);
- 
-    
-    
 
+
+    abstract protected function updateRecord($insertArray);
 }

@@ -226,7 +226,7 @@
                 <br>
 
                 @if(file_exists(base_path() . '\public\images\motorcycles\motorcycle_' . $motorcycleArray['id'] . '.jpeg'))
-                <p><img src="{{'/images/motorcycles/motorcycle_' . $motorcycleArray['id'] . '.jpeg?img='. time()}}" class="animated zoomIn"></p>
+                <p><img src="{{'/images/motorcycles/motorcycle_' . $motorcycleArray['id'] . '.jpeg?img='. time()}}" class="animated zoomIn"></p><br>
                 {{Form::open(array('action' => array('AdminMotorcyclesController@update', $motorcycleArray['id']), 'method'=>'put', 'id' => 'deleteImage'))}}
                 <a class="btn btn-setting btn-success" href="#">
                     <i class="glyphicon glyphicon-share icon-white"></i>
@@ -255,7 +255,7 @@
                             Только файлы формата .jpeg или .jpeg
                         </li>
                         <li>
-                            Размер изображения должен быть 300x200 пикселей, в противном случае файл будет уменьшен автоматически
+                            Размер изображения должен быть 600x555 пикселей, в противном случае файл будет уменьшен автоматически
                         </li>
                         <li>
                             Если изображение уже существует, то новое изображение заменит старое

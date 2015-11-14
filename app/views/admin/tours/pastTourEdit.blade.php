@@ -140,7 +140,27 @@
 
                                             {{ $errors->first('ru_endTime', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
+<tr>
+                                        <td>
+                                            {{ Form::label('ru_nodateactive', 'Дата не определена:') }}</td><td>
+                                            @if($tourArray['nodateactive'] == 1)
+                                            {{ Form::checkbox('ru_nodateactive','1', true)}}
+                                            @else {{ Form::checkbox('ru_nodateactive','1')}}
+                                            @endif
+                                            Дата не определена
 
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            {{ Form::label('ru_nodate', 'Примерная дата:') }}</td><td>
+                                            {{ Form::text('ru_nodate', $tourArray['nodate'], array('class' => 'form-custom', 'size' => '30%')) }}
+
+                                            {{ $errors->first('ru_nodate', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
 
                                     <tr>
                                         <td>
@@ -234,7 +254,27 @@
                                             {{ $errors->first('en_endTime', '<div class="alert alert-danger">:message</div>') }}
                                         </td></tr>
 
+ <tr>
+                                        <td>
+                                            {{ Form::label('en_nodateactive', 'Дата не определена:') }}</td><td>
+                                            @if($tourArrayEng['nodateactive'] == 1)
+                                            {{ Form::checkbox('en_nodateactive','1', true)}}
+                                            @else {{ Form::checkbox('en_nodateactive','1')}}
+                                            @endif
+                                            Дата не определена (ENG)
 
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            {{ Form::label('en_nodate', 'Примерная дата(ENG):') }}</td><td>
+                                            {{ Form::text('en_nodate', $tourArrayEng['nodate'], array('class' => 'form-custom', 'size' => '30%')) }}
+
+                                            {{ $errors->first('en_nodate', '<div class="alert alert-danger">:message</div>') }}
+                                        </td></tr>
                                     <tr>
                                         <td>
                                             {{ Form::label('en_duration', 'Продолжительность тура:') }}</td><td>
@@ -352,7 +392,7 @@
                             Только файлы формата .jpg или .jpeg
                         </li>
                         <li>
-                            Размер изображения должен быть 300x200 пикселей, в противном случае файл будет уменьшен автоматически
+                            Размер изображения должен быть 800x500 пикселей, в противном случае файл будет уменьшен автоматически
                         </li>
 
                     </ul>

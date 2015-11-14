@@ -45,8 +45,8 @@ class Instructor extends Staff {
     }
 
 
-    public function setUpAllInstructorsInfo() {
-        return parent::setUpAllInfo();
+    public function setUpAllInstructorsInfo($isactive = null) {
+        return parent::setUpAllInfo($isactive);
     }
 
 
@@ -76,7 +76,8 @@ class Instructor extends Staff {
             $newInstructor->checkAndInsert();
         }
     }
-    
+
+
     protected function getInfo($id) {
         return DB::table($this->instructorTable)
                         ->where('id', $id)
@@ -84,8 +85,12 @@ class Instructor extends Staff {
     }
 
 
-    protected function getAllInfo() {
-        return DB::table($this->instructorTable)->get();
+    protected function getAllInfo($isactive = null) {
+        $isactiveString = '';
+        if ($isactive != null) {
+            $isactiveString = 'where `active` = 1';
+        }
+        return DB::select('select * from ' . $this->instructorTable . ' ' . $isactiveString);
     }
 
 
@@ -98,7 +103,7 @@ class Instructor extends Staff {
 
 
     protected function deleteAnotherLanguage($id) {
-        $newInstructor = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language,  $id);
+        $newInstructor = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
         $newInstructor->setLangId($id);
         return $newInstructor->deleteInstructorInfo();
     }

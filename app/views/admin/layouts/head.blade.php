@@ -2,10 +2,10 @@
 <head>
  
     <meta charset="utf-8">
-    <title>Free HTML5 Bootstrap Admin Template</title>
+    <title>MotoGuide | Панель администратора</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
-    <meta name="author" content="Muhammad Usman">
+    <meta name="description" content="Эндуро туры в Болгарии. Панель администратора.">
+
 
     <!-- The styles -->
  
@@ -14,6 +14,7 @@
    
     {{HTML::style('css/charisma-app.css')}} 
     {{HTML::style('css/style.css')}} 
+
     {{HTML::style('bower_components/fullcalendar/dist/fullcalendar.css')}}
     {{HTML::style('bower_components/fullcalendar/dist/fullcalendar.print.css')}} 
     {{HTML::style('bower_components/chosen/chosen.min.css')}}
@@ -40,6 +41,6 @@
     <![endif]-->
 
     <!-- The fav icon -->
-    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="shortcut icon" href="{{URL::to('img/favicon.ico')}}">
 
 </head>

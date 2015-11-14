@@ -13,12 +13,7 @@
             </div>
 
 
-            @if($errors->has('image'))
-
-            <div class="alert alert-danger" id="messageBox">
-                {{$errors->first('image')}}
-            </div>
-            @endif
+         
 
 
 
@@ -137,54 +132,8 @@
 
 
 
-                <br>
+                
 
-                @if(file_exists(base_path() . '\public\images\informations\info_1.jpeg'))
-                <p><img src="{{'/images/informations/info_1.jpeg?img='. time()}}" class="animated zoomIn"></p>
-                {{Form::open(array('action' => array('AdminInformationController@update'), 'method'=>'put', 'id' => 'deleteImage4'))}}
-                <br>
-                {{ Form::hidden('deleteImage', '1') }}
-                  {{ Form::hidden('number', '1') }}
-                {{ Form::hidden('type', 'info') }}
-
-                <a class="btn btn-danger" href="#" onclick="document.getElementById('deleteImage4').submit();
-                                    return false;">
-                    <i class="glyphicon glyphicon-trash icon-white"></i>
-                    Удалить
-                </a>
-                {{Form::close()}}
-                @else
-                <p>
-                    Изображение не загружено</p>
-                <hr>
-                <div class="modal-body">
-                    {{Form::open(array('action' => array('AdminInformationController@update'), 'method'=>'put', 'files'=>true))}}
-                    {{ Form::hidden('number', '1') }}
-                    {{ Form::hidden('type', 'info') }}
-                    {{Form::file('motoPhoto', $attributes = array())}}</p>
-                <br>
-                    {{Form::submit('Загрузить', array('name'=> 'photo', 'class'=>'btn btn-primary'))}}
-                </div>
-
-
-                {{Form::close()}}
-
-
-                @endif
-
-
-                <div class="helpbox"><ul>
-                        <li>
-                            Только файлы формата .jpeg или .jpeg
-                        </li>
-                        <li>
-                            Размер изображения должен быть 640x480 пикселей, в противном случае файл будет уменьшен автоматически
-                        </li>
-                        <li>
-                            Если изображение уже существует, то новое изображение заменит старое
-                        </li>
-                    </ul>
-                </div>
 
 
 

@@ -18,12 +18,10 @@ class RequestTour extends Staff {
     private $requestInfo = array(
         'id' => null,
         'name' => '',
-        'lastname' => '',
-        'location' => '',
-        'age' => '',
-        'comments' => '',
+        'comment' => '',
         'phone' => '',
         'email' => '',
+        'tour' => '',
         'new' => 0,
         'date' => ''
     );
@@ -43,7 +41,7 @@ class RequestTour extends Staff {
     }
 
 
-    protected function getAllInfo() {
+    protected function getAllInfo($isactive = null) {
         return DB::table($this->requestTable)->orderBy('id', 'desc')->get();
     }
 
@@ -52,8 +50,13 @@ class RequestTour extends Staff {
         return parent::setUpInfo();
     }
 
-
+    public function insertRequestInfo($requestArray = array()) {
+        return $this->insertRecord($requestArray);
+    }
+    
+    
     public function updateRequestInfo($requestArray = array()) {
+       
         return parent::updateInfo($this->requestInfo, $requestArray);
     }
 
@@ -76,20 +79,28 @@ class RequestTour extends Staff {
     }
 
 
-    protected function insertRecord($insertArray) {
-        return 0;
+    protected function insertRecord($requestArray) {
+         $check = DB::table($this->requestTable)->insert(array(
+            'name' => $requestArray['name'],
+            'comment' => $requestArray['comment'],
+            'email' => $requestArray['email'],
+            'phone' => $requestArray['phone'],
+            'tour' => $requestArray['tour'],
+            'new' => 1,
+            'date' => date('y-m-d')
+                )
+        );
+        return $check;
     }
 
 
     protected function updateRecord($requestArray) {
+        
         $check = DB::table($this->requestTable)
                 ->where('id', $this->id)
                 ->update(array(
             'name' => $requestArray['name'],
-            'lastname' => $requestArray['lastname'],
-            'location' => $requestArray['location'],
-            'age' => $requestArray['age'],
-            'comments' => $requestArray['comments'],
+            'comment' => $requestArray['comment'],
             'email' => $requestArray['email'],
             'phone' => $requestArray['phone'],
             'new' => 0,

@@ -226,7 +226,7 @@
                 <br>
 
                 @if(file_exists(base_path() . '\public\images\instructors\instructor_' . $instructorArray['id'] . '.jpeg'))
-                <p><img src="{{'/images/instructors/instructor_' . $instructorArray['id'] . '.jpeg?img='. time()}}" class="animated zoomIn"></p>
+                <p><img src="{{'/images/instructors/instructor_' . $instructorArray['id'] . '.jpeg?img='. time()}}" class="animated zoomIn"></p><br>
                 {{Form::open(array('action' => array('AdminInstructorsController@update', $instructorArray['id']), 'method'=>'put', 'id' => 'deleteImage'))}}
                 <a class="btn btn-setting btn-success" href="#">
                     <i class="glyphicon glyphicon-share icon-white"></i>
@@ -252,10 +252,10 @@
 
                 <div class="helpbox"><ul>
                         <li>
-                            Только файлы формата .jpeg или .jpeg
+                            Только файлы формата .jpeg или .jpg
                         </li>
                         <li>
-                            Размер изображения должен быть 300x200 пикселей, в противном случае файл будет уменьшен автоматически
+                            Размер изображения должен быть 900x800 пикселей, в противном случае файл будет уменьшен автоматически
                         </li>
                         <li>
                             Если изображение уже существует, то новое изображение заменит старое

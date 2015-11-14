@@ -45,8 +45,8 @@ class Client extends Staff {
     }
 
 
-    public function setUpAllClientsInfo() {
-        return parent::setUpAllInfo();
+    public function setUpAllClientsInfo($isactive = null) {
+        return parent::setUpAllInfo($isactive);
     }
 
 
@@ -96,6 +96,24 @@ class Client extends Staff {
         
     }
     
+    public function setUpRandomClient() {
+        $returnArray = array();
+        $Info = $this->getRandomClient();
+        foreach ($Info as $value) {
+            foreach ($value as $name => $val) {
+
+                $returnArray[$value->id][$name] = $val;
+            }
+        }
+
+        return $returnArray;
+    }
+    
+    protected function getRandomClient(){
+        return DB::table($this->clientTable)->where('active', 1)->orderBy(DB::raw('RAND()'))->take(2)->get();
+    }
+
+
     protected function getInfo($id) {
 
         return DB::table($this->clientTable)
@@ -104,7 +122,7 @@ class Client extends Staff {
     }
 
 
-    protected function getAllInfo() {
+    protected function getAllInfo($isactive = null) {
         return DB::table($this->clientTable)->get();
     }
 

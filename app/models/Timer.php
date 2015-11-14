@@ -20,7 +20,7 @@ class Timer {
     }
 
 
-    public function getTimer() {
+    public function getTimer($fullCheck = null) {
         $returnArray = array();
         $cnt = DB::table($this->timerTable)->where('id', $this->id)->count();
         if ($cnt == 0) {
@@ -35,12 +35,25 @@ class Timer {
                 $returnArray[$name] = $val;
             }
         }
-
+        
+        if($fullCheck == 'getTour'){
+            $returnArray = $this->checkTour($returnArray);
+            return $returnArray;
+            
+        }
+        
         $returnArray = $this->checkDate($returnArray);
+                     
+        if ($fullCheck != null) {
+            $returnArray = $this->checkActive($returnArray);
+            $returnArray = $this->checkTour($returnArray);
+        }
 
         return $returnArray;
     }
 
+    
+    
 
     private function insertContact() {
 
@@ -98,6 +111,38 @@ class Timer {
         }
         if ($array['time'] == '00:00:00') {
             $array['time'] = '9';
+        }
+        return $array;
+    }
+
+    /* Проверяем активен ли таймер
+     * 
+     */
+
+
+    private function checkActive($array) {
+        if ($array['active'] == 1) {
+            return $array;
+        } else {
+            return array();
+        }
+    }
+
+    /* Проверяем есть ли тур, предстоящий ли это тур, активен ли тур
+     * 
+     */
+
+
+    private function checkTour($array) {
+        try {
+            $factoryTour = new TourFactory();
+            $futureTourModel = $factoryTour->getTour('FutureTour', Config::get('app.locale'), $array['tour_id']);
+            $tourArray = $futureTourModel->setUpTourInfo();
+        } catch (Exception $e) {
+            return array();
+        }
+        if ($tourArray['tourType_id'] != 1 || $tourArray['active'] != 1) {
+            return array();
         }
         return $array;
     }

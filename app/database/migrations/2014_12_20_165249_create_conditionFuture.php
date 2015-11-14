@@ -5,6 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateConditionFuture extends Migration {
 
+
     /**
      * Run the migrations.
      *
@@ -15,7 +16,6 @@ class CreateConditionFuture extends Migration {
             $table->integer('tour_id');
             $table->string('residence', 128);
             $table->string('feed', 256);
-
             $table->primary('tour_id');
         });
 
@@ -23,10 +23,10 @@ class CreateConditionFuture extends Migration {
             $table->integer('tour_id');
             $table->string('residence', 128);
             $table->string('feed', 256);
-
             $table->primary('tour_id');
         });
     }
+
 
     /**
      * Reverse the migrations.

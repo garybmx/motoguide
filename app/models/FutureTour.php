@@ -14,6 +14,7 @@
 class FutureTour extends Tour {
 
     protected $tourType;
+    protected $paginate;
     private $condition;
     protected $id;
     private $futureTourInfo = array(
@@ -23,6 +24,8 @@ class FutureTour extends Tour {
         'name' => '',
         'startTime' => '',
         'endTime' => '',
+        'nodate' => '',
+        'nodateactive' => '',
         'description' => '',
         'duration' => '',
         'level_id' => '',
@@ -38,6 +41,7 @@ class FutureTour extends Tour {
         $this->tourType = 1;
         $this->condition = new ConditionFuture($this->language, $this->id);
         $this->langId = null;
+        $this->paginate = 2;
     }
 
 
@@ -46,9 +50,21 @@ class FutureTour extends Tour {
      * @return array
      * Function return array of all tours
      */
-    public function setUpAllToursInfo($select= array()) {
-        $result = parent::setUpAllToursInfo($select);
+    public function setUpAllToursInfo($select = array(), $isactive = null, $num = null) {
+        $result = parent::setUpAllToursInfo($select, $isactive, $num);
         return $result;
+    }
+
+
+    public function setUpShortTourInfo($active = null) {
+
+        $tourInfo = $this->getFullTourInfo($this->id, array(), $active);
+        foreach ($tourInfo as $value) {
+            foreach ($value as $name => $val) {
+                $this->futureTourInfo[$name] = $val;
+            }
+        }
+        return $this->futureTourInfo;
     }
 
 
@@ -58,12 +74,18 @@ class FutureTour extends Tour {
      * Function return array of information for one tour
      * 
      */
-    public function setUpTourInfo() {
+    public function setUpTourInfo($isactive = null) {
 
         $tourInfo = $this->getFullTourInfo($this->id);
         foreach ($tourInfo as $value) {
             foreach ($value as $name => $val) {
                 $this->futureTourInfo[$name] = $val;
+            }
+        }
+
+        if ($isactive != null) {
+            if ($this->futureTourInfo['active'] != 1) {
+                return array();
             }
         }
 
@@ -153,7 +175,8 @@ class FutureTour extends Tour {
         return $this->checkTrue($check);
     }
 
-     public function deleteOnePriceRecord($priceId) {
+
+    public function deleteOnePriceRecord($priceId) {
         $this->condition->deleteOnePriceRecord($priceId);
     }
 
@@ -162,19 +185,49 @@ class FutureTour extends Tour {
         $check = array();
         $check[] = $this->changeTypeId();
         $check[] = $this->condition->deleteConditionFutureRecord();
-        $check[] = $this->condition->deletePriceRecords();        
-        
+        $check[] = $this->condition->deletePriceRecords();
+
         $past = new ConditionPast($this->language, $this->id);
         $insertArray = array();
         $insertArray['review'] = '';
         $check[] = $past->insertConditionPastRecord($insertArray);
-        
+
         if (($this->langId === NULL) && (is_numeric($this->id))) {
             $check[] = $this->changeAnotherLanguage($this->id);
         }
-        
+
         return $this->checkTrue($check);
     }
+
+
+    public function getPrices($id) {
+
+
+        $price = new Price($this->language, $id);
+        $getPrice = $price->getAllPrices();
+
+        if (!empty($getPrice)) {
+            $i = 1;
+            foreach ($getPrice as $prices) {
+                $priceArray[$i]['num'] = $i;
+                $priceArray[$i]['name'] = $prices->price_name;
+                $priceArray[$i]['price_id'] = $prices->price_id;
+                $priceArray[$i]['price'] = $prices->price;
+                $priceArray[$i]['description'] = $prices->description;
+                $i++;
+            }
+        } else {
+            $priceArray[1]['num'] = 1;
+            $priceArray[1]['name'] = '';
+            $priceArray[1]['price'] = '';
+            $priceArray[1]['price_id'] = '';
+            $priceArray[1]['description'] = '';
+        }
+        return $priceArray;
+    }
+
+
+    
 
 
     protected function deleteAnotherLanguage($id) {
@@ -185,6 +238,7 @@ class FutureTour extends Tour {
         return $newTour->deleteTour();
     }
 
+
     protected function changeAnotherLanguage($id) {
 
         $newTour = addMultiLanguageService::getAnotherLanguageObj(get_class($this), $this->language, $id);
@@ -193,7 +247,6 @@ class FutureTour extends Tour {
         return $newTour->changeType();
     }
 
-   
 
     protected function changeTypeId() {
         $check = DB::table($this->table)

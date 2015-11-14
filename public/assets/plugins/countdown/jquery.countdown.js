@@ -25,6 +25,17 @@ function Countdown() {
 		timeSeparator: ':', // Separator for time periods
 		isRTL: false // True for right-to-left languages, false for left-to-right
 	};
+        this.regional['ru'] = { // Default regional settings
+		// The display texts for the counters
+		labels: ['Years', 'Months', 'Weeks', 'дней', 'Hours', 'Minutes', 'Seconds'],
+		// The display texts for the counters if only one
+		labels1: ['Year', 'Month', 'Week', 'Ddfay', 'Hour', 'Minute', 'Second'],
+		compactLabels: ['y', 'm', 'w', 'd'], // The compact texts for the counters
+		whichLabels: null, // Function to determine which labels to use
+		digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], // The digits to display
+		timeSeparator: ':', // Separator for time periods
+		isRTL: false // True for right-to-left languages, false for left-to-right
+	};
 	this._defaults = {
 		until: null, // new Date(year, mth - 1, day, hr, min, sec) - date/time to count down to
 			// or numeric for seconds offset, or string for unit offset(s):

@@ -91,36 +91,15 @@
                                     </td>
                                 </tr>
 
+                       
                                 <tr>
 
                                     <td>
-                                        {{ Form::label('lastname', 'Фамилия:') }}
+                                        {{ Form::label('tour', 'Тур:') }}
                                     </td><td>
-                                        {{ Form::text('lastname', $requestArray['lastname'], array('class' => 'form-custom', 'size' => '30%')) }}
+                                        {{ Form::text('tour', $requestArray['tour'], array('class' => 'form-custom', 'size' => '30%')) }}
 
-                                        {{ $errors->first('lastname', '<div class="alert alert-danger">:message</div>') }}
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        {{ Form::label('location', 'Город:') }}
-                                    </td><td>
-                                        {{ Form::text('location', $requestArray['lastname'], array('class' => 'form-custom', 'size' => '30%')) }}
-
-                                        {{ $errors->first('location', '<div class="alert alert-danger">:message</div>') }}
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        {{ Form::label('age', 'Возраст:') }}
-                                    </td><td>
-                                        {{ Form::text('age', $requestArray['age'], array('class' => 'form-custom', 'size' => '30%')) }}
-
-                                        {{ $errors->first('age', '<div class="alert alert-danger">:message</div>') }}
+                                        {{ $errors->first('tour', '<div class="alert alert-danger">:message</div>') }}
                                     </td>
                                 </tr>
 
@@ -149,10 +128,10 @@
                                 <tr>
 
                                     <td>
-                                        {{ Form::label('comments', 'Комментарий:') }}</td><td>
-                                        {{ Form::textarea('comments', $requestArray['comments'], array('class' => 'form-custom'))}}
+                                        {{ Form::label('comment', 'Комментарий:') }}</td><td>
+                                        {{ Form::textarea('comment', $requestArray['comment'], array('class' => 'form-custom'))}}
 
-                                        {{ $errors->first('comments', '<div class="alert alert-danger">:message</div>') }}
+                                        {{ $errors->first('comment', '<div class="alert alert-danger">:message</div>') }}
                                     </td>
                                 </tr>
 

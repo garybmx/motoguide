@@ -9,8 +9,8 @@
         $('input[name="ru_endTime"]').minical();
         $("#markItUp").markItUp(mySettings);
         $("#markItUp2").markItUp(mySettings);
-   $("#markItUp3").markItUp(mySettings);
-   
+        $("#markItUp3").markItUp(mySettings);
+
 
     });
 
@@ -81,8 +81,25 @@
 
                                     {{ $errors->first('ru_endTime', '<div class="alert alert-danger">:message</div>') }}
                                 </td></tr>
+                            <tr>
+                                <td>
+                                    {{ Form::label('ru_nodateactive', 'Дата не определена:') }}</td><td>
+
+                                    {{ Form::checkbox('ru_nodateactive','1')}}
+                                    Дата не определена
 
 
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    {{ Form::label('ru_nodate', 'Примерная дата:') }}</td><td>
+                                    {{ Form::text('ru_nodate', null, array('class' => 'form-custom', 'size' => '30%')) }}
+
+                                    {{ $errors->first('ru_nodate', '<div class="alert alert-danger">:message</div>') }}
+                                </td></tr>
+                            
                             <tr>
                                 <td>
                                     {{ Form::label('ru_duration', 'Продолжительность тура:') }}</td><td>
@@ -133,7 +150,7 @@
                                     {{ $errors->first('ru_feed', '<div class="alert alert-danger">:message</div>') }}
                                 </td></tr>
 
-                           
+
 
                             <tr>
                                 <td>

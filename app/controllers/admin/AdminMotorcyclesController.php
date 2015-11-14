@@ -19,8 +19,8 @@ class AdminMotorcyclesController extends \BaseController {
         'boolean' => 'Запись не добавлена: Недопустимые сиволы.',
         'integer' => 'Запись не добавлена: Поле должно содержать только цифры'
     );
-    private $imageHeight = 300;
-    private $imageWidth = 200;
+    private $imageHeight = 600;
+    private $imageWidth = 555;
 
 
     /**
@@ -276,7 +276,7 @@ class AdminMotorcyclesController extends \BaseController {
         $width = Image::make($path)->width();
 
         if ($height != $this->imageHeight || $width != $this->imageWidth) {
-            $img = Image::make($path)->resize($this->imageHeight, $this->imageWidth);
+            $img = Image::make($path)->resize($this->imageWidth, $this->imageHeight);
         } else {
             $img = Image::make($path);
         }

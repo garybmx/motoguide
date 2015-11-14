@@ -14,10 +14,10 @@
 class AdminContactsController extends \BaseController {
 
     private $rules = array(
-        'ru_address' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\;\.:\(\)\/]+$)u'),
+        'ru_address' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\ \.\,\;\.:\(\)\/]+$)u'),
         'ru_mail' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\@\ \;\.:\(\)\/]+$)u'),
         'ru_phone' => array('Regex:(^[A-Za-z0-9\n\r\\-\,\ \;\.:\(\)\/]+$)u'),
-        'en_address' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\,\ \;\.:\(\)\/]+$)u'),
+        'en_address' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\.\,\ \;\.:\(\)\/]+$)u'),
         'en_mail' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\-!\@\ \;\.:\(\)\/]+$)u'),
         'en_phone' => array('Regex:(^[A-Za-z0-9\n\r\-\,\ \;\.:\(\)\/]+$)u'),
     );

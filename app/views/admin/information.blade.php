@@ -19,13 +19,18 @@
     if ($("div").is("#messageBox")) {
     setTimeout(function () {
     $('#messageBox').fadeOut('slow').remove();
-    }, 1000);
+    }, 5000);
     }
 
     $('#informations_link').parent().addClass('active');
     });</script>
 
+  @if($errors->has('image'))
 
+            <div class="alert alert-danger" id="messageBox">
+                {{$errors->first('image')}}
+            </div>
+            @endif
 
 @include('admin.infolayots.info1')
 @include('admin.infolayots.info2')

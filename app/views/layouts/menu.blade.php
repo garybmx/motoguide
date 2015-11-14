@@ -7,37 +7,43 @@
                         </a><!-- /nav-collapse -->                                  
                         <div class="nav-collapse collapse">                                     
                             <ul class="nav">
-                                <li class="active">
+                                <li {{ HTML::active(array('IndexController@index')); }}>
                                     <a href="{{ URL::to(Config::get('app.locale') ) }}"> {{ trans('menu.main') }}         
                                     </a>                                    
                                 </li>
-                                <li>
+                                <li {{ HTML::active(array('futureTours', 'pastTours'));}}>
                                     <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ trans('menu.tours') }}
                                         <b class="caret"></b>                            
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{ URL::to(Config::get('app.locale')  . '/futureTours' ) }}">{{ trans('menu.futureTours') }}</a></li>
-                                        <li><a href="{{ URL::to(Config::get('app.locale')  . '/pastTours' ) }}">{{ trans('menu.pastTours') }}</a></li>                                        
+                                        <li {{ HTML::active(array('futureTours'));}}><a href="{{ URL::to(Config::get('app.locale')  . '/futureTours' ) }}">{{ trans('menu.futureTours') }}</a></li>
+                                        <li {{ HTML::active(array('pastTours'));}}><a href="{{ URL::to(Config::get('app.locale')  . '/pastTours' ) }}">{{ trans('menu.pastTours') }}</a></li>                                        
                                     </ul>
                                     <b class="caret-out"></b>                        
                                 </li>
-                                <li>
+                                <li {{ HTML::active(array('motorcycles', 'instructors')); }}>
                                     <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ trans('menu.about') }}
                                         <b class="caret"></b>                            
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{ URL::to(Config::get('app.locale')   . '/motorcycles' ) }}">{{ trans('menu.motorcycles') }}</a></li>
-                                        <li><a href="{{ URL::to(Config::get('app.locale')  . '/instructors' )  }}">{{ trans('menu.instructors') }}</a></li>                                        
+                                        <li {{ HTML::active(array('motorcycles')); }}><a href="{{ URL::to(Config::get('app.locale')   . '/motorcycles' ) }}">{{ trans('menu.motorcycles') }}</a></li>
+                                        <li {{ HTML::active(array('instructors')); }}><a href="{{ URL::to(Config::get('app.locale')  . '/instructors' )  }}">{{ trans('menu.instructors') }}</a></li>                                        
                                     </ul>
                                     <b class="caret-out"></b>                        
                                 </li>
-                                 <li>
-                                    <a href="{{ URL::to(Config::get('app.locale')  . '/application' ) }}" class="dropdown-toggle" data-toggle="dropdown">{{ trans('menu.application') }}
+                                 <li {{ HTML::active(array('blog')); }}>
+                                    <a href="{{ URL::to(Config::get('app.locale')  . '/blog' ) }}">{{ trans('menu.blog') }}
                                     </a>
 
                                 </li>
-                                <li>
-                                    <a href="{{ URL::to(Config::get('app.locale')  . '/contacts' ) }}" class="dropdown-toggle" data-toggle="dropdown">{{ trans('menu.contacts') }}
+                                 <li {{ HTML::active(array('request')); }}>
+                                    <a href="{{ URL::to(Config::get('app.locale')  . '/request' ) }}" >{{ trans('menu.request') }}
+                                    </a>
+
+                                </li>
+                                
+                                <li {{ HTML::active(array('contacts')); }}>
+                                    <a href="{{ URL::to(Config::get('app.locale')  . '/contacts' ) }}" >{{ trans('menu.contacts') }}
                                     </a>
 
                                 </li>

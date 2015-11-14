@@ -7,15 +7,7 @@ and open the template in the editor.
     Created on : 07.02.2015, 14:03:28
     Author     : Gary
 */
-@font-face {
-  font-family: 'CTCSplashRounded';
-  src: url('CTCSplashRounded.eot');
-  src: url('CTCSplashRounded.eot?#iefix') format('embedded-opentype'),
-       url('CTCSplashRounded.ttf') format('truetype'),
-       url('CTCSplashRounded.svg#CTCSplashRounded') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
+
 
 
 .mkt{
@@ -67,4 +59,31 @@ and open the template in the editor.
     padding: 5px;
     width: 230px;
     color: #060606;
+}
+
+.margin-top-10{
+    margin-top: 10px;
+}
+
+.margin-top-30{
+    margin-top: 30px;
+}
+
+.biglist {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.center-img{
+    text-align: center;
+}
+
+.back a{
+    color: #666;
+}
+
+.back a:hover{
+    color: #e67e22;
+    text-decoration: none;
 }

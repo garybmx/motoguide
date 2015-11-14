@@ -179,7 +179,7 @@
                 <script class="source" type="text/javascript">
                     $('.countdown').downCount({
                         date: '{{$timerArray["date"]}} {{$timerArray["time"]}}',
-                        offset: +4
+                        offset: +3
                     }, function () {
                         $('#timer').css('display', 'none');
                     });

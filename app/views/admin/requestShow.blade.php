@@ -91,33 +91,15 @@
                                     </td>
                                 </tr>
 
+                               
+
+                               
                                 <tr>
 
                                     <td>
-                                        {{ Form::label('lastname', 'Фамилия:') }}
+                                        {{ Form::label('tour', 'Тур:') }}
                                     </td><td>
-                                        {{ $requestArray['lastname'] }}
-
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        {{ Form::label('location', 'Город:') }}
-                                    </td><td>
-                                        {{$requestArray['lastname'] }}
-
-                                     
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        {{ Form::label('age', 'Возраст:') }}
-                                    </td><td>
-                                        {{ $requestArray['age'] }}
+                                        {{ $requestArray['tour'] }}
 
                                        
                                     </td>
@@ -148,8 +130,8 @@
                                 <tr>
 
                                     <td>
-                                        {{ Form::label('comments', 'Комментарий:') }}</td><td>
-                                        {{ $requestArray['comments']}}
+                                        {{ Form::label('comment', 'Комментарий:') }}</td><td>
+                                        {{ $requestArray['comment']}}
 
                                        
                                     </td>

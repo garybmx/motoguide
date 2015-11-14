@@ -13,12 +13,32 @@
  */
 class AdminSettingsController extends \BaseController {
 
-      public function index() {
 
-   
+    public function index() {
 
-        return View::make('admin.settings');
+        $mailinglistModel = new Mailinglist;
+        $mailinglist = count($mailinglistModel->setUpAllMailinglistsInfo());
+
+        $requestModel = new RequestTour;
+        $requestAll = $requestModel->setUpAllRequestsInfo();
+        $request = count($requestAll);
+        $requestNew = 0;
+        foreach($requestAll as $rq){
+            if($rq['new'] == 1){
+                $requestNew++;
+            }
+        }
+
+        //Cache::flush();
+        return View::make('admin.settings', array('mailinglist' => $mailinglist, 'request' => $request, 'requestNew' => $requestNew));
     }
 
+
+    public function update() {
+        $messages = new Illuminate\Support\MessageBag;
+        Cache::flush();
+        $messages->add('done', 'Кэш обновлен');
+        return Redirect::back()->withErrors($messages);
+    }
 
 }

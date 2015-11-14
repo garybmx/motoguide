@@ -15,7 +15,7 @@ class InformationCreate extends Migration {
         Schema::create('information_ru', function($table) {
             $table->increments('id');
             $table->string('name', 256);
-            $table->string('value', 512);
+            $table->text('value');
         });
 
         DB::table('information_ru')->insert(array(
@@ -39,7 +39,7 @@ class InformationCreate extends Migration {
         Schema::create('information_en', function($table) {
             $table->increments('id');
             $table->string('name', 256);
-            $table->string('value', 512);
+            $table->text('value');
         });
         
         DB::table('information_en')->insert(array(

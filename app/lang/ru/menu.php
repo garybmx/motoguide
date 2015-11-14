@@ -6,8 +6,9 @@ return array(
     'futureTours' => 'Предстоящие туры',
     'pastTours' => 'Прошедшие туры',
     'motorcycles' => 'Мотоциклы',
-    'instructors' => 'Инструкторы',
-    'application' => 'Заявка на участие',
+    'instructors' => 'Команда',
+    'blog' => 'Блог',
+    'request' => 'Заявка на участие',
     'about' => 'О нас',
     'contacts' => 'Контакты',
 );

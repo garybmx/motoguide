@@ -15,12 +15,10 @@ class AdminRequestController extends \BaseController {
 
     private $rules = array(
         'name' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.:\(\)]+$/u'),
-        'lastname' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\.:\(\)]+$/u'),
-        'location' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\.:\(\)]+$/u'),
-        'age' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\.:\(\)]+$/u'),
-        'comments' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]+$)u'),
-        'phone' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.\+:\(\)]+$/u'),
+        'phone' => array('Regex:/^[A-Za-zа-яА-Я0-9\-! ,\\ \.\+:\(\)]*$/u'),
         'email' => array('Regex:/^[A-Za-zа-яА-Я0-9\-!@ ,\\ \.:\(\)]+$/u'),
+        'comment' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]*$)u'),
+        'tour' => array('Regex:(^[A-Za-zа-яА-Я0-9\n\r\<\>\&\?\-!\,\\\ \;\.:\(\)\/]*$)u'),
         'date' => array('Regex:/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/'),
     );
     private $messages = array(
@@ -43,6 +41,11 @@ class AdminRequestController extends \BaseController {
         $request = new RequestTour($id);
         $request->setStatus();
         $requestArray = $request->setUpRequestInfo();
+        if ($requestArray['new'] == 1) {
+
+
+            $check = $request->updateRequestInfo($requestArray);
+        }
 
 
         return View::make('admin.requestShow', array('requestArray' => $requestArray));
@@ -52,6 +55,7 @@ class AdminRequestController extends \BaseController {
     public function edit($id) {
         $request = new RequestTour($id);
         $requestArray = $request->setUpRequestInfo();
+
 
 
         return View::make('admin.requestEdit', array('requestArray' => $requestArray));
@@ -71,10 +75,7 @@ class AdminRequestController extends \BaseController {
         $requestInfo = array(
             'id' => null,
             'name' => Input::get('name'),
-            'lastname' => Input::get('lastname'),
-            'location' => Input::get('location'),
-            'age' => Input::get('age'),
-            'comments' => Input::get('comments'),
+            'comment' => Input::get('comments'),
             'phone' => Input::get('phone'),
             'email' => Input::get('email'),
             'new' => 0,

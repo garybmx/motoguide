@@ -1,7 +1,5 @@
 @extends('admin.layouts.base')
-
-@section('admin.body')   
-
+@section('admin.body')
 <!-- content starts -->
 <div>
     <ul class="breadcrumb">
@@ -10,7 +8,7 @@
 
         </li>
         <li>
-            {{HTML::link('admin/instructors', 'Инструктора')}}
+            {{HTML::link('admin/instructors', 'Инструкторы')}}
         </li>
       
     </ul>

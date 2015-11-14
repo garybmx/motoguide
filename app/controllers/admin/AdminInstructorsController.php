@@ -19,8 +19,8 @@ class AdminInstructorsController extends \BaseController {
         'boolean' => 'Запись не добавлена: Недопустимые сиволы.',
         'integer' => 'Запись не добавлена: Поле должно содержать только цифры'
     );
-    private $imageHeight = 300;
-    private $imageWidth = 200;
+    private $imageHeight = 800;
+    private $imageWidth = 900;
 
 
     /**

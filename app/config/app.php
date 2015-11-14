@@ -108,7 +108,7 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Intervention\Image\ImageServiceProvider',
-        'PragmaRX\Tracker\Vendor\Laravel\ServiceProvider'
+        
     ),
     /*
       |--------------------------------------------------------------------------
@@ -171,6 +171,6 @@ return array(
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View' => 'Illuminate\Support\Facades\View',
         'Image' => 'Intervention\Image\Facades\Image',
-        'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade'
+       
     ),
 );

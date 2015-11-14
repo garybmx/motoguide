@@ -11,8 +11,7 @@
                         <li class="nav-header">Настройки сайта</li>
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/settings');}}" id="settings_link"><i class="glyphicon  glyphicon-cog"></i><span> Главная</span></a>
                         </li>
-                        <li><a class="ajax-link" href="{{HTML::entities('/admin/levels');}}" id="levels_link"><i
-                                    class="glyphicon glyphicon-signal"></i><span> Статистика</span></a></li>
+                        
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/information');}}" id="information_link"><i class="glyphicon glyphicon-info-sign"></i><span> Информация</span></a>
                         </li>
                         
@@ -37,10 +36,13 @@
                                 <li><a href="{{HTML::entities('/admin/FutureTour');}}" id="futureTour_link">Предстоящие</a></li>
                             </ul>
                         </li>
+                          <li><a class="ajax-link" href="{{HTML::entities('/admin/blog');}}" id="blog_link"><i
+                                    class="glyphicon glyphicon-pencil"></i><span> Блог</span></a></li>
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/levels');}}" id="levels_link"><i
                                     class="glyphicon glyphicon-signal"></i><span> Уровни сложности</span></a></li>
                                      <li><a class="ajax-link" href="{{HTML::entities('/admin/request');}}" id="request_link"><i
                                     class="glyphicon glyphicon-bullhorn"></i><span> Заявки</span></a></li>
+                                   
                         <li><a class="ajax-link" href="{{HTML::entities('/admin/mailinglist');}}" id="mailinglist_link"><i
                                     class=" glyphicon glyphicon-envelope"></i><span> Подписки</span></a></li>
                                    

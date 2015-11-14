@@ -46,8 +46,8 @@ class Motorcycle extends Staff {
     }
 
 
-    public function setUpAllMotorcylesInfo() {
-        return parent::setUpAllInfo();
+    public function setUpAllMotorcylesInfo($isactive = null) {
+        return parent::setUpAllInfo($isactive);
     }
 
 
@@ -86,8 +86,12 @@ class Motorcycle extends Staff {
     }
 
 
-    protected function getAllInfo() {
-        return DB::table($this->motorTable)->get();
+    protected function getAllInfo($isactive = null) {
+        $isactiveString = '';
+        if ($isactive != null) {
+            $isactiveString = 'where `active` = 1';
+        }
+        return DB::select('select * from ' . $this->motorTable . ' ' . $isactiveString);
     }
 
 
@@ -130,7 +134,7 @@ class Motorcycle extends Staff {
                 )
         );
 
-        
+
         if ($check > 0) {
             return true;
         } else {

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if IE 7]> <html lang="en" class="ie7"> <![endif]-->  
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<!--[if IE 7]> <html lang="{{Config::get('app.locale')}}" class="ie7"> <![endif]-->  
+<!--[if IE 8]> <html lang="{{Config::get('app.locale')}}" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="{{Config::get('app.locale')}}" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="{{Config::get('app.locale')}}"> <!--<![endif]-->  
     @include('layouts.head')
 
     <body>
@@ -19,7 +19,7 @@
         <div class="top">
             <div class="container">         
                 <ul class="loginbar pull-right">
-                    <li><i class="icon-globe"></i><a>Languages <i class="icon-sort-up"></i></a>
+                    <li><i class="icon-">&#xf0ac;</i><a>Languages <i class="icon-sort-up"></i></a>
                         <ul class="nav-list">
 
                             @if(Request::segment(1) == 'en' || Config::get('app.locale') == 'en')
@@ -35,8 +35,8 @@
 
                         </ul>
                     </li>   
-                    <li><a href="mailto:info@anybiz.com"><i class="icon-envelope-alt"></i> info@anybiz.com</a></li> 
-                    <li><a href="#"><i class="icon-phone-sign"></i> 010 4202 2656</a></li>   
+                    <li><a href="mailto:{{$contactArray['mail']}}"><i class="icon-">&#xf0e0;</i> {{$contactArray['mail']}}</a></li> 
+                    <li><a href="#"><i class="icon-">&#xf095;</i>{{$contactArray['phone']}}</a></li>   
 
 
                 </ul>
@@ -49,7 +49,8 @@
             <div class="container"> 
                 <!-- Logo -->       
                 <div class="logo">                                             
-                    <a href="index.html"><img id="logo-header" src="assets/img/logo2-default.png" alt="Logo" /></a>
+                    <a href="{{ URL::to(Config::get('app.locale')  . '/' ) }}">
+                        {{ HTML::image('assets/img/logo2-default.png', 'Enduro Tours logo', array('id' => 'logo-header')) }}                        
                 </div><!-- /logo -->        
 
                 <!-- Menu -->       
@@ -59,51 +60,91 @@
         <!--=== End Header ===-->
 
         <!--=== Slider ===-->
-        @yield('admin.body') 	
+        @yield('body') 	
         <!-- End Content Part -->
 
         <!--=== Footer ===-->
         @include('layouts.footer')
         <!--=== End Footer ===-->
 
+
         <!-- JS Global Compulsory -->           
         {{HTML::script('assets/js/jquery-1.8.2.min.js')}}
-        {{HTML::script('assets/js/modernizr.custom.js')}}     
+        {{HTML::script('assets/js/modernizr.custom.js')}}    
         {{HTML::script('assets/plugins/bootstrap/js/bootstrap.min.js')}}
-        <!-- JS Implementing Plugins -->           
-        {{HTML::script('assets/plugins/flexslider/jquery.flexslider-min.js')}}
-        {{HTML::script('assets/plugins/parallax-slider/js/modernizr.js')}}
-        {{HTML::script('assets/plugins/parallax-slider/js/jquery.cslider.js')}}
-        {{HTML::script('assets/plugins/bxslider/jquery.bxslider.js')}}
         {{HTML::script('assets/plugins/back-to-top.js')}}
-        <!-- JS Page Level -->           
         {{HTML::script('assets/js/app.js')}}
-        {{HTML::script('assets/js/pages/index.js')}}
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                App.init();
-                App.initSliders();
-                App.initBxSlider1();
-                Index.initParallaxSlider();
-            });
-        </script>
-        <!--[if lt IE 9]>
-            {{HTML::script('assets/js/respond.js')}}
-        <![endif]-->
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-29166220-1']);
-            _gaq.push(['_setDomainName', 'htmlstream.com']);
-            _gaq.push(['_trackPageview']);
+        {{HTML::script('js/done.js')}}    
+        <!-- JS Page Level -->           
+      
 
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
+        @if($errors->has('letterdone'))
+        <!--[if IE]>
+         {{HTML::script('js/doneie.js')}}
+          <script type = "text/javascript" >
+            jQuery(document).ready(function () {                
+               done_alert("{{trans('request.letterMes')}}");
+            });</script>
+       <![endif]-->
+        <![if !IE]>
+        {{HTML::script('js/done.js')}}    
+         <script type = "text/javascript" >
+            jQuery(document).ready(function () {                
+               done_alert("{{trans('request.letterMes')}}");
+            });</script>
+        <![endif]>
+        @endif
+
+        @if($errors->has('letternotdone'))
+        <!--[if IE]>
+         {{HTML::script('js/doneie.js')}}
+          <script type = "text/javascript" >
+            jQuery(document).ready(function () {                
+               not_alert("{{trans('request.letterError')}}");
+            });</script>
+       <![endif]-->
+        <![if !IE]>
+        {{HTML::script('js/done.js')}}    
+         <script type = "text/javascript" >
+            jQuery(document).ready(function () {                
+               not_alert("{{trans('request.letterError')}}");
+            });</script>
+        <![endif]>
+        @endif
+
+
+        <!--[if lt IE 9]>
+           {{HTML::script('assets/js/respond.js')}}
+           {{HTML::script('js/ie8.js')}}          
+       <![endif]-->
+        <![if !IE]>
+        {{HTML::script('js/sweetalert.min.js')}}    
+        <![endif]>
+        @yield('footerscript')
+
+
+
+
+
+
+
+        <!--
+       <script type="text/javascript">
+           var _gaq = _gaq || [];
+           _gaq.push(['_setAccount', 'UA-29166220-1']);
+           _gaq.push(['_setDomainName', 'htmlstream.com']);
+           _gaq.push(['_trackPageview']);
+
+           (function () {
+               var ga = document.createElement('script');
+               ga.type = 'text/javascript';
+               ga.async = true;
+               ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+               var s = document.getElementsByTagName('script')[0];
+               s.parentNode.insertBefore(ga, s);
+           })();
+       </script>
+        -->
+
     </body>
 </html> 
